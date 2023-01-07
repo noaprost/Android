@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_historyFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_restaurantMainFragment"
+            app:destination="@id/restaurantMainFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -43,6 +46,9 @@
         <action
             android:id="@+id/action_homeFragment_to_historyFragment"
             app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_restaurantMainFragment"
+            app:destination="@id/restaurantMainFragment" />
     </fragment>
     <fragment
         android:id="@+id/likeFragment"
@@ -61,6 +67,9 @@
         <action
             android:id="@+id/action_likeFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_likeFragment_to_restaurantMainFragment"
+            app:destination="@id/restaurantMainFragment" />
     </fragment>
     <fragment
         android:id="@+id/myPageFragment"
@@ -79,6 +88,9 @@
         <action
             android:id="@+id/action_myPageFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_restaurantMainFragment"
+            app:destination="@id/restaurantMainFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -96,6 +108,33 @@
             app:destination="@id/likeFragment" />
         <action
             android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_restaurantMainFragment"
+            app:destination="@id/restaurantMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/restaurantMainFragment"
+        android:name="com.example.capstone.restaurant.RestaurantMainFragment"
+        android:label="fragment_restaurant_main"
+        tools:layout="@layout/fragment_restaurant_main" >
+        <action
+            android:id="@+id/action_restaurantMainFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_restaurantMainFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
+        <action
+            android:id="@+id/action_restaurantMainFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_restaurantMainFragment_to_likeFragment"
+            app:destination="@id/likeFragment" />
+        <action
+            android:id="@+id/action_restaurantMainFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_restaurantMainFragment_to_homeFragment2"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
