@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
+import com.example.capstone.MainActivity
 import com.example.capstone.databinding.FragmentRestaurantMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -23,6 +24,9 @@ class RestaurantMainFragment : Fragment() {
         _binding = FragmentRestaurantMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val mainAct = activity as MainActivity
+        mainAct.HideBottomNavi(true)
+
         val viewPager: ViewPager2 = binding.pager
         val tabLayout: TabLayout = binding.tabLayout
         val viewpagerFragmentAdapter = ViewPagerAdapter(this)
@@ -38,7 +42,7 @@ class RestaurantMainFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
 
         binding.mainScrollView.run{
-            header=binding.infoBox
+            header=binding.headerView
             stickListener = { _ ->
                 Log.d("LOGGER_TAG", "stickListener")
             }
@@ -51,6 +55,8 @@ class RestaurantMainFragment : Fragment() {
     }
     override fun onDestroyView() {
         super.onDestroyView()
+        val mainAct = activity as MainActivity
+        mainAct.HideBottomNavi(false)
         _binding = null
     }
 }
