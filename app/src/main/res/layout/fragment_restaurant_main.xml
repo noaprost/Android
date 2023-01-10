@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@+id/infoBox"
+                app:layout_constraintBottom_toTopOf="@id/headerView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
