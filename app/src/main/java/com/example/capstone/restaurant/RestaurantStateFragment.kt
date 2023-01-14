@@ -58,17 +58,17 @@ class RestaurantStateFragment : Fragment() {
                 setDrawLabels(true) // 값 적는거 허용 (0, 50, 100)
                 setDrawGridLines(true) //격자 라인 활용
                 setDrawAxisLine(false) // 축 그리기 설정
-                axisLineColor = ContextCompat.getColor(context,R.color.black) // 축 색깔 설정
-                gridColor = ContextCompat.getColor(context,R.color.purple_500) // 축 아닌 격자 색깔 설정
-                textColor = ContextCompat.getColor(context,R.color.purple_200) // 라벨 텍스트 컬러 설정
-                textSize = 13f //라벨 텍스트 크기
+                axisLineColor = ContextCompat.getColor(context, R.color.LightGray) // 축 색깔 설정
+                gridColor = ContextCompat.getColor(context, R.color.LightGray) // 축 아닌 격자 색깔 설정
+                textColor = ContextCompat.getColor(context, R.color.black) // 라벨 텍스트 컬러 설정
+                textSize = 10f //라벨 텍스트 크기
             }
             xAxis.run {
                 position = XAxis.XAxisPosition.BOTTOM //X축을 아래에다가 둔다.
                 granularity = 1f // 1 단위만큼 간격 두기
                 setDrawAxisLine(true) // 축 그림
                 setDrawGridLines(false) // 격자
-                textColor = ContextCompat.getColor(context, androidx.appcompat.R.color.abc_background_cache_hint_selector_material_dark) //라벨 색상
+                textColor = ContextCompat.getColor(context, R.color.black) //라벨 색상
                 textSize = 12f // 텍스트 크기
                 valueFormatter = MyXAxisFormatter() // X축 라벨값(밑에 표시되는 글자) 바꿔주기 위해 설정
             }
@@ -79,7 +79,7 @@ class RestaurantStateFragment : Fragment() {
         }
 
         var set = BarDataSet(entries,"DataSet") // 데이터셋 초기화
-        set.color = ContextCompat.getColor(requireContext(),R.color.teal_200) // 바 그래프 색 설정
+        set.color = ContextCompat.getColor(requireContext(), R.color.INUYellow) // 바 그래프 색 설정
 
         val dataSet :ArrayList<IBarDataSet> = ArrayList()
         dataSet.add(set)
@@ -95,7 +95,7 @@ class RestaurantStateFragment : Fragment() {
         return root
     }
     inner class MyXAxisFormatter : ValueFormatter() {
-        private val days = arrayOf("1차","2차","3차","4차","5차","6차","7차")
+        private val days = arrayOf("10시","11시","12시","1시","2시","3시","4시")
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             return days.getOrNull(value.toInt()-1) ?: value.toString()
         }
