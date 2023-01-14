@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         binding =  ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         var bnv_main = findViewById(R.id.nav_view) as BottomNavigationView
 
 
@@ -28,11 +29,11 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.navigation_home -> {
                     // 다른 프래그먼트 화면으로 이동하는 기능
-                    val homeFragment = RestaurantMainFragment()
+                    val homeFragment = HomeFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, homeFragment).commit()
                 }
                 R.id.navigation_search -> {
-                    val boardFragment = SearchFragment()
+                    val boardFragment = RestaurantMainFragment()//SearchFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, boardFragment).commit()
                 }
                 R.id.navigation_history -> {
