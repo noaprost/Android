@@ -1,5 +1,6 @@
 package com.example.capstone.restaurant
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -49,6 +50,11 @@ class RestaurantMainFragment : Fragment() {
             freeListener = { _ ->
                 Log.d("LOGGER_TAG", "freeListener")
             }
+        }
+
+        binding.button.setOnClickListener {
+            val intent = Intent(activity, RestaurantWaitingActivity::class.java)
+            startActivity(intent)
         }
 
         return root

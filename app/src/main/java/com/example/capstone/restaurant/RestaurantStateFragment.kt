@@ -32,7 +32,7 @@ class RestaurantStateFragment : Fragment() {
         val root: View = binding.root
 
         val mainAct = activity as MainActivity
-        mainAct.HideBottomNavi(true)
+        //mainAct.HideBottomNavi(true)
 
         var barChart: BarChart = binding.barChart // barChart 생성
 
