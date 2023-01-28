@@ -24,7 +24,7 @@ class RestaurantReviewFragment : Fragment() {
         val root: View = binding.root
 
         binding.viewReviewButton.setOnClickListener {
-            val intent = Intent(getActivity(), RestaurantReviewDetail::class.java)
+            val intent = Intent(activity, RestaurantReviewDetail::class.java)
             startActivity(intent)
         }
         return root
