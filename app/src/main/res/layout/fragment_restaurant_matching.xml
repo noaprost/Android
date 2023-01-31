@@ -57,13 +57,21 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/BestKeyword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="데이트코스"
+            android:textSize="22sp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayou2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="20dp">
 
         <ImageView
             android:id="@+id/imageView9"
@@ -86,14 +94,6 @@
             app:layout_constraintStart_toEndOf="@id/imageView9"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/BestKeyword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="데이트코스"
-        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/Bestkeyword2"

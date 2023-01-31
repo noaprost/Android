@@ -10,9 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.animate
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentRestaurantMatchingBinding
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
