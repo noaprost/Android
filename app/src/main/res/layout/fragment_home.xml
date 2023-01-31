@@ -1,15 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeFragment">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/mainHeaderView"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:background="@color/white"
+            android:scaleType="fitCenter"
+            android:src="@drawable/star"
+            android:contentDescription="알림"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+        <!-- TODO: Icon change-->
+        <!-- TODO: Add logo-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/mainInfoView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginVertical="16dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="내가 좋아하는 음식점"
+                    android:textColor="@color/black"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    android:background="@color/white"
+                    android:contentDescription="전체 보기"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/star"
+                    tools:ignore="TouchTargetSizeCheck" />
+                <!-- TODO: Icon change-->
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/restaurantRecyclerView1"
+                android:layout_width="wrap_content"
+                android:layout_height="199dp"
+                android:orientation="horizontal"
+                app:fastScrollHorizontalThumbDrawable="@layout/item_restaurant"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:listitem="@layout/item_restaurant" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mainInfoView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginVertical="16dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="이번 주 Hot한 음식점"
+                    android:textColor="@color/black"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/imageButton4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    android:background="@color/white"
+                    android:contentDescription="전체 보기"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/star"
+                    tools:ignore="TouchTargetSizeCheck" />
+                <!-- TODO: Icon change-->
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/restaurantRecyclerView2"
+                android:layout_width="wrap_content"
+                android:layout_height="195dp"
+                android:orientation="horizontal"
+                app:fastScrollHorizontalThumbDrawable="@layout/item_restaurant"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:listitem="@layout/item_restaurant" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FAF3E6"
-        android:text="home" />
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_weight="0.2">
 
-</FrameLayout>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/INUYellow"
+            android:text="대기 정보"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>
