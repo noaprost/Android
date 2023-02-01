@@ -28,6 +28,13 @@
                 android:text="검색어를 입력해주세요"
                 android:textColor="@color/LightGray" />
 
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:src="@drawable/star" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -38,7 +45,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:fastScrollHorizontalThumbDrawable="@layout/item_restaurant_search"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
