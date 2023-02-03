@@ -130,6 +130,7 @@
         android:padding="10dp">
 
         <LinearLayout
+            android:id="@+id/my_use_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -163,6 +164,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/my_setting"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -196,6 +198,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/my_announce"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -229,6 +232,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/my_logout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
