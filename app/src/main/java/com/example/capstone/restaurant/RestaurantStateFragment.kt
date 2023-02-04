@@ -28,8 +28,6 @@ class RestaurantStateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRestaurantStateBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
         val mainAct = activity as MainActivity
         mainAct.HideBottomNavi(true)
