@@ -38,8 +38,21 @@
         <entry key="..\:/Users/user/Desktop/my230131/app/src/main/res/layout/fragment_restaurant_main.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/my230131/app/src/main/res/layout/fragment_restaurant_review_detail.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/activity_my_review.xml" value="0.2" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/activity_restaurant_review_detail.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/activity_restaurant_waiting.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_my_page.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_info.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_main.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_matching.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_review.xml" value="0.264" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_review_detail.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_state.xml" value="0.17685185185185184" />
         <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_search.xml" value="0.2390625" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/item_my_review.xml" value="0.4" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/item_restaurant.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/item_restaurant_search.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/item_review.xml" value="0.341645885286783" />
       </map>
     </option>
   </component>

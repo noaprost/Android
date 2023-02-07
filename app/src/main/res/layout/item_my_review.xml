@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:padding="15sp">
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,69 +21,105 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/userName"
+                android:id="@+id/reviewRestaurantName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="dlfma"
+                android:text="온리원파스타"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="20sp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_next" />
+
             <TextView
                 android:id="@+id/writingDate"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
+                android:gravity="center"
                 android:text="어제" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
                 app:srcCompat="@drawable/star" />
 
             <TextView
                 android:id="@+id/reviewScore"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="3dp"
+                android:gravity="center_vertical"
                 android:text="4.5"
-                android:textColor="#000000" />
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="3dp"
+                android:gravity="center_vertical"
                 android:text="#데이트코스"
-                android:textColor="#0A4A9B" />
+                android:textAlignment="center"
+                android:textColor="#0A4A9B"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:gravity="center_vertical"
                 android:text="#연인끼리"
-                android:textColor="#0A4A9B" />
+                android:textAlignment="center"
+                android:textColor="#0A4A9B"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="#조용한"
-                android:textColor="#0A4A9B" />
+                android:textAlignment="viewStart"
+                android:textColor="#0A4A9B"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/myReviewDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_round_rectangular"
+                android:paddingLeft="10sp"
+                android:paddingTop="3sp"
+                android:paddingRight="10sp"
+                android:paddingBottom="3sp"
+                android:text="삭제"
+                android:textAlignment="viewEnd"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -92,7 +127,7 @@
             android:id="@+id/reviewImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/dummy_food_image" />

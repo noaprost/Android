@@ -141,18 +141,5 @@
         android:id="@+id/restaurantReviewFragment"
         android:name="com.example.capstone.restaurant.RestaurantReviewFragment"
         android:label="fragment_restaurant_review"
-        tools:layout="@layout/fragment_restaurant_review" >
-        <action
-            android:id="@+id/action_restaurantReviewFragment_to_restaurantReviewDetailFragment"
-            app:destination="@id/restaurantReviewDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/restaurantReviewDetailFragment"
-        android:name="com.example.capstone.restaurant.RestaurantReviewDetailActivity"
-        android:label="fragment_restaurant_review_detail"
-        tools:layout="@layout/fragment_restaurant_review_detail" >
-        <action
-            android:id="@+id/action_restaurantReviewDetailFragment_to_restaurantReviewFragment"
-            app:destination="@id/restaurantReviewFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_restaurant_review" />
 </navigation>
