@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="80dp"
-    android:padding="15sp"
-    tools:context=".restaurant.RestaurantStateFragment">
+    android:padding="15sp">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
