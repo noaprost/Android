@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.capstone.MainActivity
 import com.example.capstone.databinding.FragmentRestaurantMainBinding
@@ -57,6 +59,21 @@ class RestaurantMainFragment : Fragment() {
             startActivity(intent)
         }
 
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val view = (viewPager[0] as RecyclerView).layoutManager?.findViewByPosition(position)
+                view?.post {
+                    val wMeasureSpec = View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
+                    val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                    view.measure(wMeasureSpec, hMeasureSpec)
+                    if (viewPager.layoutParams.height != view.measuredHeight) {
+                        viewPager.layoutParams = (viewPager.layoutParams).also { lp -> lp.height = view.measuredHeight }
+                    }
+                }
+            }
+        })
         return root
     }
     override fun onDestroyView() {
