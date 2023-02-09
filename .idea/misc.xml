@@ -4,12 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2425" />
+        <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable/background_round_rectangular.xml" value="0.188" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable/background_waiting_button.xml" value="0.1965" />
+        <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable/bg_spinner_waiting.xml" value="0.2075" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable/ic__back.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable/ic_armchair.xml" value="0.204" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable/ic_back.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable/ic_check.xml" value="0.189" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2425" />
+        <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable/ic_waiting.xml" value="0.189" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/activity_restaurant_review_detail.xml" value="0.2" />
+        <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/activity_restaurant_waiting.xml" value="0.264" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/fragment_history.xml" value="0.16" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/fragment_home.xml" value="0.12407407407407407" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/fragment_like.xml" value="0.25364583333333335" />
@@ -19,10 +25,34 @@
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/fragment_restaurant_matching.xml" value="0.264" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/fragment_restaurant_review.xml" value="0.2" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/fragment_restaurant_review_detail.xml" value="0.264" />
-        <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/fragment_restaurant_state.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/fragment_restaurant_state.xml" value="0.2" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/fragment_search.xml" value="0.19722222222222222" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/layout/item_review.xml" value="0.264" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/menu/navi_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230131/app/src/main/res/drawable/background_round_rectangular.xml" value="0.2195" />
+        <entry key="..\:/Users/user/Desktop/my230131/app/src/main/res/drawable/ic__23161_discussion_bubble_chat_comment_communication_icon.xml" value="0.2195" />
+        <entry key="..\:/Users/user/Desktop/my230131/app/src/main/res/drawable/ic_comment.xml" value="0.2195" />
+        <entry key="..\:/Users/user/Desktop/my230131/app/src/main/res/drawable/ic_heart.xml" value="0.2195" />
+        <entry key="..\:/Users/user/Desktop/my230131/app/src/main/res/drawable/ic_pen.xml" value="0.2195" />
+        <entry key="..\:/Users/user/Desktop/my230131/app/src/main/res/layout/fragment_my_page.xml" value="0.264" />
+        <entry key="..\:/Users/user/Desktop/my230131/app/src/main/res/layout/fragment_restaurant_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230131/app/src/main/res/layout/fragment_restaurant_review_detail.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/activity_my_review.xml" value="0.2" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/activity_restaurant_review_detail.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/activity_restaurant_waiting.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_my_page.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_info.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_main.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_matching.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_review.xml" value="0.2" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_review_detail.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_restaurant_state.xml" value="0.17685185185185184" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/fragment_search.xml" value="0.2390625" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/item_my_review.xml" value="0.4" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/item_restaurant.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/item_restaurant_search.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/my230202/app/src/main/res/layout/item_review.xml" value="0.341645885286783" />
       </map>
     </option>
   </component>

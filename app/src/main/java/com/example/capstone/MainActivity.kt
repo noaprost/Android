@@ -2,14 +2,15 @@ package com.example.capstone
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+
 import com.example.capstone.databinding.ActivityMainBinding
 import com.example.capstone.history.HistoryFragment
 import com.example.capstone.home.HomeFragment
 import com.example.capstone.like.LikeFragment
 import com.example.capstone.mypage.MyPageFragment
 import com.example.capstone.restaurant.RestaurantMainFragment
-import com.example.capstone.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -22,8 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        var bnv_main = findViewById(R.id.nav_view) as BottomNavigationView
-
+        var bnv_main = findViewById<BottomNavigationView>(R.id.nav_view)
 
         bnv_main.run { setOnNavigationItemSelectedListener {
             when(it.itemId) {
@@ -53,9 +53,14 @@ class MainActivity : AppCompatActivity() {
         }
             selectedItemId = R.id.navigation_home
         }
+
     }
+
     fun HideBottomNavi(state: Boolean){
         if(state) binding.navView.visibility = View.GONE else binding.navView.visibility = View.VISIBLE
     }
-
+    fun ChangePage(pageId:Int){
+        var bnv_main = findViewById<BottomNavigationView>(R.id.nav_view)
+        bnv_main.selectedItemId=pageId
+    }
 }

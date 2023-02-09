@@ -14,6 +14,12 @@
         android:theme="@style/Theme.Capstone"
         tools:targetApi="31">
         <activity
+            android:name=".mypage.MyReviewActivity"
+            android:exported="true" />
+        <activity
+            android:name=".restaurant.RestaurantWaitingActivity"
+            android:exported="true" />
+        <activity
             android:name=".restaurant.RestaurantReviewDetail"
             android:exported="true" />
         <activity

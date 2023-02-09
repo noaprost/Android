@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="80dp"
     android:orientation="vertical"
     android:padding="15sp"
     tools:context=".restaurant.RestaurantInfoFragment">
@@ -96,7 +97,7 @@
         android:id="@+id/note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15sp"
+        android:layout_marginBottom="80dp"
         android:padding="3sp"
         android:text="대기 가능 시간"
         android:textColor="#000000" />
