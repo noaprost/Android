@@ -20,6 +20,8 @@ class HistoryFragment : Fragment(){
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // recyvlerView 추가
+
         return root
     }
 

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -32,6 +34,31 @@ class HomeFragment : Fragment() {
         binding.watingInfoBtn.setOnClickListener {
             
         }
+
+        val restaurantList = arrayListOf(
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
+        )
+
+        // 스크롤 오류 수정 필요
+        binding.restaurantHomeRecyclerView1.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.restaurantHomeRecyclerView1.setHasFixedSize(true)
+        binding.restaurantHomeRecyclerView1.adapter = RestaurantAdapter(restaurantList)
+
+        // 스크롤 오류 수정 필요
+        binding.restaurantHomeRecyclerView2.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.restaurantHomeRecyclerView2.setHasFixedSize(true)
+        binding.restaurantHomeRecyclerView2.adapter = RestaurantAdapter(restaurantList)
 
         return root
     }

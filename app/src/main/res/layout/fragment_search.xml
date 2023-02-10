@@ -51,6 +51,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/restaurantSearchRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:fastScrollHorizontalThumbDrawable="@layout/item_restaurant_search"

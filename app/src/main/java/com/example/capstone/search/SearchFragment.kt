@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.R
 import com.example.capstone.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
@@ -19,6 +21,7 @@ class SearchFragment : Fragment() {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
         binding.inputSearchKeyword.setOnClickListener{
             binding.inputSearchKeyword.text.clear()
             // 검색어 입력시 검은 글씨로 입력되도록 변경해주는 부분 필요
@@ -29,6 +32,21 @@ class SearchFragment : Fragment() {
             var searchKeyWord = binding.inputSearchKeyword.text // get user input search keyword
             // 검색어 매칭 하는 부분 추가
         }
+
+        // 검색어 입력 후 일치하는 조건만 보야주도록 변경 필요
+        val searchRestaurantList = arrayListOf(
+            SearchRestaurant(R.drawable.dummy_restaurant_image, 7, 4.9, 22, "#분위기좋은", "#연인끼리", "인스타맛집"),
+            SearchRestaurant(R.drawable.dummy_restaurant_image, 7, 4.9, 22, "#분위기좋은", "#연인끼리", "인스타맛집"),
+            SearchRestaurant(R.drawable.dummy_restaurant_image, 7, 4.9, 22, "#분위기좋은", "#연인끼리", "인스타맛집"),
+            SearchRestaurant(R.drawable.dummy_restaurant_image, 7, 4.9, 22, "#분위기좋은", "#연인끼리", "인스타맛집"),
+            SearchRestaurant(R.drawable.dummy_restaurant_image, 7, 4.9, 22, "#분위기좋은", "#연인끼리", "인스타맛집"),
+            SearchRestaurant(R.drawable.dummy_restaurant_image, 7, 4.9, 22, "#분위기좋은", "#연인끼리", "인스타맛집"),
+            SearchRestaurant(R.drawable.dummy_restaurant_image, 7, 4.9, 22, "#분위기좋은", "#연인끼리", "인스타맛집")
+        )
+
+        binding.restaurantSearchRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.restaurantSearchRecyclerView.setHasFixedSize(true)
+        binding.restaurantSearchRecyclerView.adapter = SearchRestaurantAdapter(searchRestaurantList)
 
         return root
     }
