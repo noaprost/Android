@@ -6,7 +6,7 @@ import android.view.View
 
 import com.example.capstone.databinding.ActivityMainBinding
 import com.example.capstone.history.HistoryFragment
-import com.example.capstone.home.HomeActivity
+import com.example.capstone.home.HomeFragment
 import com.example.capstone.like.LikeFragment
 import com.example.capstone.mypage.MyPageFragment
 import com.example.capstone.restaurant.RestaurantMainFragment
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.navigation_home -> {
                     // 다른 프래그먼트 화면으로 이동하는 기능
-                    val homeFragment = HomeActivity()
+                    val homeFragment = HomeFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, homeFragment).commit()
                 }
                 R.id.navigation_search -> {
