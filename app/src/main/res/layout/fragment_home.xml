@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -28,7 +29,7 @@
             android:layout_margin="16dp"
             android:background="@color/white"
             android:scaleType="fitCenter"
-            android:src="@drawable/star"
+            android:src="@drawable/ic_announce"
             android:contentDescription="알림"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
         <!-- TODO: Icon change-->
@@ -73,7 +74,7 @@
                     android:background="@color/white"
                     android:contentDescription="전체 보기"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/star"
+                    android:src="@drawable/ic_next"
                     tools:ignore="TouchTargetSizeCheck" />
                 <!-- TODO: Icon change-->
             </LinearLayout>
@@ -124,7 +125,7 @@
                     android:background="@color/white"
                     android:contentDescription="전체 보기"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/star"
+                    android:src="@drawable/ic_next"
                     tools:ignore="TouchTargetSizeCheck" />
                 <!-- TODO: Icon change-->
             </LinearLayout>
@@ -151,10 +152,10 @@
 
         <Button
             android:id="@+id/watingInfoBtn"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginRight="15dp"
-            android:background="@color/INUYellow"
+            android:background="@drawable/background_waiting_button"
             android:text="대기 정보"
             android:textColor="@color/white" />
     </LinearLayout>
