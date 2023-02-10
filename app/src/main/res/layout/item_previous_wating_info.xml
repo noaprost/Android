@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/txtWatingDate"
+        app:layout_constraintTop_toBottomOf="@+id/txtWaitingDate"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="NotSibling">
 
@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtWatingDate"
+                android:id="@+id/txtWaitingDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/Gray"
@@ -37,15 +37,15 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="1dp"
-                    android:layout_height="80dp"
-                    android:background="@color/INUYellow">
+                    android:layout_height="80dp">
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center">
 
                     <ImageView
                         android:id="@+id/imageView13"
@@ -77,22 +77,26 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
+<!--                            배경화면이 노란색으로 가득 차는 오류 수정 필요-->
                             <Button
                                 android:id="@+id/button2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:background="@color/white"
+                                android:background="@drawable/background_waiting_button"
+                                android:textColor="@color/black"
                                 android:text="상세 정보"
                                 android:textSize="14dp"
                                 android:textStyle="bold" />
 
+<!--                            배경화면이 노란색으로 가득 차는 오류 수정 필요-->
                             <Button
                                 android:id="@+id/button5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:background="@color/white"
+                                android:layout_marginLeft="8dp"
+                                android:background="@drawable/background_waiting_button"
                                 android:text="리뷰 쓰기"
                                 android:textColor="@color/INUYellow"
                                 android:textSize="14dp"
