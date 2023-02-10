@@ -30,6 +30,7 @@ class RestaurantStateFragment : Fragment() {
     ): View? {
 
         val mainAct = activity as MainActivity
+        val root: View = binding.root
         //mainAct.HideBottomNavi(true)
 
         var barChart: BarChart = binding.barChart // barChart 생성
@@ -88,7 +89,6 @@ class RestaurantStateFragment : Fragment() {
             setFitBars(true)
             invalidate()
         }
-
 
         return root
     }
