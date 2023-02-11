@@ -24,3 +24,11 @@ data class MyReview(
     val keyword3:String,
     val restaurant:String
 ): Serializable
+
+data class Restaurant(
+    val restaurantImg: Int,
+    val rating: Double,
+    val commentNumber: Int,
+    val name: String,
+    val waiting: Int
+    )

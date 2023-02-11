@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.R
@@ -37,10 +38,11 @@ class SearchRestaurantAdapter(val searchRestaurantList : ArrayList<SearchRestaur
         holder.tag1.text = searchRestaurantList.get(position).tag1
         holder.tag2.text = searchRestaurantList.get(position).tag2
         holder.tag3.text = searchRestaurantList.get(position).tag3
+        holder.searchRestaurantImg.clipToOutline=true
     }
 
     class SearchViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        val searchRestaurantImg = itemView.findViewById<ImageButton>(R.id.searchRestaurantImage)
+        val searchRestaurantImg = itemView.findViewById<ImageView>(R.id.searchRestaurantImage)
         val waitingTeamNum = itemView.findViewById<TextView>(R.id.waitingTeamNum)
         val searchRating = itemView.findViewById<TextView>(R.id.searchRating)
         val searchCommentNum = itemView.findViewById<TextView>(R.id.searchCommentNumber)
