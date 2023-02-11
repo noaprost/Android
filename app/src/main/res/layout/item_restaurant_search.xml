@@ -3,21 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/searchRestaurantImage"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            app:srcCompat="@drawable/dummy_restaurant_image"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:background="@drawable/background_round_rectangular"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/dummy_restaurant_image" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,36 +41,41 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
                     android:text="온리원 파스타 송도점"
+                    android:textColor="#000000"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#33FCAF17"
-                    android:padding="4dp"
-                    android:orientation="horizontal">
+                    android:background="@drawable/background_round_rectangular"
+                    android:backgroundTint="#33FCAF17"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
 
                     <TextView
                         android:id="@+id/textView35"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="11dp"
-                        android:text="대기 " />
+                        android:text="대기 "
+                        android:textColor="#000000"
+                        android:textSize="11dp" />
 
                     <TextView
                         android:id="@+id/waitingTeamNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="7"
+                        android:textColor="#000000"
                         android:textSize="11dp" />
 
                     <TextView
                         android:id="@+id/textView36"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="11dp"
-                        android:text="팀" />
+                        android:text="팀"
+                        android:textColor="#000000"
+                        android:textSize="11dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -90,14 +100,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
                     android:gravity="center"
-                    android:text="4.9" />
+                    android:text="4.9"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/searchCommentNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="(22)" />
+                    android:text="(22)"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -112,21 +124,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
-                    android:text="#분위기좋은" />
+                    android:text="#분위기좋은"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/tag2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
-                    android:text="#연인끼리" />
+                    android:text="#연인끼리"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/tag3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
-                    android:text="#인스타맛집" />
+                    android:text="#인스타맛집"
+                    android:textColor="#000000" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -14,7 +14,7 @@
     <item
         android:id="@+id/navigation_history"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="주문내역" />
+        android:title="대기내역" />
 
     <item
         android:id="@+id/navigation_like"
