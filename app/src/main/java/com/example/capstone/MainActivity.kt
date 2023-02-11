@@ -2,7 +2,6 @@ package com.example.capstone
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 
 import com.example.capstone.databinding.ActivityMainBinding
@@ -11,6 +10,7 @@ import com.example.capstone.home.HomeFragment
 import com.example.capstone.like.LikeFragment
 import com.example.capstone.mypage.MyPageFragment
 import com.example.capstone.restaurant.RestaurantMainFragment
+import com.example.capstone.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, homeFragment).commit()
                 }
                 R.id.navigation_search -> {
-                    val boardFragment = RestaurantMainFragment()//SearchFragment()
+                    val boardFragment = SearchFragment() // RestaurantMainFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, boardFragment).commit()
                 }
                 R.id.navigation_history -> {

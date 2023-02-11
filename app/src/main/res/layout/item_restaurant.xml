@@ -45,18 +45,33 @@
                 android:text="5.0" />
 
             <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(" />
+
+            <TextView
                 android:id="@+id/commentNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="(19)" />
+                android:text="19" />
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/restaurantName"
+            android:textSize="13dp"
+
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="온리원 파스타" />
+            android:text="온리원 파스타 송도점" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

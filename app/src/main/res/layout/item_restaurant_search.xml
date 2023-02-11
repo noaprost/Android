@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,11 +13,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/searchRestaurantImage"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:scaleType="center"
-            app:srcCompat="@drawable/dummy_restaurant_image" />
+            app:srcCompat="@drawable/dummy_restaurant_image"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +31,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView16"
+                    android:id="@+id/searchRestaurantName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
@@ -38,14 +39,35 @@
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView18"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#33FCAF17"
                     android:padding="4dp"
-                    android:text="대기 7팀"
-                    android:textSize="11dp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView35"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="11dp"
+                        android:text="대기 " />
+
+                    <TextView
+                        android:id="@+id/waitingTeamNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7"
+                        android:textSize="11dp" />
+
+                    <TextView
+                        android:id="@+id/textView36"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="11dp"
+                        android:text="팀" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -63,7 +85,7 @@
                     app:srcCompat="@drawable/star" />
 
                 <TextView
-                    android:id="@+id/rating"
+                    android:id="@+id/searchRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
@@ -71,7 +93,7 @@
                     android:text="4.9" />
 
                 <TextView
-                    android:id="@+id/commentNumber"
+                    android:id="@+id/searchCommentNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -86,21 +108,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView21"
+                    android:id="@+id/tag1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
                     android:text="#분위기좋은" />
 
                 <TextView
-                    android:id="@+id/textView22"
+                    android:id="@+id/tag2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
                     android:text="#연인끼리" />
 
                 <TextView
-                    android:id="@+id/textView23"
+                    android:id="@+id/tag3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"

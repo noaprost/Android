@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -22,16 +23,15 @@
 
         <ImageButton
             android:id="@+id/imageButton2"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_margin="16dp"
             android:background="@color/white"
             android:scaleType="fitCenter"
-            android:src="@drawable/star"
+            android:src="@drawable/ic_bell"
             android:contentDescription="알림"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
-        <!-- TODO: Icon change-->
         <!-- TODO: Add logo-->
     </LinearLayout>
 
@@ -42,7 +42,7 @@
 
         <LinearLayout
             android:id="@+id/mainInfoView1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginVertical="16dp"
@@ -73,13 +73,13 @@
                     android:background="@color/white"
                     android:contentDescription="전체 보기"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/star"
+                    android:src="@drawable/ic_next"
                     tools:ignore="TouchTargetSizeCheck" />
-                <!-- TODO: Icon change-->
+
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/restaurantRecyclerView1"
+                android:id="@+id/restaurantHomeRecyclerView1"
                 android:layout_width="wrap_content"
                 android:layout_height="199dp"
                 android:orientation="horizontal"
@@ -93,7 +93,7 @@
 
         <LinearLayout
             android:id="@+id/mainInfoView2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginVertical="16dp"
@@ -124,13 +124,12 @@
                     android:background="@color/white"
                     android:contentDescription="전체 보기"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/star"
+                    android:src="@drawable/ic_next"
                     tools:ignore="TouchTargetSizeCheck" />
-                <!-- TODO: Icon change-->
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/restaurantRecyclerView2"
+                android:id="@+id/restaurantHomeRecyclerView2"
                 android:layout_width="wrap_content"
                 android:layout_height="195dp"
                 android:orientation="horizontal"
@@ -149,13 +148,12 @@
         android:gravity="right"
         android:layout_weight="0.2">
 
-
         <Button
-            android:id="@+id/button2"
-            android:layout_width="80dp"
+            android:id="@+id/watingInfoBtn"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginRight="15dp"
-            android:background="@color/INUYellow"
+            android:background="@drawable/background_waiting_button"
             android:text="대기 정보"
             android:textColor="@color/white" />
     </LinearLayout>
