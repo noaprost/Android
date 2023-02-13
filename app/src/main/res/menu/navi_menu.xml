@@ -2,28 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="홈" />
-
-    <item
         android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_nv_search"
         android:title="검색" />
 
     <item
+        android:id="@+id/navigation_list"
+        android:icon="@drawable/ic_nv_list"
+        android:title="음식점" />
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_nv_home"
+        android:title="홈" />
+    <item
         android:id="@+id/navigation_history"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_nv_history"
         android:title="대기내역" />
 
     <item
-        android:id="@+id/navigation_like"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="찜" />
-
-    <item
         android:id="@+id/navigation_myPage"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_nv_profile"
         android:title="마이" />
 
 </menu>

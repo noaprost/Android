@@ -24,8 +24,8 @@ class MyPageFragment : Fragment() {
         val root: View = binding.root
 
         binding.myLikeBox.setOnClickListener{
-            val mainAct = activity as MainActivity
-            mainAct.ChangePage(R.id.navigation_like)
+            //val mainAct = activity as MainActivity
+            //mainAct.ChangePage(R.id.navigation_like)
         }
         binding.myUseHistory.setOnClickListener{
             val mainAct = activity as MainActivity
