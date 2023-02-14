@@ -1,6 +1,7 @@
 package com.example.capstone.like
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,9 @@ class LikeFragment : Fragment() {
         _binding = FragmentLikeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding.backButton.setOnClickListener {
+            //todo 백버튼 연결
+        }
         val restaurantList = arrayListOf(
             Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점", 1),
             Restaurant(R.drawable.dummy_food_image, 5.0, 19, "네네치킨", 7),

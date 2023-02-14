@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".history.WriteReviewActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/myReviewRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="false"
+            android:layout_centerVertical="true"
+            android:background="#00FFFFFF"
+            app:srcCompat="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/writeReviewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="온리원파스타 송도점"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <com.example.capstone.restaurant.NewScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView37"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30sp"
+                android:text="이용은 만족스러우셨나요?"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/ratingBar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10sp" />
+
+            <TextView
+                android:id="@+id/textView39"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30sp"
+                android:text="어울리는 키워드를 골라주세요!"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20sp">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword1"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#연인끼리"
+                    app:chipStrokeColor="#FCAF17" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword2"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#가족끼리" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword3"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#프라이빗" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword4"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#단체석" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword5"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#인스타감성" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword6"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#반려견과" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword7"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#포토존" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword8"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#키즈존" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword12"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#기념일" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword9"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#가성비" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword10"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#맛집" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword11"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#단체석" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <EditText
+                android:id="@+id/writeReviewComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:background="@drawable/background_round_rectangular"
+                android:backgroundTint="#3CFCAF17"
+                android:ems="10"
+                android:hint="이용시 좋았던 점이나 아쉬웠던 점을 알려주세요! "
+                android:inputType="none"
+                android:lines="10"
+                android:maxLength="400"
+                android:padding="15sp"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/writeReviewLength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:layout_marginRight="20sp"
+                android:text="0/400"
+                android:textAlignment="textEnd" />
+
+            <ImageView
+                android:id="@+id/writeReviewImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="20sp"
+                android:background="@drawable/background_round_rectangular"
+                android:padding="15dp"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
+
+        </LinearLayout>
+    </com.example.capstone.restaurant.NewScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

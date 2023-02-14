@@ -63,4 +63,17 @@ class MainActivity : AppCompatActivity() {
         var bnv_main = findViewById<BottomNavigationView>(R.id.nav_view)
         bnv_main.selectedItemId=pageId
     }
+
+    fun ChangeFragment(page:String){
+        val transaction = supportFragmentManager.beginTransaction()
+        when(page) {
+            "Like" -> {
+                transaction.replace(R.id.fragmentContainerView, LikeFragment())
+            }
+            "Restaurant" -> {
+                transaction.replace(R.id.fragmentContainerView, RestaurantMainFragment())
+            }
+        }
+        transaction.commit()
+    }
 }
