@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.example.capstone.MainActivity
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentMyPageBinding
-import com.example.capstone.restaurant.RestaurantReviewDetail
+import com.example.capstone.history.WriteReviewActivity
 
 
 class MyPageFragment : Fragment() {
@@ -24,8 +24,8 @@ class MyPageFragment : Fragment() {
         val root: View = binding.root
 
         binding.myLikeBox.setOnClickListener{
-            //val mainAct = activity as MainActivity
-            //mainAct.ChangePage(R.id.navigation_like)
+            val mainAct = activity as MainActivity
+            mainAct.ChangeFragment("Like")
         }
         binding.myUseHistory.setOnClickListener{
             val mainAct = activity as MainActivity
@@ -33,6 +33,10 @@ class MyPageFragment : Fragment() {
         }
         binding.myCommentBox.setOnClickListener{
             val intent = Intent(activity, MyReviewActivity::class.java)
+            startActivity(intent)
+        }
+        binding.myEditBox.setOnClickListener {
+            val intent = Intent(activity, WriteReviewActivity::class.java)
             startActivity(intent)
         }
         return root
