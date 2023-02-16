@@ -59,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:text="내가 좋아하는 음식점"
+                    android:text="추천 음식점"
                     android:textColor="@color/black"
                     android:textSize="24dp"
                     android:textStyle="bold" />
@@ -154,6 +154,7 @@
             android:layout_height="40dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/background_waiting_button"
+            android:layout_gravity="center"
             android:text="대기 정보"
             android:textColor="@color/white" />
     </LinearLayout>
