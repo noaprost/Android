@@ -210,6 +210,16 @@
                 android:padding="15dp"
                 app:srcCompat="@android:drawable/ic_menu_camera" />
 
+            <Button
+                android:id="@+id/writeReviewButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:background="@drawable/background_waiting_button"
+                android:text="등록하기"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
     </com.example.capstone.restaurant.NewScrollView>
 
