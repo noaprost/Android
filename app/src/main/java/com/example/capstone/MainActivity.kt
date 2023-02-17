@@ -1,15 +1,17 @@
 package com.example.capstone
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.replace
 import com.example.capstone.databinding.ActivityMainBinding
 import com.example.capstone.history.HistoryFragment
 import com.example.capstone.home.HomeFragment
 import com.example.capstone.like.LikeFragment
 import com.example.capstone.list.ListFragment
 import com.example.capstone.mypage.MyPageFragment
+import com.example.capstone.mypage.MyReviewFragment
 import com.example.capstone.restaurant.RestaurantMainFragment
 import com.example.capstone.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -66,12 +68,22 @@ class MainActivity : AppCompatActivity() {
 
     fun ChangeFragment(page:String){
         val transaction = supportFragmentManager.beginTransaction()
+        val bundle = Bundle()
         when(page) {
             "Like" -> {
+                transaction.addToBackStack(null)
                 transaction.replace(R.id.fragmentContainerView, LikeFragment())
             }
             "Restaurant" -> {
+                transaction.addToBackStack(null)
                 transaction.replace(R.id.fragmentContainerView, RestaurantMainFragment())
+            }
+            "MyReview" -> {
+                val fragment:Fragment=MyReviewFragment()
+                //bundle.putString("bundleData", "번들데이터의데이터")
+                //fragment.arguments=bundle
+                transaction.addToBackStack(null)
+                transaction.replace(R.id.fragmentContainerView, fragment)
             }
         }
         transaction.commit()

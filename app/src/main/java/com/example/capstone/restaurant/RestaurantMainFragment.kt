@@ -28,7 +28,7 @@ class RestaurantMainFragment : Fragment() {
         val root: View = binding.root
 
         val mainAct = activity as MainActivity
-        //mainAct.HideBottomNavi(true)
+        mainAct.HideBottomNavi(true)
 
         val viewPager: ViewPager2 = binding.pager
         val tabLayout: TabLayout = binding.tabLayout

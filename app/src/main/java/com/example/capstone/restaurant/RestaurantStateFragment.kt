@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.example.capstone.MainActivity
 import com.example.capstone.R
+import com.example.capstone.databinding.FragmentMyPageBinding
 import com.example.capstone.databinding.FragmentRestaurantMainBinding
 import com.example.capstone.databinding.FragmentRestaurantStateBinding
 import com.github.mikephil.charting.charts.BarChart
@@ -28,10 +29,8 @@ class RestaurantStateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val mainAct = activity as MainActivity
+        _binding = FragmentRestaurantStateBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        //mainAct.HideBottomNavi(true)
 
         var barChart: BarChart = binding.barChart // barChart 생성
 
