@@ -17,9 +17,6 @@
             android:name=".history.WriteReviewActivity"
             android:exported="true" />
         <activity
-            android:name=".mypage.MyReviewActivity"
-            android:exported="true" />
-        <activity
             android:name=".restaurant.RestaurantWaitingActivity"
             android:exported="true" />
         <activity

@@ -31,9 +31,9 @@ class MyPageFragment : Fragment() {
             val mainAct = activity as MainActivity
             mainAct.ChangePage(R.id.navigation_history)
         }
-        binding.myCommentBox.setOnClickListener{
-            val intent = Intent(activity, MyReviewActivity::class.java)
-            startActivity(intent)
+        binding.myReviewBox.setOnClickListener{
+            val mainAct = activity as MainActivity
+            mainAct.ChangeFragment("MyReview")
         }
         binding.myEditBox.setOnClickListener {
             val intent = Intent(activity, WriteReviewActivity::class.java)
