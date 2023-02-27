@@ -49,15 +49,21 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
         builder.setSpan(ForegroundColorSpan(resources.getColor(R.color.INUYellow)), 7, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.textView20.text = builder
         binding.waitingButton.setOnClickListener {
-            val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기 신청이 완료되었습니다", 0, 1)
+            val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기를 신청하시겠습니까?", 0, 0)
             dialog.isCancelable = false
             dialog.show(this.supportFragmentManager, "ConfirmDialog")
+        }
+        binding.backButton.setOnClickListener {
+            finish()
         }
     }
 
     override fun onYesButtonClick(num: Int, theme: Int) {
         when(num){
-
+            0->{
+                //todo 대기 신청 연결
+                finish()
+            }
         }
     }
 }
