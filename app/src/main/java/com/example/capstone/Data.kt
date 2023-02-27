@@ -31,4 +31,4 @@ data class Restaurant(
     val commentNumber: Int,
     val name: String,
     val waiting: Int
-    )
+)

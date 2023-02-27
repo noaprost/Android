@@ -43,13 +43,18 @@
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/drawable/background_waiting_button.xml" value="0.2315" />
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/drawable/border_round_rectangula.xml" value="0.2315" />
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/activity_my_review.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/activity_restaurant_review_detail.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/activity_restaurant_waiting.xml" value="0.12864583333333332" />
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/dialog_layout.xml" value="0.264" />
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/fragment_like.xml" value="0.12864583333333332" />
+        <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/fragment_list.xml" value="0.2" />
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/fragment_my_page.xml" value="0.1765625" />
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/fragment_my_review.xml" value="0.1765625" />
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/fragment_restaurant_review_detail.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/item_my_review.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/item_previous_wating_info.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/item_restaurant.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/item_restaurant_search.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/user/Desktop/230216/app/src/main/res/layout/item_review.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2425" />
         <entry key="..\:/Users/user/Desktop/Capstone/app/src/main/res/drawable/background_round_rectangular.xml" value="0.188" />

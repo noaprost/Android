@@ -11,12 +11,10 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone.MainActivity
-import com.example.capstone.MyReview
-import com.example.capstone.R
+import com.example.capstone.*
 import com.example.capstone.databinding.FragmentMyReviewBinding
 
-class MyReviewFragment : Fragment() {
+class MyReviewFragment : Fragment(), ConfirmDialogInterface {
     private var _binding: FragmentMyReviewBinding? = null
     private val binding get() = _binding!!
     private var dummy = ArrayList<MyReview>()
@@ -86,7 +84,10 @@ class MyReviewFragment : Fragment() {
                 mainAct.ChangeFragment("Restaurant")
             }
             deleteButton.setOnClickListener{
-
+                val dialog = CustomDialog(this@MyReviewFragment, "리뷰를 삭제하시겠습니까?\n재작성은 불가능합니다.", 0, 0)
+                dialog.isCancelable = false
+                this@MyReviewFragment.fragmentManager?.let { it1 -> dialog.show(it1, "ConfirmDialog") }
+                //todo 리사이클러뷰 새로고침
             }
         }
 
@@ -104,6 +105,13 @@ class MyReviewFragment : Fragment() {
             holder.bind(post)
         }
     }
+
+    override fun onYesButtonClick(num: Int, theme: Int) {
+        when(num){
+
+        }
+    }
+
     fun destroy(){
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         fragmentManager.beginTransaction().remove(this@MyReviewFragment).commit()

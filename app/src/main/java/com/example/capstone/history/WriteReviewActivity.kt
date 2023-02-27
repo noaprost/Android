@@ -8,11 +8,14 @@ import android.text.TextWatcher
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
+import com.example.capstone.ConfirmDialogInterface
+import com.example.capstone.CustomDialog
 import com.example.capstone.databinding.ActivityWriteReviewBinding
 
 
-class WriteReviewActivity : AppCompatActivity() {
+class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private lateinit var binding: ActivityWriteReviewBinding
     private lateinit var reviewImage: Uri
 
@@ -34,7 +37,10 @@ class WriteReviewActivity : AppCompatActivity() {
             activityResult.launch(intent)
         }
         binding.writeReviewButton.setOnClickListener{
-            //todo 리뷰 등록코드 작성
+            val dialog = CustomDialog(this, "리뷰를 등록하시겠습니까?", 0, 0)
+            dialog.isCancelable = false
+            dialog.show(this.supportFragmentManager, "ConfirmDialog")
+
         }
         binding.backButton.setOnClickListener {
             finish()
@@ -52,4 +58,13 @@ class WriteReviewActivity : AppCompatActivity() {
             }
 
         }
+
+    override fun onYesButtonClick(num: Int, theme: Int) {
+        when(num){
+            0 -> {
+                finish()
+                //todo 리뷰 등록코드 작성
+            }
+        }
+    }
 }
