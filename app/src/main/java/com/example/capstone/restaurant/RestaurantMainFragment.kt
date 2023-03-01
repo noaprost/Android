@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.get
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.capstone.MainActivity
@@ -54,6 +55,10 @@ class RestaurantMainFragment : Fragment() {
             }
         }
 
+        binding.backButton.setOnClickListener {
+            destroy()
+        }
+
         binding.button.setOnClickListener {
             val intent = Intent(activity, RestaurantWaitingActivity::class.java)
             startActivity(intent)
@@ -74,6 +79,7 @@ class RestaurantMainFragment : Fragment() {
                 }
             }
         })
+        viewPager.setUserInputEnabled(false)
         return root
     }
     override fun onDestroyView() {
@@ -81,5 +87,11 @@ class RestaurantMainFragment : Fragment() {
         val mainAct = activity as MainActivity
         mainAct.HideBottomNavi(false)
         _binding = null
+    }
+    fun destroy(){
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.beginTransaction().remove(this@RestaurantMainFragment).commit()
+        fragmentManager.popBackStack()
+
     }
 }
