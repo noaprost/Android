@@ -74,7 +74,7 @@ class RestaurantReviewFragment : Fragment() {
         return MyViewHolder(view)
     }
 
-        override fun getItemCount(): Int = 3 //최근 4개만
+        override fun getItemCount(): Int = 3
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             val post=list[position]

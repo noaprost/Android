@@ -1,7 +1,5 @@
 package com.example.capstone.restaurant
 
-import android.annotation.SuppressLint
-import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,10 +10,12 @@ import android.text.style.StyleSpan
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.example.capstone.ConfirmDialogInterface
+import com.example.capstone.CustomDialog
 import com.example.capstone.R
 import com.example.capstone.databinding.ActivityRestaurantWaitingBinding
 
-class RestaurantWaitingActivity : AppCompatActivity() {
+class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
     private lateinit var binding: ActivityRestaurantWaitingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +48,22 @@ class RestaurantWaitingActivity : AppCompatActivity() {
         builder.setSpan(StyleSpan(Typeface.BOLD), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         builder.setSpan(ForegroundColorSpan(resources.getColor(R.color.INUYellow)), 7, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.textView20.text = builder
+        binding.waitingButton.setOnClickListener {
+            val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기를 신청하시겠습니까?", 0, 0)
+            dialog.isCancelable = false
+            dialog.show(this.supportFragmentManager, "ConfirmDialog")
+        }
+        binding.backButton.setOnClickListener {
+            finish()
+        }
+    }
 
+    override fun onYesButtonClick(num: Int, theme: Int) {
+        when(num){
+            0->{
+                //todo 대기 신청 연결
+                finish()
+            }
+        }
     }
 }

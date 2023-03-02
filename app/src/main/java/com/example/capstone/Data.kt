@@ -31,4 +31,15 @@ data class Restaurant(
     val commentNumber: Int,
     val name: String,
     val waiting: Int
+)
+
+data class RestaurantList(
+    val restaurantImg: Int,
+    val rating: Double,
+    val commentNumber: Int,
+    val name: String,
+    val waiting: Int,
+    val keyword1: String,
+    val keyword2: String,
+    val keyword3: String
     )

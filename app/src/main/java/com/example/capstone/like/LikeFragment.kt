@@ -1,15 +1,17 @@
 package com.example.capstone.like
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone.MainActivity
 import com.example.capstone.R
 import com.example.capstone.Restaurant
 import com.example.capstone.databinding.FragmentLikeBinding
@@ -26,6 +28,9 @@ class LikeFragment : Fragment() {
         _binding = FragmentLikeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding.backButton.setOnClickListener {
+            destroy()//todo 백버튼 연결
+        }
         val restaurantList = arrayListOf(
             Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점", 1),
             Restaurant(R.drawable.dummy_food_image, 5.0, 19, "네네치킨", 7),
@@ -61,7 +66,8 @@ class LikeFragment : Fragment() {
             }
             img.clipToOutline=true
             itemView.setOnClickListener{
-
+                val mainAct = activity as MainActivity
+                mainAct.ChangeFragment("Restaurant")
             }
         }
 
@@ -79,6 +85,13 @@ class LikeFragment : Fragment() {
             holder.bind(post)
             binding.textView34.visibility=View.GONE
         }
+    }
+
+    fun destroy(){
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.beginTransaction().remove(this@LikeFragment).commit()
+        fragmentManager.popBackStack()
+
     }
 
 }

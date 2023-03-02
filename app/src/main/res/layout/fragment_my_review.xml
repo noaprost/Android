@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".like.LikeFragment">
+    tools:context=".mypage.MyReviewFragment">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -34,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="내가 찜한 가게"
+            android:text="리뷰 관리"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -42,26 +41,14 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView34"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="앗! 아직 찜한 가게가 없어요."
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/likeRecyclerView"
-        android:layout_width="wrap_content"
+        android:id="@+id/myReviewRecyclerView"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        tools:listitem="@layout/item_my_review" />
 </androidx.constraintlayout.widget.ConstraintLayout>
