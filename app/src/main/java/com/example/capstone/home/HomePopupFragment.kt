@@ -14,6 +14,6 @@ class HomePopupFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wating_info_popup, container, false)
+        return inflater.inflate(R.layout.fragment_waiting_info_popup, container, false)
     }
 }

@@ -13,8 +13,8 @@
         <TextView
             android:id="@+id/textView26"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginLeft="16dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:text="이전 대기 내역"
             android:textColor="@color/black"
             android:textSize="24dp"
@@ -23,11 +23,11 @@
             tools:ignore="MissingConstraints" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/previousWatingRecyclerView"
+            android:id="@+id/previousWaitingRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints"
-            tools:listitem="@layout/item_previous_wating_info" />
+            tools:listitem="@layout/item_previous_waiting_info" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
