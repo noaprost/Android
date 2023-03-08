@@ -1,22 +1,26 @@
+/*
 package com.example.capstone.GPS
 
 import android.Manifest
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationRequest
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-<<<<<<< Updated upstream
-=======
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+import com.google.android.gms.location.LocationRequest.create
 import com.google.android.gms.tasks.Task
->>>>>>> Stashed changes
+
 
 class GPSActivity : AppCompatActivity(){
 
@@ -117,10 +121,11 @@ class GPSActivity : AppCompatActivity(){
                 requestingLocationUpdates = false
             }
 
-            /*override fun onResume() {
+override fun onResume() {
                 super.onResume()
                 if (requestingLocationUpdates) startLocationUpdates()
-            }*/
+            }
+
         }
 
         locationCallback = object : LocationCallback() {
@@ -167,3 +172,4 @@ class GPSActivity : AppCompatActivity(){
 
 
 }
+*/
