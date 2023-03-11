@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.capstone.ConfirmDialogInterface
+import com.example.capstone.CustomDialog
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), ConfirmDialogInterface {
 
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -32,7 +34,7 @@ class HomeFragment : Fragment() {
 
         // 대기 정보 버튼을 누를 경우 팝업 연결
         binding.watingInfoBtn.setOnClickListener {
-            
+            val dialog = CustomDialog(this,"", 0, 0)
         }
 
         val restaurantList = arrayListOf(
@@ -50,17 +52,19 @@ class HomeFragment : Fragment() {
             Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
         )
 
-        // 스크롤 오류 수정 필요
         binding.restaurantHomeRecyclerView1.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.restaurantHomeRecyclerView1.setHasFixedSize(true)
         binding.restaurantHomeRecyclerView1.adapter = RestaurantAdapter(restaurantList)
 
-        // 스크롤 오류 수정 필요
         binding.restaurantHomeRecyclerView2.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.restaurantHomeRecyclerView2.setHasFixedSize(true)
         binding.restaurantHomeRecyclerView2.adapter = RestaurantAdapter(restaurantList)
 
         return root
+    }
+
+    override fun onYesButtonClick(num: Int, theme: Int) {
+        TODO("Not yet implemented")
     }
 
 }
