@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHistoryBinding
@@ -34,6 +35,7 @@ class HistoryFragment : Fragment(){
             PreviousWaiting("2023-02-14", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점"),
         )
 
+        binding.previousWaitingRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.previousWaitingRecyclerView.setHasFixedSize(true)
         binding.previousWaitingRecyclerView.adapter = PreviousWaitingAdapter(previousWaitingList)
 

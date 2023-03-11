@@ -5,18 +5,18 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15dp">
+    android:padding="12dp">
 
     <ImageView
         android:id="@+id/restaurantImage"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:background="@drawable/background_round_rectangular"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/dummy_restaurant_image" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:text="온리원 파스타 송도점"
         android:textColor="@color/black"
-        android:textSize="13dp"
+        android:textSize="12dp"
         android:textStyle="bold" />
 
 </LinearLayout>
