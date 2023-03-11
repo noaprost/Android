@@ -77,28 +77,27 @@
                           android:layout_height="match_parent"
                           android:orientation="horizontal">
 
-<!--                        배경이 노란색으로 가득 차는 오류 수정 필요-->
+<!--                        디자인 수정 필요-->
                             <Button
                                 android:id="@+id/button2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:background="@drawable/background_waiting_button"
-                                android:textColor="@color/black"
+                                android:background="@drawable/background_round_rectangular"
+                                android:textColor="@color/white"
                                 android:text="상세 정보"
                                 android:textSize="14dp"
                                 android:textStyle="bold" />
 
-<!--                        배경화면이 노란색으로 가득 차는 오류 수정 필요-->
                             <Button
                                 android:id="@+id/button5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginLeft="8dp"
-                                android:background="@drawable/background_waiting_button"
+                                android:background="@drawable/background_round_rectangular"
+                                android:textColor="@color/white"
                                 android:text="리뷰 쓰기"
-                                android:textColor="@color/INUYellow"
                                 android:textSize="14dp"
                                 android:textStyle="bold" />
                         </LinearLayout>

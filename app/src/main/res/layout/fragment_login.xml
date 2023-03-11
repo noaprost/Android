@@ -18,7 +18,7 @@
                 android:id="@+id/imageButton"
                 android:layout_width="40dp"
                 android:layout_height="50dp"
-                android:background="none"
+                android:background="@color/white"
                 app:srcCompat="@drawable/ic_back" />
 
             <TextView

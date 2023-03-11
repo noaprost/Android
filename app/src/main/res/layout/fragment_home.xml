@@ -37,13 +37,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/mainInfoView1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
 >
 
@@ -57,8 +58,9 @@
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_marginHorizontal="16dp"
                     android:text="추천 음식점"
+                    android:layout_gravity="center"
                     android:textColor="@color/black"
                     android:textSize="24dp"
                     android:textStyle="bold" />
@@ -93,7 +95,7 @@
         <LinearLayout
             android:id="@+id/mainInfoView2"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginVertical="16dp">
 
@@ -107,7 +109,8 @@
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_gravity="center"
                     android:text="이번 주 Hot한 음식점"
                     android:textColor="@color/black"
                     android:textSize="24dp"
@@ -137,13 +140,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:listitem="@layout/item_restaurant" />
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="right">
 
         <Button
             android:id="@+id/watingInfoBtn"
@@ -151,7 +147,7 @@
             android:layout_height="40dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/background_waiting_button"
-            android:layout_gravity="center"
+            android:layout_gravity="right"
             android:text="대기 정보"
             android:textColor="@color/white" />
     </LinearLayout>

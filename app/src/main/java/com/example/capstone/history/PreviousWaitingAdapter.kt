@@ -13,8 +13,8 @@ class PreviousWaitingAdapter(val previousWaitingList: ArrayList<PreviousWaiting>
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ) : PreviousWaitingAdapter.WaitingViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_restaurant, parent, false)
+    ) : WaitingViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_previous_waiting_info, parent, false)
         return WaitingViewHolder(view).apply {
             itemView.setOnClickListener {
                 val curPos : Int = adapterPosition
@@ -26,7 +26,6 @@ class PreviousWaitingAdapter(val previousWaitingList: ArrayList<PreviousWaiting>
 
     override fun getItemCount(): Int {
         return previousWaitingList.size
-
     }
 
     override fun onBindViewHolder(holder: WaitingViewHolder, position: Int) {
