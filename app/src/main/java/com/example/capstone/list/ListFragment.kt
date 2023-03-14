@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
+import com.example.capstone.MainActivity
 import com.example.capstone.databinding.FragmentListBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -18,7 +19,7 @@ class ListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val viewPager: ViewPager2 = binding.pager
@@ -34,7 +35,11 @@ class ListFragment : Fragment() {
 
         // 2. TabLayout 과 ViewPager2를 연결하고, TabItem 의 메뉴명을 설정한다.
         TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
-
+        
+        binding.mapButton.setOnClickListener {
+            val mainAct = activity as MainActivity
+            mainAct.ChangeFragment("map")
+        }
 
         return root
     }

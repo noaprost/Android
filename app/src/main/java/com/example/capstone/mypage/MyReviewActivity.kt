@@ -12,6 +12,7 @@ import com.example.capstone.MyReview
 import com.example.capstone.R
 import com.example.capstone.Review
 import com.example.capstone.databinding.ActivityMyReviewBinding
+import com.google.android.gms.maps.SupportMapFragment
 
 class MyReviewActivity : AppCompatActivity() {
 

@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
 import com.example.capstone.databinding.ActivityMainBinding
 import com.example.capstone.history.HistoryFragment
 import com.example.capstone.home.HomeFragment
 import com.example.capstone.like.LikeFragment
 import com.example.capstone.list.ListFragment
+import com.example.capstone.map.MapFragment
 import com.example.capstone.mypage.MyPageFragment
 import com.example.capstone.mypage.MyReviewFragment
 import com.example.capstone.restaurant.RestaurantMainFragment
@@ -84,6 +84,14 @@ class MainActivity : AppCompatActivity() {
                 //fragment.arguments=bundle
                 transaction.addToBackStack(null)
                 transaction.replace(R.id.fragmentContainerView, fragment)
+            }
+            "map" -> {
+                transaction.addToBackStack(null)
+                transaction.replace(R.id.fragmentContainerView, MapFragment())
+            }
+            "list" -> {
+                transaction.addToBackStack(null)
+                transaction.replace(R.id.fragmentContainerView, ListFragment())
             }
         }
         transaction.commit()

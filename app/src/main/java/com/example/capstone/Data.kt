@@ -1,6 +1,7 @@
 package com.example.capstone
 
 import android.net.Uri
+import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 
 data class Review(
@@ -43,3 +44,10 @@ data class RestaurantList(
     val keyword2: String,
     val keyword3: String
     )
+
+data class Place(
+    val name: String,
+    val latLng: LatLng,
+    val address: LatLng,
+    val rating: Float
+)
