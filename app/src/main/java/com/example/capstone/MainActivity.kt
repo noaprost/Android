@@ -86,11 +86,13 @@ class MainActivity : AppCompatActivity() {
                 transaction.replace(R.id.fragmentContainerView, fragment)
             }
             "map" -> {
+                transaction.setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top)
                 transaction.addToBackStack(null)
                 transaction.replace(R.id.fragmentContainerView, MapFragment())
             }
             "list" -> {
-                transaction.addToBackStack(null)
+                //transaction.setCustomAnimations(R.anim.slide_out_top, R.anim.slide_in_bottom, R.anim.slide_in_bottom, R.anim.slide_out_top)
+                //transaction.addToBackStack(null)
                 transaction.replace(R.id.fragmentContainerView, ListFragment())
             }
         }
