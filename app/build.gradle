@@ -58,4 +58,7 @@ dependencies {
     //그래프
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    //슬라이드 패널
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+
 }
