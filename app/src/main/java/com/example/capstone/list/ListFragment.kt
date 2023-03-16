@@ -1,13 +1,22 @@
 package com.example.capstone.list
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.capstone.databinding.FragmentListBinding
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -18,12 +27,22 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlin.properties.Delegates
 
 class ListFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
     private lateinit var mapView : MapView
+
+    private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
+    private lateinit var mLocationRequest: LocationRequest
+    private val REQUEST_PERMISSION_LOCATION = 10
+    private lateinit var mMap: GoogleMap
+
+
+    private var mlat by Delegates.notNull<Double>()
+    private var mlng by Delegates.notNull<Double>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,14 +54,10 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         val tabLayout: TabLayout = binding.tabLayout
         val viewpagerFragmentAdapter = ViewPagerAdapter(this@ListFragment)
 
-        // ViewPager2의 adapter 설정
         viewPager.adapter = viewpagerFragmentAdapter
 
-        // ###### TabLayout 과 ViewPager2를 연결
-        // 1. 탭메뉴의 이름을 리스트로 생성해둔다.
         val tabTitles = listOf("한식", "양식", "중식", "일식", "해산물", "육류", "카페", "베이커리", "브런치", "주점")
 
-        // 2. TabLayout 과 ViewPager2를 연결하고, TabItem 의 메뉴명을 설정한다.
         TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
 
         mapView = binding.mapFragment2
@@ -51,30 +66,79 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         binding.listButton.setOnClickListener {//패널 닫기
             binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         }
+
+        mLocationRequest =  LocationRequest.create().apply {
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
         return root
     }
 
     override fun onMapReady(map: GoogleMap) {
-
-        //val point = LatLng(37.514655, 126.979974)
-        //map.addMarker(MarkerOptions().position(point).title("현위치"))
-        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(point,12f))
-        onAddMarker(37.374605366192256, 126.63383983056585, map) //내위치
+        mMap=map
+        if(checkPermissionForLocation(requireContext())) startLocationUpdates()
     }
     fun onAddMarker(latitude:Double, longitude:Double, map:GoogleMap){
-
+        Log.d("hy", "onAddMarker")
         val position = LatLng(latitude , longitude) //내 위치
         map.addMarker(MarkerOptions().position(position).title("현위치"))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,12f))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,15f))
 
         val circle1KM = CircleOptions().center(position) // 원점
             .radius(2000.0)      //반지름 단위 : m, 반경 1km 원
             .strokeWidth(0f)  //선너비 0f : 선없음
-            .fillColor(Color.parseColor("#41FCAF17")); //배경색
+            .fillColor(Color.parseColor("#41FCAF17")) //배경색
 
-        map.addCircle(circle1KM);
+        map.addCircle(circle1KM)
     }
 
+    // 위치 권한이 있는지 확인 하는 메서드
+    private fun checkPermissionForLocation(context: Context): Boolean {
+        // Android 6.0 Marshmallow 이상에서는 위치 권한에 추가 런타임 권한이 필요
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                true
+            } else {
+                //권한 요청 알림 보내기
+                requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
+                false
+            }
+        } else {
+            true
+        }
+    }
+
+    private fun startLocationUpdates() {
+        //FusedLocationProviderClient의 인스턴스를 생성.
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return
+        }
+        // 지정한 루퍼 스레드(Looper.myLooper())에서 콜백(mLocationCallback)으로 위치 업데이트를 요청
+        mFusedLocationProviderClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper()!!)
+    }
+
+    // 시스템으로 부터 위치 정보를 콜백으로 받음
+    private val mLocationCallback = object : LocationCallback() {
+
+        override fun onLocationResult(locationResult: LocationResult) {
+            locationResult.lastLocation
+            val location=locationResult.lastLocation
+            mlat=location.latitude
+            mlng=location.longitude
+            onAddMarker(mlat, mlng, mMap)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == REQUEST_PERMISSION_LOCATION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startLocationUpdates()
+            } else {
+                Toast.makeText(context, "위치 접근 권한이 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     override fun onStart() {
         super.onStart()
