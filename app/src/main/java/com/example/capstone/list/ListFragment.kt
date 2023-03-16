@@ -1,17 +1,18 @@
 package com.example.capstone.list
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
-import com.example.capstone.MainActivity
 import com.example.capstone.databinding.FragmentListBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.tabs.TabLayout
@@ -54,10 +55,27 @@ class ListFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
-        val point = LatLng(37.514655, 126.979974)
-        map.addMarker(MarkerOptions().position(point).title("현위치"))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(point,12f))
+
+        //val point = LatLng(37.514655, 126.979974)
+        //map.addMarker(MarkerOptions().position(point).title("현위치"))
+        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(point,12f))
+        onAddMarker(37.374605366192256, 126.63383983056585, map) //내위치
     }
+    fun onAddMarker(latitude:Double, longitude:Double, map:GoogleMap){
+
+        val position = LatLng(latitude , longitude) //내 위치
+        map.addMarker(MarkerOptions().position(position).title("현위치"))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position,12f))
+
+        val circle1KM = CircleOptions().center(position) // 원점
+            .radius(2000.0)      //반지름 단위 : m, 반경 1km 원
+            .strokeWidth(0f)  //선너비 0f : 선없음
+            .fillColor(Color.parseColor("#41FCAF17")); //배경색
+
+        map.addCircle(circle1KM);
+    }
+
+
     override fun onStart() {
         super.onStart()
         mapView.onStart()
