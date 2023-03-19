@@ -9,7 +9,6 @@ import com.example.capstone.history.HistoryFragment
 import com.example.capstone.home.HomeFragment
 import com.example.capstone.like.LikeFragment
 import com.example.capstone.list.ListFragment
-import com.example.capstone.map.MapFragment
 import com.example.capstone.mypage.MyPageFragment
 import com.example.capstone.mypage.MyReviewFragment
 import com.example.capstone.restaurant.RestaurantMainFragment
@@ -84,16 +83,6 @@ class MainActivity : AppCompatActivity() {
                 //fragment.arguments=bundle
                 transaction.addToBackStack(null)
                 transaction.replace(R.id.fragmentContainerView, fragment)
-            }
-            "map" -> {
-                transaction.setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top)
-                transaction.addToBackStack(null)
-                transaction.replace(R.id.fragmentContainerView, MapFragment())
-            }
-            "list" -> {
-                //transaction.setCustomAnimations(R.anim.slide_out_top, R.anim.slide_in_bottom, R.anim.slide_in_bottom, R.anim.slide_out_top)
-                //transaction.addToBackStack(null)
-                transaction.replace(R.id.fragmentContainerView, ListFragment())
             }
         }
         transaction.commit()
