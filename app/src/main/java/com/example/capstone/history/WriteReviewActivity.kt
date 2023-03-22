@@ -5,19 +5,22 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.View.GONE
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.example.capstone.ConfirmDialogInterface
 import com.example.capstone.CustomDialog
+import com.example.capstone.R
 import com.example.capstone.databinding.ActivityWriteReviewBinding
 
 
 class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private lateinit var binding: ActivityWriteReviewBinding
     private lateinit var reviewImage: Uri
+    private var isSatisfied=true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +31,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                binding.writeReviewLength.setText(s.length.toString() + "/400")
+                binding.writeReviewLength.text = s.length.toString() + "/400"
             }
         })
         binding.writeReviewImage.setOnClickListener {
@@ -36,11 +39,20 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
             intent.type="image/*"
             activityResult.launch(intent)
         }
+        binding.reviewImageBox.setOnClickListener {
+            binding.addReviewImage.background=getDrawable(R.drawable.background_round_rectangular)
+            binding.reviewImageBox.visibility= GONE
+        }
+        binding.radioGroup.setOnCheckedChangeListener { radioGroup, checkedId ->
+            when(checkedId){
+                binding.radioSatisfied.id -> isSatisfied=true
+                binding.radioUnsatisfied.id -> isSatisfied=false
+            }
+        }
         binding.writeReviewButton.setOnClickListener{
             val dialog = CustomDialog(this, "리뷰를 등록하시겠습니까?", 0, 0)
             dialog.isCancelable = false
             dialog.show(this.supportFragmentManager, "ConfirmDialog")
-
         }
         binding.backButton.setOnClickListener {
             finish()
@@ -48,13 +60,15 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     }
 
     private val activityResult:ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()){
-            if(it.resultCode== RESULT_OK && it.data != null){
+        ActivityResultContracts.StartActivityForResult()){ it ->
+        if(it.resultCode== RESULT_OK && it.data != null){
                 val uri = it.data!!.data
                 uri!!.also { reviewImage = it }
                 Glide.with(this)
                     .load(uri) //이미지
-                    .into(binding.writeReviewImage)
+                    .into(binding.addReviewImage)
+                binding.reviewImageBox.visibility= View.VISIBLE
+                binding.addReviewImage.clipToOutline = true
             }
 
         }

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.capstone.MainActivity
+import com.example.capstone.R
 import com.example.capstone.databinding.FragmentRestaurantMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -20,11 +21,12 @@ class RestaurantMainFragment : Fragment() {
 
     private var _binding: FragmentRestaurantMainBinding? = null
     private val binding get() = _binding!!
+    private var isLiked=false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRestaurantMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -64,6 +66,19 @@ class RestaurantMainFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.imageButton4.setOnClickListener {
+            //todo 좋아요 버튼 연결
+            //임시 코드
+            isLiked = !isLiked
+            isLiked = if(isLiked) {
+                binding.imageButton4.setColorFilter(resources.getColor(R.color.INUYellow))
+                true
+            } else {
+                binding.imageButton4.setColorFilter(resources.getColor(R.color.semiWhite))
+                false
+            }
+
+        }
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -79,7 +94,7 @@ class RestaurantMainFragment : Fragment() {
                 }
             }
         })
-        viewPager.setUserInputEnabled(false)
+        viewPager.isUserInputEnabled = false
         return root
     }
     override fun onDestroyView() {
@@ -88,7 +103,7 @@ class RestaurantMainFragment : Fragment() {
         mainAct.HideBottomNavi(false)
         _binding = null
     }
-    fun destroy(){
+    private fun destroy(){
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         fragmentManager.beginTransaction().remove(this@RestaurantMainFragment).commit()
         fragmentManager.popBackStack()
