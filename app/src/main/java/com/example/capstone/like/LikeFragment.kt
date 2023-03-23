@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,7 +28,9 @@ class LikeFragment : Fragment() {
     ): View? {
         _binding = FragmentLikeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        if(MainActivity().isMember){//로그인이 돼있으면
+        val isMember = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)
+        if(isMember){//로그인이 돼있으면
+            //todo 리스트 확인 로직 추가 작성
             binding.textView34.visibility=View.VISIBLE
             binding.likeRecyclerView.visibility=View.GONE
         }else{

@@ -121,16 +121,23 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
             val address:ArrayList<Address>
             var addressResult="주소를 변환할 수 없습니다."
             Log.d("hy", "${location.latitude}, ${location.longitude}")
-            val lat:Double=location.latitude
-            val lng:Double=location.longitude
+            val lat:Double=37.5182604
+            val lng:Double=126.7942456
             try {
-                address = geocoder.getFromLocation(lat, lng, 100) as ArrayList<Address>
+                address = geocoder.getFromLocation(lat, lng, 10) as ArrayList<Address>
                 if (address.size > 0) {
                     // 주소 받아오기
                     val currentLocationAddress = address[0].getAddressLine(0).toString()
                     addressResult = currentLocationAddress
+                    binding.userLocation.text=addressResult
+                    var arr: List<String> = listOf("서울특별시", "중구", "명동")
+                    for (addr in addressResult) {
+                        val splitedAddr = addressResult.split(" ")
+                        arr = splitedAddr
+                    }
+                    presentLocation = arr[1] + " " + arr[2] + " " + arr[3] + " " + arr[4]
+                    binding.userLocation.text = presentLocation
                 }
-                Log.d("hy", "dfadfadsfadsfasssssssssssss: ${address}-----------------------------------------------")
             } catch (e: IOException) {
                 e.printStackTrace()
                 binding.userLocation.text = location.latitude.toString()+" "+location.longitude.toString()

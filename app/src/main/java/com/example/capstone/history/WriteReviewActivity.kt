@@ -3,6 +3,8 @@ package com.example.capstone.history
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -16,12 +18,14 @@ import com.example.capstone.CustomDialog
 import com.example.capstone.R
 import com.example.capstone.databinding.ActivityWriteReviewBinding
 import com.example.capstone.mypage.MyPageFragment
+import kotlinx.coroutines.delay
 
 
 class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private lateinit var binding: ActivityWriteReviewBinding
     private lateinit var reviewImage: Uri
     private var isSatisfied=true
+    private lateinit var dialog1:CustomDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +55,9 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
             }
         }
         binding.writeReviewButton.setOnClickListener{
-            val dialog = CustomDialog(this, "리뷰를 등록하시겠습니까?", 0, 0)
-            dialog.isCancelable = false
-            dialog.show(this.supportFragmentManager, "ConfirmDialog")
+            dialog1 = CustomDialog(this, "리뷰를 등록하시겠습니까?", 0, 0)
+            dialog1.isCancelable = false
+            dialog1.show(this.supportFragmentManager, "ConfirmDialog")
         }
         binding.backButton.setOnClickListener {
             finish()
@@ -77,10 +81,15 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     override fun onYesButtonClick(num: Int, theme: Int) {
         when(num){
             0 -> {
-                this.finish()
                 //todo 리뷰 등록코드 작성
-                // todo 작성 완료 팝업 작성
-
+                dialog1.dismiss()
+                // todo 작성 완료 팝업. 나중에 레트로핏 안으로 옮기기
+                val dialog = CustomDialog(this, "리뷰 작성을 완료하였습니다", 0, 1)
+                dialog.isCancelable = true
+                dialog.show(this.supportFragmentManager, "ConfirmDialog")
+                Handler(Looper.getMainLooper()).postDelayed({
+                    finish()
+                }, 500)
 
             }
         }
