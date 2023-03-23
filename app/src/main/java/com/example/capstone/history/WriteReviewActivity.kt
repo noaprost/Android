@@ -15,6 +15,7 @@ import com.example.capstone.ConfirmDialogInterface
 import com.example.capstone.CustomDialog
 import com.example.capstone.R
 import com.example.capstone.databinding.ActivityWriteReviewBinding
+import com.example.capstone.mypage.MyPageFragment
 
 
 class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
@@ -76,8 +77,11 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     override fun onYesButtonClick(num: Int, theme: Int) {
         when(num){
             0 -> {
-                finish()
+                this.finish()
                 //todo 리뷰 등록코드 작성
+                // todo 작성 완료 팝업 작성
+
+
             }
         }
     }

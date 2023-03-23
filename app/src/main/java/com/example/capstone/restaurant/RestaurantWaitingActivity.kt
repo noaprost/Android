@@ -49,10 +49,12 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
         builder.setSpan(ForegroundColorSpan(resources.getColor(R.color.INUYellow)), 7, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.textView20.text = builder
         binding.waitingButton.setOnClickListener {
+            // todo 조건 확인 코드 필요
             val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기를 신청하시겠습니까?", 0, 0)
             dialog.isCancelable = false
             dialog.show(this.supportFragmentManager, "ConfirmDialog")
         }
+
         binding.backButton.setOnClickListener {
             finish()
         }

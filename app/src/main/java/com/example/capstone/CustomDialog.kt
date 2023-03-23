@@ -55,7 +55,7 @@ class CustomDialog(
             binding.okButton.visibility=View.VISIBLE
         }else{ //텍스트만
             binding.noButton.visibility=View.GONE
-            binding.okButton.visibility=View.VISIBLE
+            binding.okButton.visibility=View.GONE
         }
 
         return view

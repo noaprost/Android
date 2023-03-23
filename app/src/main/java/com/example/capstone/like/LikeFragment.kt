@@ -27,7 +27,13 @@ class LikeFragment : Fragment() {
     ): View? {
         _binding = FragmentLikeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
+        if(MainActivity().isMember){//로그인이 돼있으면
+            binding.textView34.visibility=View.VISIBLE
+            binding.likeRecyclerView.visibility=View.GONE
+        }else{
+            binding.textView34.visibility=View.GONE
+            binding.likeRecyclerView.visibility=View.VISIBLE
+        }
         binding.backButton.setOnClickListener {
             destroy()//todo 백버튼 연결
         }

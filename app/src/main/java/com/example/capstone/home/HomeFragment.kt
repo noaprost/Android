@@ -3,8 +3,8 @@ package com.example.capstone.home
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Address
 import android.location.Geocoder
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
@@ -21,7 +21,9 @@ import com.example.capstone.CustomDialog
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHomeBinding
 import com.google.android.gms.location.*
+import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment(), ConfirmDialogInterface {
 
@@ -33,6 +35,7 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
     private val REQUEST_PERMISSION_LOCATION = 10
 
     private var presentLocation = ""
+    var addrList:List<Address>?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,7 +90,6 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
                 startLocationUpdates()
             }
         }
-
         return root
     }
 
@@ -116,16 +118,51 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
             locationResult.lastLocation
             val location=locationResult.lastLocation
             var geocoder = Geocoder(requireContext(), Locale.KOREA)
-            val addrList = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            val address:ArrayList<Address>
+            var addressResult="주소를 변환할 수 없습니다."
+            Log.d("hy", "${location.latitude}, ${location.longitude}")
+            val lat:Double=location.latitude
+            val lng:Double=location.longitude
+            try {
+                address = geocoder.getFromLocation(lat, lng, 100) as ArrayList<Address>
+                if (address.size > 0) {
+                    // 주소 받아오기
+                    val currentLocationAddress = address[0].getAddressLine(0).toString()
+                    addressResult = currentLocationAddress
+                }
+                Log.d("hy", "dfadfadsfadsfasssssssssssss: ${address}-----------------------------------------------")
+            } catch (e: IOException) {
+                e.printStackTrace()
+                binding.userLocation.text = location.latitude.toString()+" "+location.longitude.toString()
+            }
+
+            Log.d("hy", "결과: ${addressResult}")
+            /*
+            try{
+                addrList = geocoder.getFromLocation(location.latitude, location.longitude, 4)
+            }catch (e:java.lang.Exception){
+                e.printStackTrace()
+                binding.userLocation.text = location.latitude.toString()+" "+location.longitude.toString()
+            }
+            if(addrList!=null){
+                Log.d("hy", addrList!![0].getAddressLine(0))
+            }else{
+                Log.d("hy", "returns null")
+            }
+
+             */
+            /*
             //주소 초기화
             var address: List<String> = listOf("서울특별시", "중구", "명동")
             for (addr in addrList) {
-                val splitedAddr = addr.getAddressLine(0).split(" ")
+                val splitedAddr = addrList.split(" ")
                 address = splitedAddr
             }
             presentLocation = address[1] + " " + address[2] + " " + address[3] + " " + address[4]
             binding.userLocation.text = presentLocation
-            Log.d("hy", presentLocation)
+
+             */
+
         }
     }
 
