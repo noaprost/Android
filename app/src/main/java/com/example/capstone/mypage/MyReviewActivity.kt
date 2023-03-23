@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone.MainActivity
 import com.example.capstone.MyReview
 import com.example.capstone.R
 import com.example.capstone.Review
@@ -23,7 +24,6 @@ class MyReviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding =  ActivityMyReviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         binding.backButton.setOnClickListener {
             finish()
         }

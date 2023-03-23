@@ -14,7 +14,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
+import com.example.capstone.ConfirmDialogInterface
+import com.example.capstone.CustomDialog
 import com.example.capstone.databinding.FragmentListBinding
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -29,7 +32,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlin.properties.Delegates
 
-class ListFragment : Fragment(), OnMapReadyCallback {
+class ListFragment : Fragment(), OnMapReadyCallback, ConfirmDialogInterface {
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
@@ -70,7 +73,16 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         mLocationRequest =  LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
+        binding.infoButton.setOnClickListener {
+            val dialog = CustomDialog(this@ListFragment, "- 인기순으로 정렬됩니다.\n- 반경 내의 음식점에만 대기 신청이 가능합니다.\n오늘도 내 자리 내놔를 이용해주셔서 감사합니다." , 0, 1)
+            dialog.isCancelable = true
+            this.fragmentManager?.let { it1 -> dialog.show(it1, "ConfirmDialog") }
+        }
         return root
+    }
+
+    override fun onYesButtonClick(num: Int, theme: Int) {
+
     }
 
     override fun onMapReady(map: GoogleMap) {

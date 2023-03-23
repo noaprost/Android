@@ -1,6 +1,8 @@
 package com.example.capstone
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,16 +16,25 @@ import com.example.capstone.mypage.MyReviewFragment
 import com.example.capstone.restaurant.RestaurantMainFragment
 import com.example.capstone.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private var userId by Delegates.notNull<Long>()
+    var isMember by Delegates.notNull<Boolean>()
+    lateinit var userInfo: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =  ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        userInfo = getSharedPreferences("userInfo", 0)
+        userInfo.edit().putBoolean("isMember", false).apply()
+        userInfo.edit().putString("userId", "0").apply()
+        userId = userInfo.getString("userInfo", "2")!!.toLong()
+        isMember = userInfo.getBoolean("isMember", false)
 
         var bnv_main = findViewById<BottomNavigationView>(R.id.nav_view)
 
@@ -87,4 +98,5 @@ class MainActivity : AppCompatActivity() {
         }
         transaction.commit()
     }
+
 }
