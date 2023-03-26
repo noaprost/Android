@@ -14,16 +14,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.capstone.ConfirmDialogInterface
 import com.example.capstone.CustomDialog
 import com.example.capstone.databinding.FragmentListBinding
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -53,6 +49,7 @@ class ListFragment : Fragment(), OnMapReadyCallback, ConfirmDialogInterface {
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        MapsInitializer.initialize(requireContext())
         val viewPager: ViewPager2 = binding.pager
         val tabLayout: TabLayout = binding.tabLayout
         val viewpagerFragmentAdapter = ViewPagerAdapter(this@ListFragment)
@@ -136,8 +133,8 @@ class ListFragment : Fragment(), OnMapReadyCallback, ConfirmDialogInterface {
         override fun onLocationResult(locationResult: LocationResult) {
             locationResult.lastLocation
             val location=locationResult.lastLocation
-            mlat=location.latitude
-            mlng=location.longitude
+            mlat=location!!.latitude
+            mlng=location!!.longitude
             onAddMarker(mlat, mlng, mMap)
         }
     }

@@ -85,8 +85,10 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
         mLocationRequest =  LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
-        binding.locationImage.setOnClickListener {
+        binding.constraintLayout4.setOnClickListener {
+            Log.d("hy", "위치클릭")
             if (checkPermissionForLocation(requireContext())) {
+                Log.d("hy", "권한확인")
                 startLocationUpdates()
             }
         }
@@ -98,31 +100,36 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
     }
 
     private fun startLocationUpdates() {
+        Log.d("hy", "startLocationUpdates")
         //FusedLocationProviderClient의 인스턴스를 생성.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return
         }
+        Log.d("hy", "startLocationUpdates2")
         // 기기의 위치에 관한 정기 업데이트를 요청하는 메서드 실행
         // 지정한 루퍼 스레드(Looper.myLooper())에서 콜백(mLocationCallback)으로 위치 업데이트를 요청
         mFusedLocationProviderClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback,
             Looper.myLooper()!!
         )
+        Log.d("hy", "startLocationUpdates3")
     }
 
     // 시스템으로 부터 위치 정보를 콜백으로 받음
     private val mLocationCallback = object : LocationCallback() {
+
         override fun onLocationResult(locationResult: LocationResult) {
+            Log.d("hy", "mLocationCallback")
             // 시스템에서 받은 location 정보를 onLocationChanged()에 전달
             locationResult.lastLocation
             val location=locationResult.lastLocation
             var geocoder = Geocoder(requireContext(), Locale.KOREA)
             val address:ArrayList<Address>
             var addressResult="주소를 변환할 수 없습니다."
-            Log.d("hy", "${location.latitude}, ${location.longitude}")
-            val lat:Double=37.5182604
-            val lng:Double=126.7942456
+            Log.d("hy", "${location!!.latitude}, ${location.longitude}")
+            val lat:Double=location.latitude
+            val lng:Double=location.longitude
             try {
                 address = geocoder.getFromLocation(lat, lng, 10) as ArrayList<Address>
                 if (address.size > 0) {
