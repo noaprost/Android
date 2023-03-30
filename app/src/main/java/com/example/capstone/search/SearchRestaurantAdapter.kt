@@ -1,14 +1,16 @@
 package com.example.capstone.search
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.R
-
+import com.example.capstone.restaurant.RestaurantReviewDetail
 
 
 class SearchRestaurantAdapter(val searchRestaurantList : ArrayList<SearchRestaurant>) : RecyclerView.Adapter<SearchRestaurantAdapter.SearchViewHolder>(){
@@ -16,11 +18,9 @@ class SearchRestaurantAdapter(val searchRestaurantList : ArrayList<SearchRestaur
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : SearchRestaurantAdapter.SearchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_restaurant_search, parent, false)
         return SearchViewHolder(view).apply {
-
             itemView.setOnClickListener {
                 val curPos : Int = adapterPosition
                 val searchRestaurant : SearchRestaurant = searchRestaurantList.get(curPos)
-                // 해당 음식점 상세 페이지로 이동하는 부분 추가
             }
         }
     }
