@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHistoryBinding
 
-class HistoryFragment : Fragment(){
+class HistoryFragment : Fragment() {
 
     private var _binding : FragmentHistoryBinding? = null
     private val binding get() = _binding!!
@@ -37,7 +37,9 @@ class HistoryFragment : Fragment(){
 
         binding.previousWaitingRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.previousWaitingRecyclerView.setHasFixedSize(true)
-        binding.previousWaitingRecyclerView.adapter = PreviousWaitingAdapter(previousWaitingList)
+        binding.previousWaitingRecyclerView.adapter = PreviousWaitingAdapter(previousWaitingList, this)
+
+
 
         return root
     }

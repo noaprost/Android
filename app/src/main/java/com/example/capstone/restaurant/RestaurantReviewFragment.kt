@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone.MyReview
 import com.example.capstone.R
 import com.example.capstone.Review
 import com.example.capstone.databinding.FragmentRestaurantReviewBinding

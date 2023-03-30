@@ -4,35 +4,33 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
+  android:layout_height="wrap_content"
 >
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-  >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-      android:id="@+id/textView26"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_margin="15dp"
-      android:text="이전 대기 내역"
-      android:textColor="@color/black"
-      android:textSize="24dp"
-      android:textStyle="bold"
-      android:gravity="center_vertical"
-      tools:ignore="MissingConstraints"
-    />
+            android:id="@+id/textView26"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center_vertical"
+            android:text="이전 대기 내역"
+            android:textColor="@color/black"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
 
         <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/previousWaitingRecyclerView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      tools:ignore="MissingConstraints"
-      tools:listitem="@layout/item_previous_waiting_info"
-    />
+            android:id="@+id/previousWaitingRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_previous_waiting_info"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
