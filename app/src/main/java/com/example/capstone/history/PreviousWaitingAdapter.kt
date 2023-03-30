@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone.MainActivity
 import com.example.capstone.R
 
 
@@ -19,7 +20,6 @@ class PreviousWaitingAdapter(val previousWaitingList: ArrayList<PreviousWaiting>
             itemView.setOnClickListener {
                 val curPos : Int = adapterPosition
                 val watingHistory : PreviousWaiting = previousWaitingList.get(curPos)
-
             }
         }
     }
@@ -33,6 +33,9 @@ class PreviousWaitingAdapter(val previousWaitingList: ArrayList<PreviousWaiting>
         holder.waitingImg.setImageResource(previousWaitingList.get(position).waitingImg)
         holder.waitingTitle.text = previousWaitingList.get(position).waitingTitle
         holder.waitingImg.clipToOutline=true
+        holder.txtWaitingDate.setOnClickListener {
+
+        }
     }
 
     class WaitingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
