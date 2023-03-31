@@ -5,13 +5,11 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import com.example.capstone.ConfirmDialogInterface
 import com.example.capstone.CustomDialog
 import com.example.capstone.MainActivity
@@ -35,8 +33,6 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
         userInfo = this.requireActivity().getSharedPreferences("userInfo", MODE_PRIVATE)
         val isMember = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)
         val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "00")
-
-        Log.d("hy","${isMember}, ${userId}")
 
         if(isMember){ //로그인 돼있으면
             binding.myBox1.visibility=View.VISIBLE
@@ -79,8 +75,6 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("hy", "${requestCode}  ${resultCode}")
-        Log.d("hy","다시 메인페이지: ${this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)}, ${this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "00")}")
         if (requestCode==1 && resultCode == RESULT_OK) {
             var isSignedIn = data!!.getBooleanExtra("isSignedIn", false)
             if (isSignedIn) {
@@ -88,11 +82,14 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
                 mainAct.ChangePage(R.id.navigation_myPage)
             }
         }
-
     }
     override fun onYesButtonClick(num: Int, theme: Int) {
         when(num){
-            //todo 로그아웃 연결
+            0->{//로그아웃
+                userInfo.edit().putString("userId", "0").putBoolean("isMember", false).apply() //정보변경
+                val mainAct = activity as MainActivity
+                mainAct.ChangePage(R.id.navigation_myPage)
+            }
         }
     }
 
