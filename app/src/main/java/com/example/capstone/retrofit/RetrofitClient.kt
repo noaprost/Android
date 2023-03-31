@@ -1,8 +1,7 @@
-/*package com.example.capstone.retrofit
+package com.example.capstone.retrofit
 
 import android.util.Log
 import com.example.capstone.retrofit.API.BASE_URL
-import com.google.android.gms.common.api.Response
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -82,5 +81,3 @@ object RetrofitClient {
         retrofit.create(IRetrofit::class.java)
     }
 }
-
- */

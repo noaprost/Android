@@ -34,20 +34,37 @@ data class Restaurant(
     val waiting: Int
 )
 
-data class RestaurantList(
-    val restaurantImg: Int,
-    val rating: Double,
-    val commentNumber: Int,
-    val name: String,
-    val waiting: Int,
-    val keyword1: String,
-    val keyword2: String,
-    val keyword3: String
-    )
+data class Restaurants(
+    val resImg: Int,
+    val resRating: Double,
+    val resCategory: String,
+    val commentNumber: Int, //todo
+    val resName: String,
+    val waiting: Int, //todo
+    val keyword1: String, //todo
+    val keyword2: String, //todo
+    val keyword3: String //todo
+)
 
-data class Place(
-    val name: String,
-    val latLng: LatLng,
-    val address: LatLng,
-    val rating: Float
+data class Res(
+    val resIdx: Int,
+    val resName : String,
+    val resAddress: String,
+    val resCategory: String,
+    val resPhNum: String,
+    val resSeat: String,
+    val resOpen: String,
+    val resClose: String,
+    val resWaitOpen: String,
+    val resWaitClose: String,
+    val resRating: String,
+    val resImg: Int
+    //    val resMngNum : String,
+    //    val resPwd: String,
+)
+data class resAddress(
+    val resAddress:String
+)
+data class RestaurantList(
+    val results: List<Restaurants>
 )

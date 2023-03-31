@@ -31,23 +31,22 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
     private val binding get() = _binding!!
 
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
-    internal lateinit var mLocationRequest: LocationRequest // 위치 정보 요청의 매개변수를 저장하는
+    private lateinit var mLocationRequest: LocationRequest // 위치 정보 요청의 매개변수를 저장하는
     private val REQUEST_PERMISSION_LOCATION = 10
 
     private var presentLocation = ""
-    var addrList:List<Address>?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         // 대기 내역이 있는 경우에만 대기 정보 버튼이 보이도록 설정
-        var isExistWatingInfo : Boolean = true // 불러온 데이터의 존재여부로 판단되도혹 수정 필요
-        binding.watingInfoBtn.visibility = if(isExistWatingInfo == true){
+        var isExistWatingInfo = true // 불러온 데이터의 존재여부로 판단되도혹 수정 필요
+        binding.watingInfoBtn.visibility = if(isExistWatingInfo){
             View.VISIBLE
         }else{
             View.INVISIBLE
@@ -88,7 +87,6 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
         binding.constraintLayout4.setOnClickListener {
             Log.d("hy", "위치클릭")
             if (checkPermissionForLocation(requireContext())) {
-                Log.d("hy", "권한확인")
                 startLocationUpdates()
             }
         }
@@ -107,26 +105,21 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
             && ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return
         }
-        Log.d("hy", "startLocationUpdates2")
         // 기기의 위치에 관한 정기 업데이트를 요청하는 메서드 실행
         // 지정한 루퍼 스레드(Looper.myLooper())에서 콜백(mLocationCallback)으로 위치 업데이트를 요청
-        mFusedLocationProviderClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback,
-            Looper.myLooper()!!
-        )
-        Log.d("hy", "startLocationUpdates3")
+        mFusedLocationProviderClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.getMainLooper())
     }
 
     // 시스템으로 부터 위치 정보를 콜백으로 받음
     private val mLocationCallback = object : LocationCallback() {
 
         override fun onLocationResult(locationResult: LocationResult) {
-            Log.d("hy", "mLocationCallback")
             // 시스템에서 받은 location 정보를 onLocationChanged()에 전달
             locationResult.lastLocation
             val location=locationResult.lastLocation
-            var geocoder = Geocoder(requireContext(), Locale.KOREA)
+            val geocoder = Geocoder(requireContext(), Locale.KOREA)
             val address:ArrayList<Address>
-            var addressResult="주소를 변환할 수 없습니다."
+            var addressResult: String
             Log.d("hy", "${location!!.latitude}, ${location.longitude}")
             val lat:Double=location.latitude
             val lng:Double=location.longitude
@@ -142,40 +135,13 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
                         val splitedAddr = addressResult.split(" ")
                         arr = splitedAddr
                     }
-                    presentLocation = arr[1] + " " + arr[2] + " " + arr[3] + " " + arr[4]
+                    presentLocation = arr[1] + " " + arr[2] + " " + arr[3] + " " + arr[4]+ " " + arr[5]
                     binding.userLocation.text = presentLocation
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
                 binding.userLocation.text = location.latitude.toString()+" "+location.longitude.toString()
             }
-
-            Log.d("hy", "결과: ${addressResult}")
-            /*
-            try{
-                addrList = geocoder.getFromLocation(location.latitude, location.longitude, 4)
-            }catch (e:java.lang.Exception){
-                e.printStackTrace()
-                binding.userLocation.text = location.latitude.toString()+" "+location.longitude.toString()
-            }
-            if(addrList!=null){
-                Log.d("hy", addrList!![0].getAddressLine(0))
-            }else{
-                Log.d("hy", "returns null")
-            }
-
-             */
-            /*
-            //주소 초기화
-            var address: List<String> = listOf("서울특별시", "중구", "명동")
-            for (addr in addrList) {
-                val splitedAddr = addrList.split(" ")
-                address = splitedAddr
-            }
-            presentLocation = address[1] + " " + address[2] + " " + address[3] + " " + address[4]
-            binding.userLocation.text = presentLocation
-
-             */
 
         }
     }
@@ -208,5 +174,9 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
                 Toast.makeText(requireContext(), "권한이 없어 해당 기능을 실행할 수 없습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    override fun onPause() {
+        super.onPause()
+        if(presentLocation!="") mFusedLocationProviderClient!!.removeLocationUpdates(mLocationCallback)
     }
 }

@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
@@ -26,6 +28,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
 class ListFragment : Fragment(), OnMapReadyCallback, ConfirmDialogInterface {
@@ -39,9 +44,9 @@ class ListFragment : Fragment(), OnMapReadyCallback, ConfirmDialogInterface {
     private val REQUEST_PERMISSION_LOCATION = 10
     private lateinit var mMap: GoogleMap
 
-
     private var mlat by Delegates.notNull<Double>()
     private var mlng by Delegates.notNull<Double>()
+    private var requestString = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,8 +60,8 @@ class ListFragment : Fragment(), OnMapReadyCallback, ConfirmDialogInterface {
         val viewpagerFragmentAdapter = ViewPagerAdapter(this@ListFragment)
 
         viewPager.adapter = viewpagerFragmentAdapter
-
-        val tabTitles = listOf("한식", "양식", "중식", "일식", "해산물", "육류", "카페", "베이커리", "브런치", "주점")
+        viewPager.setUserInputEnabled(false);
+        val tabTitles = listOf("전체","한식", "양식", "중식", "일식", "해산물", "육류", "카페", "베이커리", "브런치", "주점")
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
 
@@ -134,8 +139,27 @@ class ListFragment : Fragment(), OnMapReadyCallback, ConfirmDialogInterface {
             locationResult.lastLocation
             val location=locationResult.lastLocation
             mlat=location!!.latitude
-            mlng=location!!.longitude
+            mlng= location.longitude
             onAddMarker(mlat, mlng, mMap)
+            val geocoder = Geocoder(requireContext(), Locale.KOREA)
+            val address:ArrayList<Address>
+            val addressResult: String
+            try {
+                address = geocoder.getFromLocation(mlat, mlng, 10) as ArrayList<Address>
+                if (address.size > 0) {
+                    // 주소 받아오기
+                    val currentLocationAddress = address[0].getAddressLine(0).toString()
+                    addressResult = currentLocationAddress
+                    var arr: List<String> = listOf("서울특별시", "중구", "명동")
+                    for (addr in addressResult) {
+                        val splitedAddr = addressResult.split(" ")
+                        arr = splitedAddr
+                    }
+                    requestString=arr[2]
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
     }
 

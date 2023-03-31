@@ -1,10 +1,10 @@
 package com.example.capstone.mypage
 
+import android.app.Activity.RESULT_OK
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +16,7 @@ import com.example.capstone.MainActivity
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentMyPageBinding
 import com.example.capstone.history.WriteReviewActivity
+import com.example.capstone.login.LoginActivity
 
 
 class MyPageFragment : Fragment(), ConfirmDialogInterface {
@@ -33,8 +34,6 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
         val isMember = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)
         val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "00")
 
-        Log.d("hy","${isMember}, ${userId}")
-
         if(isMember){ //로그인 돼있으면
             binding.myBox1.visibility=View.VISIBLE
             binding.goSignIn.visibility=View.GONE
@@ -47,13 +46,8 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
             binding.LinearLayout.visibility=View.GONE
         }
         binding.goSignIn.setOnClickListener {
-            Log.d("hy", "버튼클릭")
-            //임시로 로그인 처리
-            userInfo.edit().putBoolean("isMember", true).putString("userId", "1").apply()
-            val isMember = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)
-            val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "00")
-            Log.d("hy","${isMember}, ${userId}")
-
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivityForResult(intent, 1)
         }
         binding.myLikeBox.setOnClickListener{
             val mainAct = activity as MainActivity
@@ -79,10 +73,23 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
         return root
 
     }
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode==1 && resultCode == RESULT_OK) {
+            var isSignedIn = data!!.getBooleanExtra("isSignedIn", false)
+            if (isSignedIn) {
+                val mainAct = activity as MainActivity
+                mainAct.ChangePage(R.id.navigation_myPage)
+            }
+        }
+    }
     override fun onYesButtonClick(num: Int, theme: Int) {
         when(num){
-            //todo 로그아웃 연결
+            0->{//로그아웃
+                userInfo.edit().putString("userId", "0").putBoolean("isMember", false).apply() //정보변경
+                val mainAct = activity as MainActivity
+                mainAct.ChangePage(R.id.navigation_myPage)
+            }
         }
     }
 
