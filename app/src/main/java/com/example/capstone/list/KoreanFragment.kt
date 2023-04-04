@@ -1,5 +1,7 @@
 package com.example.capstone.list
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,7 +26,9 @@ class KoreanFragment : Fragment() {
 
     private var _binding: FragmentKoreanBinding? = null
     private val binding get() = _binding!!
-    var category=""
+    private var category=""
+    lateinit var userInfo: SharedPreferences
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,32 +36,40 @@ class KoreanFragment : Fragment() {
         _binding = FragmentKoreanBinding.inflate(inflater, container, false)
         val root: View = binding.root
         category=arguments?.getString("category").toString()
-
-        showRestaurants(resAddress(resAddress = "연수")) //todo 주소 연결
+        userInfo = this.requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        val userLocation=userInfo.getString("userLocation", "")!!
+        var arr: List<String> = listOf("인천광역시", "연수구", "송도동") //기본 주소
+        for (addr in userLocation) {
+            val splitedAddr = userLocation.split(" ")
+            arr = splitedAddr
+        }
+        val requestString=arr[1]
+        showRestaurants(resAddress(resAddress = requestString))
         return root
     }
     inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view){
         private lateinit var restaurantList: Restaurants
-        val restaurantImg : ConstraintLayout = itemView.findViewById(R.id.list_image)
-        val rating : TextView = itemView.findViewById(R.id.list_rating)
-        val commentNumber: TextView = itemView.findViewById(R.id.list_commentNumber)
-        val name: TextView = itemView.findViewById(R.id.list_name)
-        val keyword1: TextView = itemView.findViewById(R.id.list_keyword1)
-        val keyword2: TextView = itemView.findViewById(R.id.list_keyword2)
-        val keyword3: TextView = itemView.findViewById(R.id.list_keyword3)
-        val waitingNum: TextView = itemView.findViewById(R.id.list_waiting)
+        private val restaurantImg : ConstraintLayout = itemView.findViewById(R.id.list_image)
+        private val rating : TextView = itemView.findViewById(R.id.list_rating)
+        private val commentNumber: TextView = itemView.findViewById(R.id.list_commentNumber)
+        private val name: TextView = itemView.findViewById(R.id.list_name)
+        private val keyword1: TextView = itemView.findViewById(R.id.list_keyword1)
+        private val keyword2: TextView = itemView.findViewById(R.id.list_keyword2)
+        private val keyword3: TextView = itemView.findViewById(R.id.list_keyword3)
+        private val waitingNum: TextView = itemView.findViewById(R.id.list_waiting)
 
         fun bind(restaurantList: Restaurants){
             this.restaurantList=restaurantList
-
-            //restaurantImg.setBackgroundResource(restaurantList.resImg)
+            //if(restaurantList.resImg != null)restaurantImg.setBackgroundResource(restaurantList.resImg)
             rating.text = restaurantList.resRating.toString()
-            commentNumber.text = restaurantList.commentNumber.toString()
+            commentNumber.text = restaurantList.revCnt.toString()
             name.text = restaurantList.resName
-            keyword1.text=restaurantList.keyword1
-            keyword2.text=restaurantList.keyword2
-            keyword3.text=restaurantList.keyword3
-            waitingNum.text=restaurantList.waiting.toString()
+            if(restaurantList.keyWord !=null){
+                keyword1.text=restaurantList.keyWord[0].toString()
+                keyword2.text=restaurantList.keyWord[1].toString()
+                keyword3.text=restaurantList.keyWord[2].toString()
+            }
+            waitingNum.text=restaurantList.currWaiting.toString()
             itemView.setOnClickListener {
                 val mainAct = activity as MainActivity
                 mainAct.ChangeFragment("Restaurant")
@@ -83,7 +95,6 @@ class KoreanFragment : Fragment() {
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.showRestaurants(resAddress=resAddress) ?:return
 
-        Log.d("retrofit", "${resAddress}")
         call.enqueue(object : Callback<RestaurantList> {
 
             override fun onResponse(call: Call<RestaurantList>, response: Response<RestaurantList>) {

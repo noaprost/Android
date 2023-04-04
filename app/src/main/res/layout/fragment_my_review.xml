@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".mypage.MyReviewFragment">
 
+    <TextView
+        android:id="@+id/textView64"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="앗! 아직 작성한 리뷰가 없어요."
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"

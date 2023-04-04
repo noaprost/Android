@@ -1,13 +1,13 @@
 package com.example.capstone.mypage
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +29,8 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
         binding.backButton.setOnClickListener {
             destroy()
         }
+        val isMember = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)
+        val hasReview = true //todo 리뷰내역 유무
         dummy.apply {
             add(MyReview(
                 R.drawable.dummy_food_image, "직원분도 친절하시고 음식도 너무 맛있어요!  인테리어도 예뻐서 애인이랑 오기 좋을 것 같아요  특히 라구파스타 최고,,", "어제",
@@ -64,8 +66,22 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
                 R.drawable.dummy_food_image, "직원분도 친절하시고 음식도 너무 맛있어요!  인테리어도 예뻐서 애인이랑 오기 좋을 것 같아요  특히 라구파스타 최고,,", "어제",
                 3.8.toLong(), "데이트하기 좋은", "인스타감성", "조용한", "온리원파스타"))
         }
-        binding.myReviewRecyclerView.layoutManager= LinearLayoutManager(context)
-        binding.myReviewRecyclerView.adapter=MyAdapter(dummy)
+        if(isMember){//로그인이 돼있으면
+            if(hasReview){
+                binding.textView64.visibility=View.GONE
+                binding.myReviewRecyclerView.visibility=View.VISIBLE
+                binding.myReviewRecyclerView.layoutManager= LinearLayoutManager(context)
+                binding.myReviewRecyclerView.adapter=MyAdapter(dummy)
+            }else{
+                binding.textView64.visibility=View.VISIBLE
+                binding.myReviewRecyclerView.visibility=View.GONE
+            }
+
+        }else{
+            binding.textView64.visibility=View.VISIBLE
+            binding.myReviewRecyclerView.visibility=View.GONE
+        }
+
         return root
     }
     inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view){

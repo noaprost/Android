@@ -2,6 +2,7 @@ package com.example.capstone.home
 
 import android.Manifest
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -33,7 +34,7 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
     private lateinit var mLocationRequest: LocationRequest // 위치 정보 요청의 매개변수를 저장하는
     private val REQUEST_PERMISSION_LOCATION = 10
-
+    lateinit var userInfo: SharedPreferences
     private var presentLocation = ""
 
     override fun onCreateView(
@@ -43,6 +44,7 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        userInfo = this.requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
 
         // 대기 내역이 있는 경우에만 대기 정보 버튼이 보이도록 설정
         var isExistWatingInfo = true // 불러온 데이터의 존재여부로 판단되도혹 수정 필요
@@ -90,6 +92,9 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
                 startLocationUpdates()
             }
         }
+        if(userInfo.getString("userLocation", "") !="")
+            binding.userLocation.text= userInfo.getString("userLocation", "")!!
+
         return root
     }
 
@@ -130,13 +135,14 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
                     val currentLocationAddress = address[0].getAddressLine(0).toString()
                     addressResult = currentLocationAddress
                     binding.userLocation.text=addressResult
-                    var arr: List<String> = listOf("서울특별시", "중구", "명동")
+                    var arr: List<String> = listOf("인천광역시", "연수구", "송도동")
                     for (addr in addressResult) {
                         val splitedAddr = addressResult.split(" ")
                         arr = splitedAddr
                     }
                     presentLocation = arr[1] + " " + arr[2] + " " + arr[3] + " " + arr[4]+ " " + arr[5]
                     binding.userLocation.text = presentLocation
+                    userInfo.edit().putString("userLocation", presentLocation).apply()
                 }
             } catch (e: IOException) {
                 e.printStackTrace()

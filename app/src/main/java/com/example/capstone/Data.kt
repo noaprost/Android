@@ -1,7 +1,5 @@
 package com.example.capstone
 
-import android.net.Uri
-import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 
 data class Review(
@@ -35,32 +33,25 @@ data class Restaurant(
 )
 
 data class Restaurants(
+    val resIdx: Int,
     val resImg: Int,
     val resRating: Double,
     val resCategory: String,
-    val commentNumber: Int, //todo
+    val revCnt: Int,
     val resName: String,
-    val waiting: Int, //todo
-    val keyword1: String, //todo
-    val keyword2: String, //todo
-    val keyword3: String //todo
-)
-
-data class Res(
-    val resIdx: Int,
-    val resName : String,
-    val resAddress: String,
-    val resCategory: String,
     val resPhNum: String,
     val resSeat: String,
     val resOpen: String,
     val resClose: String,
     val resWaitOpen: String,
     val resWaitClose: String,
-    val resRating: String,
-    val resImg: Int
-    //    val resMngNum : String,
-    //    val resPwd: String,
+    val resAddress: String,
+    val currWaiting: Int, //todo
+    val keyWord:List<keyword>,
+    //resMngNum:String
+)
+data class keyword(
+    val keyword:String
 )
 data class resAddress(
     val resAddress:String

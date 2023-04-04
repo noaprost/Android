@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         userInfo = getSharedPreferences("userInfo", 0)
         userInfo.edit().putBoolean("isMember", false).apply()
         userInfo.edit().putString("userId", "0").apply()
+        userInfo.edit().putString("userLocation", "").apply()
         userId = userInfo.getString("userInfo", "2")!!.toLong()
         isMember = userInfo.getBoolean("isMember", false)
 
