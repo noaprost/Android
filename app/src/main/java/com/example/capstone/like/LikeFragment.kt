@@ -29,17 +29,7 @@ class LikeFragment : Fragment() {
         _binding = FragmentLikeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val isMember = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)
-        if(isMember){//로그인이 돼있으면
-            //todo 리스트 확인 로직 추가 작성
-            binding.textView34.visibility=View.VISIBLE
-            binding.likeRecyclerView.visibility=View.GONE
-        }else{
-            binding.textView34.visibility=View.GONE
-            binding.likeRecyclerView.visibility=View.VISIBLE
-        }
-        binding.backButton.setOnClickListener {
-            destroy()//todo 백버튼 연결
-        }
+        val hasLike = true //todo 찜한 가게 유무
         val restaurantList = arrayListOf(
             Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점", 1),
             Restaurant(R.drawable.dummy_food_image, 5.0, 19, "네네치킨", 7),
@@ -51,9 +41,24 @@ class LikeFragment : Fragment() {
             Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점", 7),
             Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점", 7),
         )
+        if(isMember){//로그인이 돼있으면
+            if(hasLike){
+                binding.textView34.visibility=View.GONE
+                binding.likeRecyclerView.visibility=View.VISIBLE
+                binding.likeRecyclerView.layoutManager =  GridLayoutManager(context, 2)
+                binding.likeRecyclerView.adapter = restaurantList?.let { MyAdapter(it) }
+            }else{
+                binding.textView34.visibility=View.VISIBLE
+                binding.likeRecyclerView.visibility=View.GONE
+            }
 
-        binding.likeRecyclerView.layoutManager =  GridLayoutManager(context, 2)
-        binding.likeRecyclerView.adapter = restaurantList?.let { MyAdapter(it) }
+        }else{
+            binding.textView34.visibility=View.VISIBLE
+            binding.likeRecyclerView.visibility=View.GONE
+        }
+        binding.backButton.setOnClickListener {
+            destroy()
+        }
 
         return root
     }
