@@ -2,6 +2,7 @@ package com.example.capstone.list
 
 import android.Manifest
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
@@ -47,6 +48,7 @@ class ListFragment : Fragment(), OnMapReadyCallback, ConfirmDialogInterface {
     private var mlat by Delegates.notNull<Double>()
     private var mlng by Delegates.notNull<Double>()
     private var requestString = ""
+    lateinit var userInfo: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
