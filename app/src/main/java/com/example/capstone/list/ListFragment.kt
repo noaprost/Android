@@ -159,7 +159,9 @@ class ListFragment : Fragment(), OnMapReadyCallback {
                     var arr: List<String> = listOf("인천광역시", "연수구", "송도동")
                     for (addr in addressResult)
                         arr = addressResult.split(" ")
-                    presentLocation = arr[1] + " " + arr[2] + " " + arr[3] + " " + arr[4]
+                    for(i in 1 until arr.size){
+                        presentLocation=presentLocation+arr[i]+" "
+                    }
                     userInfo.edit().putString("userLocation", presentLocation).apply()
                     showRestaurants(resAddress(arr[3]))
                 }
