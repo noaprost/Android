@@ -80,8 +80,9 @@ class LikeFragment : Fragment() {
             }
             img.clipToOutline=true
             itemView.setOnClickListener{
+                val bundle=Bundle()
                 val mainAct = activity as MainActivity
-                mainAct.ChangeFragment("Restaurant")
+                mainAct.ChangeFragment("Restaurant", bundle)
             }
         }
 

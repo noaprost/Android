@@ -3,16 +3,17 @@ package com.example.capstone.restaurant
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.capstone.MainActivity
 import com.example.capstone.R
+import com.example.capstone.Restaurants
 import com.example.capstone.databinding.FragmentRestaurantMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -22,7 +23,7 @@ class RestaurantMainFragment : Fragment() {
     private var _binding: FragmentRestaurantMainBinding? = null
     private val binding get() = _binding!!
     private var isLiked=false
-
+    lateinit var resInfo: Restaurants
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +47,8 @@ class RestaurantMainFragment : Fragment() {
 
         // 2. TabLayout 과 ViewPager2를 연결하고, TabItem 의 메뉴명을 설정한다.
         TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
+        val bundle = arguments
+        resInfo=bundle!!.getSerializable("restaurant") as Restaurants
 
         binding.mainScrollView.run{
             header=binding.headerView
