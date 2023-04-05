@@ -140,7 +140,7 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
                         val splitedAddr = addressResult.split(" ")
                         arr = splitedAddr
                     }
-                    presentLocation = arr[1] + " " + arr[2] + " " + arr[3] + " " + arr[4]+ " " + arr[5]
+                    presentLocation = arr[1] + " " + arr[2] + " " + arr[3] + " " + arr[4]
                     binding.userLocation.text = presentLocation
                     userInfo.edit().putString("userLocation", presentLocation).apply()
                 }

@@ -49,16 +49,18 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
             startActivityForResult(intent, 1)
         }
         binding.myLikeBox.setOnClickListener{
+            val bundle=Bundle()
             val mainAct = activity as MainActivity
-            mainAct.ChangeFragment("Like")
+            mainAct.ChangeFragment("Like", bundle)
         }
         binding.myUseHistory.setOnClickListener{
             val mainAct = activity as MainActivity
             mainAct.ChangePage(R.id.navigation_history)
         }
         binding.myReviewBox.setOnClickListener{
+            val bundle=Bundle()
             val mainAct = activity as MainActivity
-            mainAct.ChangeFragment("MyReview")
+            mainAct.ChangeFragment("MyReview", bundle)
         }
         binding.myStampBox.setOnClickListener {
             val intent = Intent(activity, StampActivity::class.java)

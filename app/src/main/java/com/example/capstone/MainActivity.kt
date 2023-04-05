@@ -77,17 +77,18 @@ class MainActivity : AppCompatActivity() {
         bnv_main.selectedItemId=pageId
     }
 
-    fun ChangeFragment(page:String){
+    fun ChangeFragment(page:String, bundle: Bundle){
         val transaction = supportFragmentManager.beginTransaction()
-        val bundle = Bundle()
         when(page) {
             "Like" -> {
                 transaction.addToBackStack(null)
                 transaction.replace(R.id.fragmentContainerView, LikeFragment())
             }
             "Restaurant" -> {
+                val fragment:Fragment=RestaurantMainFragment()
                 transaction.addToBackStack(null)
-                transaction.replace(R.id.fragmentContainerView, RestaurantMainFragment())
+                fragment.arguments=bundle
+                transaction.replace(R.id.fragmentContainerView, fragment)
             }
             "MyReview" -> {
                 val fragment:Fragment=MyReviewFragment()

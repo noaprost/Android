@@ -96,8 +96,9 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
             reviewComment.text=this.review.comment
 
             myReviewInfoBox.setOnClickListener {
+                val bundle=Bundle()
                 val mainAct = activity as MainActivity
-                mainAct.ChangeFragment("Restaurant")
+                mainAct.ChangeFragment("Restaurant", bundle)
             }
             deleteButton.setOnClickListener{
                 val dialog = CustomDialog(this@MyReviewFragment, "리뷰를 삭제하시겠습니까?\n재작성은 불가능합니다.", 0, 0)

@@ -49,7 +49,7 @@ data class Restaurants(
     val currWaiting: Int, //todo
     val keyWord:List<keyword>,
     //resMngNum:String
-)
+):Serializable
 data class keyword(
     val keyword:String
 )

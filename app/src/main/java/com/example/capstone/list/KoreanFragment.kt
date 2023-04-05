@@ -45,6 +45,8 @@ class KoreanFragment : Fragment() {
         }
         val requestString=arr[1]
         showRestaurants(resAddress(resAddress = requestString))
+        Log.d("retrofit", "resAddress:${arr} ${requestString}")
+
         return root
     }
     inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -71,8 +73,10 @@ class KoreanFragment : Fragment() {
             }
             waitingNum.text=restaurantList.currWaiting.toString()
             itemView.setOnClickListener {
+                val bundle=Bundle()
+                bundle.putSerializable("restaurant", restaurantList)
                 val mainAct = activity as MainActivity
-                mainAct.ChangeFragment("Restaurant")
+                mainAct.ChangeFragment("Restaurant", bundle)
             }
 
         }
