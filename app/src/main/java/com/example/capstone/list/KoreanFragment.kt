@@ -67,9 +67,14 @@ class KoreanFragment : Fragment() {
             commentNumber.text = restaurantList.revCnt.toString()
             name.text = restaurantList.resName
             if(restaurantList.keyWord !=null){
-                keyword1.text=restaurantList.keyWord[0].toString()
-                keyword2.text=restaurantList.keyWord[1].toString()
-                keyword3.text=restaurantList.keyWord[2].toString()
+                var arr:List<String> =listOf("", "", "")
+                for (addr in restaurantList.keyWord) {
+                    val splitedAddr = restaurantList.keyWord.split("[", "]", ",", "\"")
+                    arr = splitedAddr
+                }
+                keyword1.text="#"+arr[2]
+                keyword2.text="#"+arr[5]
+                keyword3.text="#"+arr[8]
             }
             waitingNum.text=restaurantList.currWaiting.toString()
             itemView.setOnClickListener {

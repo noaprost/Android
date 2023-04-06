@@ -11,35 +11,45 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:iconifiedByDefault="false"
+            android:queryHint="검색어를 입력해주세요" />
+
         <LinearLayout
             android:id="@+id/searchLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/inputSearchKeyword"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="16dp"
-                android:ems="10"
                 android:layout_weight="1"
+                android:ems="10"
+                android:hint="검색어를 입력해주세요"
                 android:inputType="textPersonName"
-                android:text="검색어를 입력해주세요"
-                android:textColor="@color/LightGray" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/LightGray" />
 
             <ImageButton
                 android:id="@+id/searchBtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_weight="0.1"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="16dp"
+                android:layout_weight="0.1"
                 android:background="@color/white"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_search"
-                android:layout_gravity="center_vertical"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </LinearLayout>
@@ -54,10 +64,11 @@
                 android:id="@+id/restaurantSearchRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:fastScrollHorizontalThumbDrawable="@layout/item_restaurant_search"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:listitem="@layout/item_restaurant_search"/>
+                tools:listitem="@layout/item_restaurant_search" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
