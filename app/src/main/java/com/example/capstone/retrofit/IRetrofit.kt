@@ -10,5 +10,5 @@ interface IRetrofit {
     fun showRestaurants(@Body resAddress: resAddress):Call<RestaurantList>
 
     @POST("/restaurant/name")
-    fun searchRestaurants(@Body resName: String):Call<List<RestaurantList>>
+    fun searchRestaurants(@Body resName: resName):Call<RestaurantList>
 }

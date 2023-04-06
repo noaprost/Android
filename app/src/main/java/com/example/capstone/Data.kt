@@ -47,14 +47,15 @@ data class Restaurants(
     val resWaitClose: String,
     val resAddress: String,
     val currWaiting: Int, //todo
-    val keyWord:List<keyword>,
+    val keyWord:String,
     //resMngNum:String
 ):Serializable
-data class keyword(
-    val keyword:String
-)
+
 data class resAddress(
     val resAddress:String
+)
+data class resName(
+    val resName:String
 )
 data class RestaurantList(
     val results: List<Restaurants>

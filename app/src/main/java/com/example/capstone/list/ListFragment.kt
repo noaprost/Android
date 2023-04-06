@@ -103,10 +103,16 @@ class ListFragment : Fragment(), OnMapReadyCallback {
                 binding.mapResRaiting.text = restaurant.resRating.toString()
                 binding.mapResRevCnt.text = restaurant.revCnt.toString()
                 binding.waitingTeamNum.text = restaurant.currWaiting.toString()
-                if(restaurant.keyWord!=null){
-                    binding.maKeyword1.text = restaurant.keyWord[0].toString()
-                    binding.maKeyword2.text = restaurant.keyWord[0].toString()
-                    binding.maKeyword3.text = restaurant.keyWord[0].toString()
+
+                if(restaurant.keyWord !=null){
+                    var arr:List<String> =listOf("", "", "")
+                    for (addr in restaurant.keyWord) {
+                        val splitedAddr = restaurant.keyWord.split("[", "]", ",", "\"")
+                        arr = splitedAddr
+                    }
+                    binding.maKeyword1.text="#"+arr[2]
+                    binding.maKeyword2.text="#"+arr[5]
+                    binding.maKeyword3.text="#"+arr[8]
                 }
                 binding.cardView.visibility = View.VISIBLE
                 binding.cardView.setOnClickListener {
