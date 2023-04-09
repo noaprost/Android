@@ -34,9 +34,12 @@ class RestaurantMainFragment : Fragment() {
         val mainAct = activity as MainActivity
         mainAct.HideBottomNavi(true)
 
+        val bundle = arguments
+        resInfo=bundle!!.getSerializable("restaurant") as Restaurants
+
         val viewPager: ViewPager2 = binding.pager
         val tabLayout: TabLayout = binding.tabLayout
-        val viewpagerFragmentAdapter = ViewPagerAdapter(this)
+        val viewpagerFragmentAdapter = ViewPagerAdapter(this,bundle)
 
         // ViewPager2의 adapter 설정
         viewPager.adapter = viewpagerFragmentAdapter
@@ -47,8 +50,7 @@ class RestaurantMainFragment : Fragment() {
 
         // 2. TabLayout 과 ViewPager2를 연결하고, TabItem 의 메뉴명을 설정한다.
         TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
-        val bundle = arguments
-        resInfo=bundle!!.getSerializable("restaurant") as Restaurants
+
 
         binding.mainScrollView.run{
             header=binding.headerView
@@ -98,7 +100,24 @@ class RestaurantMainFragment : Fragment() {
             }
         })
         viewPager.isUserInputEnabled = false
+        attach()
         return root
+    }
+    fun attach(){
+        if(resInfo.resImg!=null) binding.imageView.setBackgroundResource(resInfo.resImg)
+        binding.textView.text=resInfo.resName
+        binding.star.text=resInfo.resRating.toString()
+        binding.totalReview.text=resInfo.revCnt.toString()
+        if(resInfo.keyWord !=null){
+            var arr:List<String> =listOf("", "", "")
+            for (addr in resInfo.keyWord) {
+                val splitedAddr = resInfo.keyWord.split("[", "]", ",", "\"")
+                arr = splitedAddr
+            }
+            binding.keyword1.text="#"+arr[2]
+            binding.keyword2.text="#"+arr[5]
+            binding.keyword3.text="#"+arr[8]
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()
