@@ -1,6 +1,7 @@
 package com.example.capstone.restaurant
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.example.capstone.MainActivity
 import com.example.capstone.R
-import com.example.capstone.databinding.FragmentMyPageBinding
-import com.example.capstone.databinding.FragmentRestaurantMainBinding
+import com.example.capstone.Restaurants
 import com.example.capstone.databinding.FragmentRestaurantStateBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
@@ -24,14 +24,16 @@ class RestaurantStateFragment : Fragment() {
 
     private var _binding: FragmentRestaurantStateBinding? = null
     private val binding get() = _binding!!
-
+    lateinit var resInfo:Restaurants
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentRestaurantStateBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
+        val bundle = arguments
+        resInfo=bundle!!.getSerializable("restaurant") as Restaurants
+        Log.d("hy", resInfo.toString())
         var barChart: BarChart = binding.barChart // barChart 생성
 
         val entries = ArrayList<BarEntry>()
