@@ -151,7 +151,6 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
         binding.constraintLayout4.setOnClickListener {
-            Log.d("hy", "위치클릭")
             if (checkPermissionForLocation(requireContext())) {
                 startLocationUpdates()
             }
@@ -208,7 +207,6 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
     }
 
     private fun startLocationUpdates() {
-        Log.d("hy", "startLocationUpdates")
         //FusedLocationProviderClient의 인스턴스를 생성.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -225,35 +223,32 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
 
         override fun onLocationResult(locationResult: LocationResult) {
             // 시스템에서 받은 location 정보를 onLocationChanged()에 전달
-            locationResult.lastLocation
             val location=locationResult.lastLocation
             val geocoder = Geocoder(context, Locale.KOREA)
             val address:ArrayList<Address>
-            var addressResult: String
-            Log.d("hy", "${location!!.latitude}, ${location.longitude}")
-            val lat:Double=location.latitude
+            val lat:Double=location!!.latitude
             val lng:Double=location.longitude
             try {
                 address = geocoder.getFromLocation(lat, lng, 10) as ArrayList<Address>
                 if (address.size > 0) {
                     // 주소 받아오기
-                    val currentLocationAddress = address[0].getAddressLine(0).toString()
-                    addressResult = currentLocationAddress
-                    binding.userLocation.text=addressResult
+                    val addressResult = address[0].getAddressLine(0).toString()
                     var arr: List<String> = listOf("인천광역시", "연수구", "송도동")
                     for (addr in addressResult) {
                         val splitedAddr = addressResult.split(" ")
                         arr = splitedAddr
                     }
-                    presentLocation = arr[1] + " " + arr[2] + " " + arr[3] + " " + arr[4]
-                    binding.userLocation.text = presentLocation
+                    for(i in 1 until arr.size){
+                        presentLocation=presentLocation+arr[i]+" "
+                    }
+                    Log.d("hy", presentLocation)
+                    binding.userLocation.text=presentLocation
                     userInfo.edit().putString("userLocation", presentLocation).apply()
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
-                binding.userLocation.text = location.latitude.toString()+" "+location.longitude.toString()
+                binding.userLocation.text = location!!.latitude.toString()+" "+location.longitude.toString()
             }
-
         }
     }
 
@@ -279,7 +274,6 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
         if (requestCode == REQUEST_PERMISSION_LOCATION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startLocationUpdates()
-
             } else {
                 Log.d("ttt", "onRequestPermissionsResult() _ 권한 허용 거부")
                 Toast.makeText(requireContext(), "권한이 없어 해당 기능을 실행할 수 없습니다.", Toast.LENGTH_SHORT).show()

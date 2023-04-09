@@ -103,10 +103,16 @@ class ListFragment : Fragment(), OnMapReadyCallback {
                 binding.mapResRaiting.text = restaurant.resRating.toString()
                 binding.mapResRevCnt.text = restaurant.revCnt.toString()
                 binding.waitingTeamNum.text = restaurant.currWaiting.toString()
-                if(restaurant.keyWord!=null){
-                    binding.maKeyword1.text = restaurant.keyWord[0].toString()
-                    binding.maKeyword2.text = restaurant.keyWord[0].toString()
-                    binding.maKeyword3.text = restaurant.keyWord[0].toString()
+
+                if(restaurant.keyWord !=null){
+                    var arr:List<String> =listOf("", "", "")
+                    for (addr in restaurant.keyWord) {
+                        val splitedAddr = restaurant.keyWord.split("[", "]", ",", "\"")
+                        arr = splitedAddr
+                    }
+                    binding.maKeyword1.text="#"+arr[2]
+                    binding.maKeyword2.text="#"+arr[5]
+                    binding.maKeyword3.text="#"+arr[8]
                 }
                 binding.cardView.visibility = View.VISIBLE
                 binding.cardView.setOnClickListener {
@@ -159,7 +165,9 @@ class ListFragment : Fragment(), OnMapReadyCallback {
                     var arr: List<String> = listOf("인천광역시", "연수구", "송도동")
                     for (addr in addressResult)
                         arr = addressResult.split(" ")
-                    presentLocation = arr[1] + " " + arr[2] + " " + arr[3] + " " + arr[4]
+                    for(i in 1 until arr.size){
+                        presentLocation=presentLocation+arr[i]+" "
+                    }
                     userInfo.edit().putString("userLocation", presentLocation).apply()
                     showRestaurants(resAddress(arr[3]))
                 }

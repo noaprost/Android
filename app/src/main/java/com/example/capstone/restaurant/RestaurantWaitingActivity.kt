@@ -14,6 +14,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.capstone.ConfirmDialogInterface
 import com.example.capstone.CustomDialog
+import com.example.capstone.MainActivity
 import com.example.capstone.R
 import com.example.capstone.databinding.ActivityRestaurantWaitingBinding
 

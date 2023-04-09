@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="bottom"
     app:umanoOverlay="true"
+    app:umanoPanelHeight="25dp"
     tools:context=".list.ListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -202,7 +203,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/background_round_rectangular">
 
         <androidx.cardview.widget.CardView
