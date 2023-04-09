@@ -91,7 +91,7 @@ class SearchFragment : Fragment() {
             return SearchViewHolder(view)
         }
 
-        override fun getItemCount(): Int = 7
+        override fun getItemCount(): Int = searchList.size
 
         override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
             val post=searchList[position]

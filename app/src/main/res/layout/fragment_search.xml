@@ -32,8 +32,8 @@
 
             <ImageButton
                 android:id="@+id/searchBtn"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
                 android:layout_weight="0.1"
                 android:layout_marginRight="16dp"
                 android:background="@color/white"

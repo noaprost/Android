@@ -4,7 +4,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,6 +12,7 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/txtWaitingDate"
         app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="20dp"
         tools:ignore="NotSibling">
 
         <LinearLayout
@@ -80,20 +81,19 @@
 <!--                        디자인 수정 필요-->
                             <Button
                                 android:id="@+id/historyDetailBtn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_width="100dp"
+                                android:layout_height="40dp"
                                 android:background="@drawable/background_round_rectangular"
                                 android:textColor="@color/white"
                                 android:text="상세 정보"
                                 android:textSize="14dp"
+                                android:layout_marginRight="8dp"
                                 android:textStyle="bold"/>
 
                             <Button
                                 android:id="@+id/historyReviewBtn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_width="100dp"
+                                android:layout_height="40dp"
                                 android:layout_marginLeft="8dp"
                                 android:background="@drawable/background_round_rectangular"
                                 android:textColor="@color/white"

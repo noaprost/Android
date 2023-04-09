@@ -51,6 +51,12 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"></activity>
+        <activity
+            android:name=".matching.MatchingRestaurantActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".hot.HotRestaurantActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
