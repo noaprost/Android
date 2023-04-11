@@ -39,7 +39,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView69"
+                        android:id="@+id/title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="온리원 파스타 송도점"
@@ -48,7 +48,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView70"
+                        android:id="@+id/info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="파스타 전문점입니다 :)"
@@ -105,7 +105,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/textView71"
+                        android:id="@+id/address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="인천광역시 연수구 아카데미로"
