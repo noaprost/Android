@@ -2,6 +2,7 @@ package com.example.capstone.home
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Address
@@ -17,10 +18,13 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.ConfirmDialogInterface
 import com.example.capstone.CustomDialog
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHomeBinding
+import com.example.capstone.hot.HotRestaurantActivity
+import com.example.capstone.matching.MatchingRestaurantActivity
 import com.google.android.gms.location.*
 import java.io.IOException
 import java.util.*
@@ -30,6 +34,8 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
 
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private var matchingRestaurantList = ArrayList<Restaurant>()
+    private var hotRestaurantList = ArrayList<Restaurant>()
 
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
     private lateinit var mLocationRequest: LocationRequest // 위치 정보 요청의 매개변수를 저장하는
@@ -59,28 +65,86 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
             val dialog = CustomDialog(this,"", 0, 0)
         }
 
-        val restaurantList = arrayListOf(
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-            Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점"),
-        )
+        binding.title1.setOnClickListener {
+            val intent = Intent(activity, MatchingRestaurantActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.title2.setOnClickListener {
+            val intent = Intent(activity, HotRestaurantActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 추천 음식점 데이터
+        matchingRestaurantList.apply{
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 4.9, 20, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 3.8, 82, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 4.1, 5, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+
+        }
+
+        // hot한 음식점 데이터
+        hotRestaurantList.apply {
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 4.4, 29, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 4.8, 72, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 4.1, 5, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+            add(
+                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
+            )
+        }
 
         binding.restaurantHomeRecyclerView1.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.restaurantHomeRecyclerView1.setHasFixedSize(true)
-        binding.restaurantHomeRecyclerView1.adapter = RestaurantAdapter(restaurantList)
+        binding.restaurantHomeRecyclerView1.adapter = MatchingRestaurantAdapter(matchingRestaurantList)
 
         binding.restaurantHomeRecyclerView2.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.restaurantHomeRecyclerView2.setHasFixedSize(true)
-        binding.restaurantHomeRecyclerView2.adapter = RestaurantAdapter(restaurantList)
+        binding.restaurantHomeRecyclerView2.adapter = HotRestaurantAdapter(hotRestaurantList)
 
         //위치 관련 코드
         mLocationRequest =  LocationRequest.create().apply {
@@ -95,6 +159,47 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
             binding.userLocation.text= userInfo.getString("userLocation", "")!!
 
         return root
+    }
+
+    inner class RestaurantViewHolder(view : View): RecyclerView.ViewHolder(view){
+        private lateinit var restaurantItem: Restaurant
+
+        fun bind(restaurantItem : Restaurant){
+            this.restaurantItem = restaurantItem
+
+            itemView.setOnClickListener {
+
+            }
+        }
+    }
+
+    inner class MatchingRestaurantAdapter(private val matchingRestaurantList: List<Restaurant>): RecyclerView.Adapter<RestaurantViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
+            val view = layoutInflater.inflate(R.layout.item_restaurant, parent, false)
+            return RestaurantViewHolder(view)
+        }
+
+        override fun getItemCount(): Int = matchingRestaurantList.size
+
+        override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
+            val post = matchingRestaurantList[position]
+            holder.bind(post)
+        }
+    }
+
+    inner class HotRestaurantAdapter(private val hotRestaurantList: List<Restaurant>): RecyclerView.Adapter<RestaurantViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
+            val view = layoutInflater.inflate(R.layout.item_restaurant, parent, false)
+            return RestaurantViewHolder(view)
+        }
+
+        override fun getItemCount(): Int = hotRestaurantList.size
+
+
+        override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
+            val post = hotRestaurantList[position]
+            holder.bind(post)
+        }
     }
 
     override fun onYesButtonClick(num: Int, theme: Int) {
@@ -119,7 +224,7 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
         override fun onLocationResult(locationResult: LocationResult) {
             // 시스템에서 받은 location 정보를 onLocationChanged()에 전달
             val location=locationResult.lastLocation
-            val geocoder = Geocoder(requireContext(), Locale.KOREA)
+            val geocoder = Geocoder(context, Locale.KOREA)
             val address:ArrayList<Address>
             val lat:Double=location!!.latitude
             val lng:Double=location.longitude
