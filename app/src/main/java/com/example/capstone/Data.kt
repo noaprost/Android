@@ -60,3 +60,12 @@ data class resName(
 data class RestaurantList(
     val results: List<Restaurants>
 )
+
+data class AddWaiting(
+    val userID : String,
+    val ResID : String,
+    val Waitheadcount : Int,
+    val WaitTime : String,
+    val WaitSeat : String,
+    val WaitisAccepted : Boolean
+):Serializable

@@ -68,6 +68,9 @@ class RestaurantMainFragment : Fragment() {
 
         binding.button.setOnClickListener {
             val intent = Intent(activity, RestaurantWaitingActivity::class.java)
+            intent.putExtra("resId", resInfo.resPhNum)
+            intent.putExtra("currWaiting", resInfo.currWaiting)
+            intent.putExtra("keyword", resInfo.resSeat)
             startActivity(intent)
         }
 
