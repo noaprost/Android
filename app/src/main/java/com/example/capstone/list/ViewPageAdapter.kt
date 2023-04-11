@@ -8,7 +8,7 @@ import com.example.capstone.mypage.MyReviewFragment
 
 
 class ViewPagerAdapter (fragment : ListFragment) : FragmentStateAdapter(fragment){
-    override fun getItemCount(): Int = 11
+    override fun getItemCount(): Int = 7
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             1 -> {
@@ -41,40 +41,12 @@ class ViewPagerAdapter (fragment : ListFragment) : FragmentStateAdapter(fragment
             }
             5 -> {
                 val bundle= Bundle()
-                bundle.putString("category", "해산물")
+                bundle.putString("category", "카페/ 베이커리")
                 val fragment:Fragment= KoreanFragment()
                 fragment.arguments=bundle
                 fragment
             }
             6 -> {
-                val bundle= Bundle()
-                bundle.putString("category", "육류")
-                val fragment:Fragment= KoreanFragment()
-                fragment.arguments=bundle
-                fragment
-            }
-            7 -> {
-                val bundle= Bundle()
-                bundle.putString("category", "카페")
-                val fragment:Fragment= KoreanFragment()
-                fragment.arguments=bundle
-                fragment
-            }
-            8 -> {
-                val bundle= Bundle()
-                bundle.putString("category", "베이커리")
-                val fragment:Fragment= KoreanFragment()
-                fragment.arguments=bundle
-                fragment
-            }
-            9 -> {
-                val bundle= Bundle()
-                bundle.putString("category", "브런치")
-                val fragment:Fragment= KoreanFragment()
-                fragment.arguments=bundle
-                fragment
-            }
-            10 -> {
                 val bundle= Bundle()
                 bundle.putString("category", "주점")
                 val fragment:Fragment= KoreanFragment()

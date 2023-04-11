@@ -70,7 +70,7 @@ class ListFragment : Fragment(), OnMapReadyCallback {
 
         viewPager.adapter = viewpagerFragmentAdapter
         viewPager.isUserInputEnabled = false
-        val tabTitles = listOf("전체","한식", "양식", "중식", "일식", "해산물", "육류", "카페", "베이커리", "브런치", "주점")
+        val tabTitles = listOf("전체","한식", "양식", "중식", "일식", "카페/베이커리", "주점")
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
 
