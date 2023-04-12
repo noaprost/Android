@@ -68,6 +68,9 @@ class RestaurantMainFragment : Fragment() {
 
         binding.button.setOnClickListener {
             val intent = Intent(activity, RestaurantWaitingActivity::class.java)
+            intent.putExtra("resId", resInfo.resPhNum)
+            intent.putExtra("currWaiting", resInfo.currWaiting)
+            intent.putExtra("keyword", resInfo.resSeat)
             startActivity(intent)
         }
 
@@ -107,7 +110,7 @@ class RestaurantMainFragment : Fragment() {
         if(resInfo.resImg!=null) binding.imageView.setBackgroundResource(resInfo.resImg)
         binding.textView.text=resInfo.resName
         binding.star.text=resInfo.resRating.toString()
-        binding.totalReview.text=resInfo.revCnt.toString()
+        binding.totalReview.text="("+resInfo.revCnt.toString()+")"
         if(resInfo.keyWord !=null){
             var arr:List<String> =listOf("", "", "")
             for (addr in resInfo.keyWord) {

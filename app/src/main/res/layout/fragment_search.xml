@@ -11,12 +11,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.SearchView
+        <SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:queryHint="검색어를 입력해주세요" />
+            android:iconifiedByDefault="false"
+            android:queryHint="검색어를 입력해주세요"
+            app:defaultQueryHint="검색어를 입력해주세요" />
 
         <LinearLayout
             android:id="@+id/searchLayout"
@@ -66,7 +68,7 @@
                 app:fastScrollHorizontalThumbDrawable="@layout/item_restaurant_search"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:listitem="@layout/item_restaurant_search"/>
+                tools:listitem="@layout/item_restaurant_search" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
