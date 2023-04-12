@@ -70,7 +70,8 @@ class RestaurantMainFragment : Fragment() {
             val intent = Intent(activity, RestaurantWaitingActivity::class.java)
             intent.putExtra("resId", resInfo.resPhNum)
             intent.putExtra("currWaiting", resInfo.currWaiting)
-            intent.putExtra("keyword", resInfo.resSeat)
+            intent.putExtra("resSeat", resInfo.resSeat)
+            intent.putExtra("resSeatCnt", resInfo.resSeatCnt)
             startActivity(intent)
         }
 
@@ -114,12 +115,13 @@ class RestaurantMainFragment : Fragment() {
         if(resInfo.keyWord !=null){
             var arr:List<String> =listOf("", "", "")
             for (addr in resInfo.keyWord) {
-                val splitedAddr = resInfo.keyWord.split("[", "]", ",", "\"")
+                val splitedAddr = resInfo.keyWord.split("\": \"", "\", \"", "\"}")
                 arr = splitedAddr
             }
-            binding.keyword1.text="#"+arr[2]
-            binding.keyword2.text="#"+arr[5]
-            binding.keyword3.text="#"+arr[8]
+            Log.d("hy", arr.toString())
+            binding.keyword1.text="#"+arr[1]
+            binding.keyword2.text="#"+arr[3]
+            binding.keyword3.text="#"+arr[5]
         }
     }
     override fun onDestroyView() {

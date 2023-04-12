@@ -32,18 +32,18 @@ class SearchFragment : Fragment() {
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        /*binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener){
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d("hy", query.toString())
-                if (query != null) searchRestaurants(resName(query))
+                if(query!=null) searchRestaurants(resName(query))
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                binding.restaurantSearchRecyclerView.visibility = View.GONE
+                binding.restaurantSearchRecyclerView.visibility=View.GONE
                 return true
             }
-        }*/
+        })
         return root
     }
 

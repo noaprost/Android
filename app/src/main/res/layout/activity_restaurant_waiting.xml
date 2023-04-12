@@ -194,42 +194,48 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#프라이빗" />
+                android:text="#프라이빗"
+                android:visibility="gone" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/seatKeyword4"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#단체석" />
+                android:text="#단체석"
+                android:visibility="gone" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/seatKeyword5"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#에어컨앞" />
+                android:text="#에어컨앞"
+                android:visibility="gone" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/seatKeyword6"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#루프탑" />
+                android:text="#루프탑"
+                android:visibility="gone" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/seatKeyword7"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#포토존" />
+                android:text="#포토존"
+                android:visibility="gone" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/seatKeyword8"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#바테이블" />
+                android:text="#바테이블"
+                android:visibility="gone" />
         </com.google.android.material.chip.ChipGroup>
 
         <LinearLayout
