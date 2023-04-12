@@ -41,12 +41,13 @@ data class Restaurants(
     val resName: String,
     val resPhNum: String,
     val resSeat: String,
+    val resSeatCnt:String,
     val resOpen: String,
     val resClose: String,
     val resWaitOpen: String,
     val resWaitClose: String,
     val resAddress: String,
-    val currWaiting: Int, //todo
+    val currWaiting: Int,
     val keyWord:String,
     //resMngNum:String
 ):Serializable

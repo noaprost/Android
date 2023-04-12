@@ -1,6 +1,7 @@
 package com.example.capstone.restaurant
 
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -16,11 +17,13 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
+import androidx.core.content.withStyledAttributes
 import com.example.capstone.*
 import com.example.capstone.databinding.ActivityRestaurantWaitingBinding
 import com.example.capstone.retrofit.API
 import com.example.capstone.retrofit.IRetrofit
 import com.example.capstone.retrofit.RetrofitClient
+import com.google.android.material.chip.Chip
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,8 +51,38 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
         Log.d("hy", userId)
         resId= intent.getStringExtra("resId").toString()
         binding.textView14.text=intent.getIntExtra("currWaiting", 0).toString()
-
+        val resSeat=intent.getStringExtra("resSeat").toString()
+        val resSeatCnt=intent.getStringExtra("resSeatCnt").toString()
         //todo 좌석 키워드 칩에 연결결
+        var arr:List<String> =listOf("", "", "")
+        for (addr in resSeat) {
+            val splitedAddr = resSeat.split(", ")
+            arr = splitedAddr
+        }
+        var seatKeyword:List<String> =listOf("", "", "")
+        var n=0
+        for(i in arr){
+            if(i!=", ") {
+                binding.chipGroup.addView(Chip(this).apply {
+                    text = "#"+i
+                    isCloseIconVisible = false
+                    //isCheckedIconVisible=true
+
+                    setOnClickListener {
+                        if(this.isChecked){
+                            searKeyword="#"+i
+                            //isSeatKeywordSelected=true
+                            //binding.checkBox.isChecked=false
+                        }else{
+                            searKeyword=""
+                            //isSeatKeywordSelected=false
+                            //binding.checkBox.isChecked=true
+                        }
+                    }
+                })
+            }
+        }
+
 
        var spinnerData=resources.getStringArray(R.array.spinner_array)
         var adapter=ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerData)
