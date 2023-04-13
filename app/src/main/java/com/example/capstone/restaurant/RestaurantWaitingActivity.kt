@@ -52,34 +52,20 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
         resId= intent.getStringExtra("resId").toString()
         binding.textView14.text=intent.getIntExtra("currWaiting", 0).toString()
         val resSeat=intent.getStringExtra("resSeat").toString()
-        val resSeatCnt=intent.getStringExtra("resSeatCnt").toString()
-        //todo 좌석 키워드 칩에 연결결
+
         var arr:List<String> =listOf("", "", "")
         for (addr in resSeat) {
             val splitedAddr = resSeat.split(", ")
             arr = splitedAddr
         }
         var seatKeyword:List<String> =listOf("", "", "")
+        var chipList:List<Chip> =listOf(binding.seatKeyword1,binding.seatKeyword2, binding.seatKeyword3, binding.seatKeyword4, binding.seatKeyword5, binding.seatKeyword6, binding.seatKeyword7, binding.seatKeyword8)
         var n=0
         for(i in arr){
             if(i!=", ") {
-                binding.chipGroup.addView(Chip(this).apply {
-                    text = "#"+i
-                    isCloseIconVisible = false
-                    //isCheckedIconVisible=true
-
-                    setOnClickListener {
-                        if(this.isChecked){
-                            searKeyword="#"+i
-                            //isSeatKeywordSelected=true
-                            //binding.checkBox.isChecked=false
-                        }else{
-                            searKeyword=""
-                            //isSeatKeywordSelected=false
-                            //binding.checkBox.isChecked=true
-                        }
-                    }
-                })
+                chipList[n].text="#"+i
+                chipList[n].visibility=View.VISIBLE
+                n+=1
             }
         }
 
@@ -108,6 +94,7 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
         builder.setSpan(ForegroundColorSpan(resources.getColor(R.color.INUYellow)), 7, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.textView20.text = builder
 
+        /*
         binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
                 binding.seatKeyword1.id->searKeyword=binding.seatKeyword1.text.toString()
@@ -122,10 +109,33 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
             isSeatKeywordSelected=true
             binding.checkBox.isChecked=false
         }
+
+         */
+        binding.chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
+            if(checkedIds.size==0) {
+                binding.checkBox.isChecked=true
+                searKeyword=""
+            }
+            else {
+                when(checkedIds[0]){
+                    binding.seatKeyword1.id->searKeyword=binding.seatKeyword1.text.toString()
+                    binding.seatKeyword2.id->searKeyword=binding.seatKeyword2.text.toString()
+                    binding.seatKeyword3.id->searKeyword=binding.seatKeyword3.text.toString()
+                    binding.seatKeyword4.id->searKeyword=binding.seatKeyword4.text.toString()
+                    binding.seatKeyword5.id->searKeyword=binding.seatKeyword5.text.toString()
+                    binding.seatKeyword6.id->searKeyword=binding.seatKeyword6.text.toString()
+                    binding.seatKeyword7.id->searKeyword=binding.seatKeyword7.text.toString()
+                    binding.seatKeyword8.id->searKeyword=binding.seatKeyword8.text.toString()
+                }
+                isSeatKeywordSelected=true
+                binding.checkBox.isChecked=false
+            }
+        }
         binding.checkBox.setOnClickListener {
             if(binding.checkBox.isChecked) {
                 searKeyword=""
                 isSeatKeywordSelected=true
+                binding.chipGroup.clearCheck()
             }
             else {
                 isSeatKeywordSelected=false

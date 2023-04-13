@@ -88,7 +88,7 @@ class RestaurantMainFragment : Fragment() {
             }
 
         }
-
+        viewPager.offscreenPageLimit=2
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)

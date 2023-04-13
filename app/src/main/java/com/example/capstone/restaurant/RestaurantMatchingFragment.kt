@@ -2,13 +2,14 @@ package com.example.capstone.restaurant
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat.animate
 import com.example.capstone.R
+import com.example.capstone.Restaurants
 import com.example.capstone.databinding.FragmentRestaurantMatchingBinding
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -20,12 +21,12 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
-import com.github.mikephil.charting.utils.ColorTemplate.COLORFUL_COLORS
 
 class RestaurantMatchingFragment : Fragment() {
     private var _binding: FragmentRestaurantMatchingBinding? = null
     private val binding get() = _binding!!
+    lateinit var resInfo:Restaurants
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,7 +34,6 @@ class RestaurantMatchingFragment : Fragment() {
         _binding = FragmentRestaurantMatchingBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.chart.setUsePercentValues(true)
-        //binding.chart.setDrawHoleEnabled(false) //구멍 없애기
         binding.chart.holeRadius=30f
         binding.chart.transparentCircleRadius=35f
         // 성별 데이터 입력
@@ -50,7 +50,6 @@ class RestaurantMatchingFragment : Fragment() {
 
         val pieDataSet = PieDataSet(sex_entries, "")
         pieDataSet.apply {
-
             colors = colorsItems
             valueTextColor = Color.WHITE
             valueTextSize = 10f
@@ -61,8 +60,6 @@ class RestaurantMatchingFragment : Fragment() {
             data = pieData
             description.isEnabled = false
             isRotationEnabled = false
-            //centerText = "남녀 선호도"
-
             setEntryLabelColor(Color.WHITE)
             animateY(1400, Easing.EaseInOutQuad)
             animate()
@@ -121,6 +118,22 @@ class RestaurantMatchingFragment : Fragment() {
             this.data = data //차트의 데이터를 data로 설정해줌.
             setFitBars(true)
             invalidate()
+        }
+
+        //---------------------------------------------------------------------------------
+        val bundle = arguments
+        resInfo=bundle!!.getSerializable("restaurant") as Restaurants
+
+        if(resInfo.keyWord !=null){
+            var arr:List<String> =listOf("", "", "")
+            for (addr in resInfo.keyWord) {
+                val splitedAddr = resInfo.keyWord.split("\": \"", "\", \"", "\"}")
+                arr = splitedAddr
+            }
+            Log.d("hy", arr.toString())
+            binding.BestKeyword.text="#"+arr[1]
+            binding.Bestkeyword2.text="#"+arr[3]
+            binding.Bestkeyword3.text="#"+arr[5]
         }
         return root
 

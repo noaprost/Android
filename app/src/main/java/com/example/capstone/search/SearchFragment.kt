@@ -68,12 +68,12 @@ class SearchFragment : Fragment() {
             if(Restaurants.keyWord !=null){
                 var arr:List<String> =listOf("", "", "")
                 for (addr in Restaurants.keyWord) {
-                    val splitedAddr = Restaurants.keyWord.split("[", "]", ",", "\"")
+                    val splitedAddr = Restaurants.keyWord.split("\": \"", "\", \"", "\"}")
                     arr = splitedAddr
                 }
-                keyword1.text="#"+arr[2]
-                keyword2.text="#"+arr[5]
-                keyword3.text="#"+arr[8]
+                keyword1.text="#"+arr[1]
+                keyword2.text="#"+arr[3]
+                keyword3.text="#"+arr[5]
             }
 
             waitingNum.text=Restaurants.currWaiting.toString()
