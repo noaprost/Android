@@ -14,4 +14,7 @@ interface IRetrofit {
 
     @POST("/user/waiting/insert")
     fun addWaiting(@Body addWaiting: AddWaiting):Call<AddWaiting>
+
+    @POST("/restaurant/reviews")
+    fun showRestaurantReview(@Body ResID: ResID):Call<RestaurantReviewList>
 }
