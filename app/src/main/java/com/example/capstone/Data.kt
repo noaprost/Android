@@ -1,16 +1,19 @@
 package com.example.capstone
 
 import java.io.Serializable
+import java.time.format.DateTimeFormatter
 
 data class Review(
-    val image:Int,
-    val comment:String,
-    val date:String,
-    val score:Long,
-    val keyword1:String,
-    val keyword2:String,
-    val keyword3:String,
-    val userName:String
+    val RevIdx:Int,
+    val UserID: String,
+    val ResID: String,
+    val Rating:Long,
+    val RevTxt: String,
+    val RevImgID:Int,
+    val RevKeyWord: String,
+    val RevSatis:Int,
+    val RevRecom:Int,
+    val RevTime:String
 ): Serializable
 
 data class MyReview(
@@ -58,8 +61,14 @@ data class resAddress(
 data class resName(
     val resName:String
 )
+data class ResID(
+    val ResID:Int
+)
 data class RestaurantList(
     val results: List<Restaurants>
+)
+data class RestaurantReviewList(
+    val result: List<Review>
 )
 
 data class AddWaiting(
