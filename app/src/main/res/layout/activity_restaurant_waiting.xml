@@ -165,6 +165,7 @@
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="상관 없어요" />
         </LinearLayout>
 
@@ -180,14 +181,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:text="#테라스석" />
+                android:text="#테라스석"
+                android:visibility="gone" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/seatKeyword2"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#룸" />
+                android:text="#룸"
+                android:visibility="gone" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/seatKeyword3"

@@ -64,13 +64,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/restaurantReviewRecyclerView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:nestedScrollingEnabled="false"
-      android:overScrollMode="never"
-      tools:listitem="@layout/item_review"
-    />
+            android:id="@+id/restaurantReviewRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            tools:listitem="@layout/item_review" />
     </LinearLayout>
 
 </FrameLayout>

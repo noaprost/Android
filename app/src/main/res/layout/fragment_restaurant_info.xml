@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15sp"
         android:padding="3sp"
-        android:text="인천광역시 연수구 아카데미로"
         android:textColor="#000000" />
 
     <TextView
@@ -42,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15sp"
         android:padding="3sp"
-        android:text="매일 오전 10시 ~ 오후 9시"
         android:textColor="#000000" />
 
     <TextView
@@ -61,7 +59,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15sp"
         android:padding="3sp"
-        android:text="운영시간 30분 전 ~ 운영 마감 1시간 전"
         android:textColor="#000000" />
 
     <TextView
@@ -80,7 +77,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15sp"
         android:padding="3sp"
-        android:text="032-835-0001"
         android:textColor="#000000" />
 
     <TextView
@@ -99,7 +95,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
         android:padding="3sp"
-        android:text="대기 가능 시간"
         android:textColor="#000000" />
 
 </LinearLayout>

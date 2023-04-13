@@ -1,11 +1,15 @@
 package com.example.capstone.restaurant
 
 import android.os.Bundle
+import android.text.TextUtils.split
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.capstone.MainActivity
 import com.example.capstone.R
@@ -33,7 +37,6 @@ class RestaurantStateFragment : Fragment() {
         val root: View = binding.root
         val bundle = arguments
         resInfo=bundle!!.getSerializable("restaurant") as Restaurants
-        Log.d("hy", resInfo.toString())
         var barChart: BarChart = binding.barChart // barChart 생성
 
         val entries = ArrayList<BarEntry>()
@@ -48,9 +51,9 @@ class RestaurantStateFragment : Fragment() {
         barChart.run {
             description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
             setMaxVisibleValueCount(7) // 최대 보이는 그래프 개수를 7개로 지정
-            setPinchZoom(false) // 핀치줌(두손가락으로 줌인 줌 아웃하는것) 설정
-            setDrawBarShadow(false) //그래프의 그림자
-            setDrawGridBackground(false)//격자구조 넣을건지
+            //setPinchZoom(false) // 핀치줌(두손가락으로 줌인 줌 아웃하는것) 설정
+            //setDrawBarShadow(false) //그래프의 그림자
+            //setDrawGridBackground(false)//격자구조 넣을건지
             axisLeft.run { //왼쪽 축. 즉 Y방향 축을 뜻한다.
                 axisMaximum = 101f //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
                 axisMinimum = 0f // 최소값 0
@@ -89,6 +92,23 @@ class RestaurantStateFragment : Fragment() {
             this.data = data //차트의 데이터를 data로 설정해줌.
             setFitBars(true)
             invalidate()
+        }
+
+        var seatKeywordBox:List<LinearLayout> =listOf(binding.seatKeywordBox1,binding.seatKeywordBox2, binding.seatKeywordBox3, binding.seatKeywordBox4, binding.seatKeywordBox5, binding.seatKeywordBox6, binding.seatKeywordBox7, binding.seatKeywordBox8 )
+        var seatKeywordList:List<TextView> =listOf(binding.seatKeyword1, binding.seatKeyword2, binding.seatKeyword3, binding.seatKeyword4, binding.seatKeyword5, binding.seatKeyword6, binding.seatKeyword7, binding.seatKeyword8)
+        var seatKeywordMaxList:List<TextView> =listOf(binding.seat1Max, binding.seat2Max, binding.seat3Max, binding.seat4Max, binding.seat5Max, binding.seat6Max, binding.seat7Max, binding.seat8Max)
+        var arr:List<String> =listOf("", "", "")
+        var arr1:List<String> =listOf("", "", "")
+        for (addr in resInfo.resSeat) {
+            arr =  resInfo.resSeat.split(", ")
+            arr1 =  resInfo.resSeatCnt.split(",")
+        }
+        var n=0
+        for(i in arr){
+            seatKeywordList[n].text="#"+arr[n]
+            seatKeywordBox[n].visibility=View.VISIBLE
+            seatKeywordMaxList[n].text=arr1[n]
+            n+=1
         }
 
         return root
