@@ -1,50 +1,96 @@
 package com.example.capstone.restaurant
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone.MainActivity
-import com.example.capstone.R
-import com.example.capstone.Review
+import com.example.capstone.*
 import com.example.capstone.databinding.ActivityRestaurantReviewDetailBinding
+import com.example.capstone.retrofit.API
+import com.example.capstone.retrofit.IRetrofit
+import com.example.capstone.retrofit.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RestaurantReviewDetail : AppCompatActivity() {
 
     private lateinit var binding: ActivityRestaurantReviewDetailBinding
-    private var dummy = ArrayList<Review>()
-
+    lateinit var resInfo: Restaurants
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =  ActivityRestaurantReviewDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.reviewRecyclerView.layoutManager= LinearLayoutManager(this)
-        binding.reviewRecyclerView.adapter=MyAdapter(dummy)
-
+        resInfo=intent.getSerializableExtra("resInfo") as Restaurants
+        showRestaurantReview(ResID(resInfo.resIdx))
+        binding.textView6.text=resInfo.resName
+        binding.textView9.text=resInfo.resRating.toString()
+        if(resInfo.keyWord !=null){
+            var arr:List<String> =listOf("", "", "")
+            for (addr in resInfo.keyWord) {
+                val splitedAddr = resInfo.keyWord.split("\": \"", "\", \"", "\"}")
+                arr = splitedAddr
+            }
+            binding.restaurantKeyword1.text="#"+arr[1]
+            binding.restaurantKeyword2.text="#"+arr[3]
+            binding.restaurantKeyword3.text="#"+arr[5]
+        }
+        binding.reviewNum.text=resInfo.revCnt.toString()
         binding.backButton.setOnClickListener {
             finish()
         }
     }
-    inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view){
+    inner class MyViewHolder(view:View): RecyclerView.ViewHolder(view){
         private lateinit var review: Review
         private val userName: TextView =itemView.findViewById(R.id.userName)
-        private val writeDate: TextView =itemView.findViewById(R.id.writingDate)
+        private val writingDate: TextView =itemView.findViewById(R.id.writingDate)
+        private val reviewScore: TextView =itemView.findViewById(R.id.reviewScore)
+        private val isSatisfied: ImageView =itemView.findViewById(R.id.isSatisfied)
         private val keyword1: TextView =itemView.findViewById(R.id.textView11)
         private val keyword2: TextView =itemView.findViewById(R.id.textView12)
         private val keyword3: TextView =itemView.findViewById(R.id.textView13)
-        private val comment: TextView =itemView.findViewById(R.id.reviewComment)
+        private val reviewImage: ImageView =itemView.findViewById(R.id.reviewImage)
+        private val reviewComment: TextView =itemView.findViewById(R.id.reviewComment)
 
-
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(review: Review){
             this.review=review
+            if(review.RevTime!=null){
+                var arr:List<String> =listOf("", "", "")
+                for (addr in review.RevKeyWord) {
+                    val splitedAddr = review.RevTime.split("T", ":")
+                    arr = splitedAddr
+                }
 
-            // writeDate.text=this.review.userName //todo 작성일자 연결
-            //todo 사진 연결
+                writingDate.text="${arr[0]} ${arr[1]}:${arr[2]}"
+            }else writingDate.text=""
+
+            reviewScore.text=review.Rating.toString()
+            if(review.RevKeyWord !=null){
+                var arr:List<String> =listOf("", "", "")
+                for (addr in review.RevKeyWord) {
+                    val splitedAddr = review.RevKeyWord.split("[\"", "\", \"", "\"]")
+                    arr = splitedAddr
+                }
+                Log.d("hy", review.RevKeyWord)
+                Log.d("hy", arr.toString())
+                keyword1.text="#"+arr[1]
+                keyword2.text="#"+arr[2]
+                keyword3.text="#"+arr[3]
+            }
+            if(review.RevImgID!=null){
+                reviewImage.visibility=View.VISIBLE
+                //todo 이미지 등록
+            }else{reviewImage.visibility=View.INVISIBLE}
+            reviewComment.text= review.RevTxt
         }
 
     }
@@ -54,11 +100,34 @@ class RestaurantReviewDetail : AppCompatActivity() {
             return MyViewHolder(view)
         }
 
-        override fun getItemCount(): Int = list.size//최근 4개만
-
+        override fun getItemCount(): Int = list.size
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             val post=list[position]
             holder.bind(post)
         }
+    }
+    private fun showRestaurantReview(ResID: ResID){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.showRestaurantReview(ResID=ResID) ?:return
+
+        call.enqueue(object : Callback<RestaurantReviewList> {
+
+            override fun onResponse(call: Call<RestaurantReviewList>, response: Response<RestaurantReviewList>) {
+                Log.d("retrofit", "음식점 리뷰 리스트 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                val arr= response.body()?.result
+                if (arr != null) {
+                    binding.reviewRecyclerView.layoutManager= LinearLayoutManager(this@RestaurantReviewDetail)
+                    binding.reviewRecyclerView.adapter=MyAdapter(arr)
+                }else{
+                    Log.d("hy", ResID.toString())
+                    Toast.makeText(this@RestaurantReviewDetail, "리뷰를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+                }
+
+            }
+            override fun onFailure(call: Call<RestaurantReviewList>, t: Throwable) {
+                Log.d("retrofit", "음식점 리뷰 리스트 - 응답 실패 / t: $t")
+            }
+        })
     }
 }

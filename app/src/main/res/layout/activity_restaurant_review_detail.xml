@@ -31,7 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="온리원 파스타 송도점"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -71,7 +70,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="4.9"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="26sp"
@@ -102,14 +100,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10sp"
-                android:text="#분위기 좋은"
                 android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/restaurantKeyword2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="#연인끼리"
                 android:textColor="#000000" />
 
             <TextView
@@ -117,7 +113,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15sp"
-                android:text="#인스타 맛집"
                 android:textColor="#000000" />
         </LinearLayout>
     </LinearLayout>
@@ -160,7 +155,7 @@
             android:id="@+id/reviewNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="22"
+            android:text="0"
             android:textColor="#000000"
             android:textStyle="bold" />
 
@@ -177,7 +172,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right|center_vertical"
-            android:text="사진 리뷰만 보기" />
+            android:text="사진 리뷰만 보기"
+            android:visibility="gone" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
