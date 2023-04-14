@@ -39,6 +39,7 @@ class RestaurantReviewFragment : Fragment() {
         resInfo=bundle!!.getSerializable("restaurant") as Restaurants
         binding.viewReviewButton.setOnClickListener {
             val intent = Intent(activity, RestaurantReviewDetail::class.java)
+            intent.putExtra("resInfo", resInfo)
             startActivity(intent)
         }
         showRestaurantReview(ResID(resInfo.resIdx))
