@@ -29,7 +29,7 @@ class RestaurantInfoFragment : Fragment() {
         binding.open.text=resInfo.resOpen+" ~ "+resInfo.resClose
         binding.waitingTime.text="운영시간 "+ resInfo.resWaitOpen+"분 전 ~ 운영 마감 "+resInfo.resWaitClose+"분 전"
         binding.phone.text=resInfo.resPhNum
-        //binding.note.text=resInfo.
+        binding.note.text=resInfo.ResComment
         return root
     }
 
