@@ -24,5 +24,8 @@ interface IRetrofit {
 
     @Multipart
     @POST("/upload/review/image")
-    fun sendImage(@Part imageFile : MultipartBody.Part, @Part("RevIdx") RevIdx: String, ):Call<String>
+    fun sendImage(@Part myFile : MultipartBody.Part, @Part("RevIdx") RevIdx: String, ):Call<String>
+
+    @DELETE("/mypage/leaveId")
+    fun deleteAccount(@Body userIdPassword: UserIdPassword):Call<UserIdPassword>
 }

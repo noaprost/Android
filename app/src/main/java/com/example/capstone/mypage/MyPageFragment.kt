@@ -66,10 +66,10 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
             val intent = Intent(activity, StampActivity::class.java)
             startActivity(intent)
         }
-        binding.myLogout.setOnClickListener {
-            val dialog = CustomDialog(this, "로그아웃 하시겠습니까?", 0, 0)
-            dialog.isCancelable = false
-            this@MyPageFragment.fragmentManager?.let { it1 -> dialog.show(it1, "ConfirmDialog") }
+
+        binding.myEdit.setOnClickListener {
+            val intent = Intent(activity, EditInfoActivity::class.java)
+            startActivity(intent)
         }
         return root
 
