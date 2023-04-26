@@ -10,11 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import com.example.capstone.ConfirmDialogInterface
-import com.example.capstone.CustomDialog
-import com.example.capstone.MainActivity
-import com.example.capstone.R
+import com.example.capstone.*
 import com.example.capstone.databinding.FragmentMyPageBinding
+import com.example.capstone.history.WriteReviewActivity
 import com.example.capstone.login.LoginActivity
 
 
@@ -58,9 +56,11 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
             mainAct.ChangePage(R.id.navigation_history)
         }
         binding.myReviewBox.setOnClickListener{
-            val bundle=Bundle()
-            val mainAct = activity as MainActivity
-            mainAct.ChangeFragment("MyReview", bundle)
+            //val bundle=Bundle()
+            //val mainAct = activity as MainActivity
+            //mainAct.ChangeFragment("MyReview", bundle)
+            val intent = Intent(activity, WriteReviewActivity::class.java)
+            startActivity(intent)
         }
         binding.myStampBox.setOnClickListener {
             val intent = Intent(activity, StampActivity::class.java)

@@ -27,6 +27,17 @@ data class MyReview(
     val restaurant:String
 ): Serializable
 
+data class WriteReview(
+    val UserID: String,
+    val ResID: String,
+    val Rating: Long,
+    val RevTxt: String,
+    val RevKeyWord: String,
+    val RevSatis: Boolean,
+    val RevRecom: Boolean,
+    val RevTime: String
+)
+
 data class Restaurant(
     val restaurantImg: Int,
     val rating: Double,
@@ -52,6 +63,7 @@ data class Restaurants(
     val resAddress: String,
     val currWaiting: Int,
     val keyWord:String,
+    val ResComment:String
     //resMngNum:String
 ):Serializable
 

@@ -131,18 +131,44 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="각 1개씩 선택해주세요."
+                android:textAlignment="center"
+                android:textColor="#C4C4C4"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView62"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="10sp"
+                android:text="음식/가격"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroup"
+                android:id="@+id/chipGroup1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20sp">
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginRight="20sp"
+                android:layout_marginBottom="5sp"
+                app:selectionRequired="false"
+                app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/writeReviewKeyword1"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#연인끼리"
+                    android:text="#특별한메뉴"
                     app:chipStrokeColor="#FCAF17" />
 
                 <com.google.android.material.chip.Chip
@@ -150,77 +176,205 @@
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#가족끼리" />
+                    android:text="#건강한맛" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/writeReviewKeyword3"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#프라이빗" />
+                    android:checkable="false"
+                    android:checked="false"
+                    android:text="#다양한메뉴" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/writeReviewKeyword4"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#단체석" />
+                    android:text="#익숙한맛" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/writeReviewKeyword5"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#인스타감성" />
+                    android:text="#가성비" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/writeReviewKeyword6"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#반려견과" />
+                    android:text="#가치있는" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/writeReviewKeyword7"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#포토존" />
+                    android:text="#신선한" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/textView63"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:text="분위기"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginRight="20sp"
+                android:layout_marginBottom="5sp"
+                app:selectionRequired="false"
+                app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/writeReviewKeyword8"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#키즈존" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/writeReviewKeyword12"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="#기념일" />
+                    android:text="#연인끼리"
+                    app:chipStrokeColor="#FCAF17" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/writeReviewKeyword9"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#가성비" />
+                    android:text="#가족끼리" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword15"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#혼자서" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/writeReviewKeyword10"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#맛집" />
+                    android:checkable="false"
+                    android:checked="false"
+                    android:text="#프라이빗" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/writeReviewKeyword11"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#단체석" />
+                    android:text="#독특한" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword12"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#인스타감성" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword13"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#뷰맛집" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword14"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#컨셉추얼" />
+
+
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword16"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#기념일" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/textView64"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:text="편의시설/기타"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginRight="20sp"
+                android:layout_marginBottom="5sp"
+                app:selectionRequired="false"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword17"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#노키즈존"
+                    app:chipStrokeColor="#FCAF17" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword18"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#반려견과" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword19"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="false"
+                    android:checked="false"
+                    android:text="#넓은주차장" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword20"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#친절해요" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword21"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#깔끔한" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/writeReviewKeyword22"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#접근성좋은" />
+
+
+
             </com.google.android.material.chip.ChipGroup>
 
             <LinearLayout
@@ -307,7 +461,7 @@
                 android:background="#80C4C4C4" />
 
             <TextView
-                android:id="@+id/textView62"
+                android:id="@+id/textView65"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -317,7 +471,7 @@
                 android:textColor="#C4C4C4" />
 
             <TextView
-                android:id="@+id/textView63"
+                android:id="@+id/textView66"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
