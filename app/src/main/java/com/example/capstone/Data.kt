@@ -91,3 +91,8 @@ data class AddWaiting(
     val WaitSeat : String,
     val WaitisAccepted : Boolean
 ):Serializable
+
+data class UserIdPassword(
+    val userID: String,
+    val userPassword:String
+)

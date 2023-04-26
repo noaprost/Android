@@ -1,8 +1,10 @@
 package com.example.capstone.history
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
@@ -20,6 +22,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.example.capstone.*
 import com.example.capstone.databinding.ActivityWriteReviewBinding
@@ -46,9 +49,14 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private lateinit var userId:String
     private lateinit var resId:String
     private lateinit var reviewImagePath:MultipartBody.Part
-    lateinit var reviewText:String
+    var reviewText=""
     private var keyword:MutableList<String> = mutableListOf("", "", "")
 
+    private val REQUEST_EXTERNAL_STORAGE = 1
+    private val PERMISSIONS_STORAGE = arrayOf<String>(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =  ActivityWriteReviewBinding.inflate(layoutInflater)
@@ -66,6 +74,11 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
             }
         })
         binding.writeReviewImage.setOnClickListener {
+            val permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE)
+            }
             val intent=Intent(Intent.ACTION_PICK)
             intent.type="image/*"
             activityResult.launch(intent)
@@ -171,7 +184,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                     binding.writeReviewComment.requestFocus()
                     Toast.makeText(this, "리뷰를 작성해주세요.", Toast.LENGTH_SHORT).show()
                 }
-                else if(keyword[0]!="" && keyword[1]!="" && keyword[2]!="" ){
+                else if(keyword[0]=="" || keyword[1]=="" || keyword[2]=="" ){
                     dialog1.dismiss()
                     binding.textView61.requestFocus()
                     Toast.makeText(this, "키워드를 선택해주세요.", Toast.LENGTH_SHORT).show()
@@ -208,7 +221,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     }
     private fun sendImage(RevIdx : String ,image : MultipartBody.Part){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.sendImage(RevIdx = RevIdx, imageFile = image) ?:return
+        val call = iRetrofit?.sendImage(RevIdx = RevIdx, myFile = image) ?:return
 
         Log.d("hy", image.toString())
         call.enqueue(object : Callback<String> {
