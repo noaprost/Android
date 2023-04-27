@@ -108,20 +108,20 @@ class RestaurantMainFragment : Fragment() {
         return root
     }
     fun attach(){
-        if(resInfo.resImg!=null) binding.imageView.setBackgroundResource(resInfo.resImg)
+        //if(resInfo.resImg!=null) binding.imageView.setBackgroundResource(resInfo.resImg)
         binding.textView.text=resInfo.resName
         binding.star.text=resInfo.resRating.toString()
         binding.totalReview.text="("+resInfo.revCnt.toString()+")"
         if(resInfo.keyWord !=null){
             var arr:List<String> =listOf("", "", "")
             for (addr in resInfo.keyWord) {
-                val splitedAddr = resInfo.keyWord.split("\": \"", "\", \"", "\"}")
+                val splitedAddr = resInfo.keyWord.split("[\"", "\", \"", "\"]")
                 arr = splitedAddr
             }
             Log.d("hy", arr.toString())
             binding.keyword1.text="#"+arr[1]
-            binding.keyword2.text="#"+arr[3]
-            binding.keyword3.text="#"+arr[5]
+            binding.keyword2.text="#"+arr[2]
+            binding.keyword3.text="#"+arr[3]
         }
     }
     override fun onDestroyView() {

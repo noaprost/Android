@@ -127,13 +127,13 @@ class RestaurantMatchingFragment : Fragment() {
         if(resInfo.keyWord !=null){
             var arr:List<String> =listOf("", "", "")
             for (addr in resInfo.keyWord) {
-                val splitedAddr = resInfo.keyWord.split("\": \"", "\", \"", "\"}")
+                val splitedAddr = resInfo.keyWord.split("[\"", "\", \"", "\"]")
                 arr = splitedAddr
             }
             Log.d("hy", arr.toString())
             binding.BestKeyword.text="#"+arr[1]
-            binding.Bestkeyword2.text="#"+arr[3]
-            binding.Bestkeyword3.text="#"+arr[5]
+            binding.Bestkeyword2.text="#"+arr[2]
+            binding.Bestkeyword3.text="#"+arr[3]
         }
         return root
 

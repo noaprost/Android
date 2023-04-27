@@ -36,12 +36,12 @@ class RestaurantReviewDetail : AppCompatActivity() {
         if(resInfo.keyWord !=null){
             var arr:List<String> =listOf("", "", "")
             for (addr in resInfo.keyWord) {
-                val splitedAddr = resInfo.keyWord.split("\": \"", "\", \"", "\"}")
+                val splitedAddr = resInfo.keyWord.split("[\"", "\", \"", "\"]")
                 arr = splitedAddr
             }
             binding.restaurantKeyword1.text="#"+arr[1]
-            binding.restaurantKeyword2.text="#"+arr[3]
-            binding.restaurantKeyword3.text="#"+arr[5]
+            binding.restaurantKeyword2.text="#"+arr[2]
+            binding.restaurantKeyword3.text="#"+arr[3]
         }
         binding.reviewNum.text=resInfo.revCnt.toString()
         binding.backButton.setOnClickListener {
