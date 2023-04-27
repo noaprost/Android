@@ -4,6 +4,7 @@ import com.example.capstone.*
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.net.URL
 
 interface IRetrofit {
 
@@ -28,4 +29,7 @@ interface IRetrofit {
 
     @DELETE("/mypage/leaveId")
     fun deleteAccount(@Body userIdPassword: UserIdPassword):Call<UserIdPassword>
+
+    @GET("/{path}")
+    fun getImage(@Path("path")path:String):Call<URL>
 }

@@ -48,7 +48,7 @@ data class Restaurant(
 
 data class Restaurants(
     val resIdx: Int,
-    val resImg: Int,
+    val resImg: String,
     val resRating: Double,
     val resCategory: String,
     val revCnt: Int,

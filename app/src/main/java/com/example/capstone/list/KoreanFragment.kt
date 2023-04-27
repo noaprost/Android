@@ -69,12 +69,12 @@ class KoreanFragment : Fragment() {
             if(restaurantList.keyWord !=null){
                 var arr:List<String> =listOf("", "", "")
                 for (addr in restaurantList.keyWord) {
-                    val splitedAddr = restaurantList.keyWord.split("\": \"", "\", \"", "\"}")
+                    val splitedAddr = restaurantList.keyWord.split("[\"", "\", \"", "\"]")
                     arr = splitedAddr
                 }
                 keyword1.text="#"+arr[1]
-                keyword2.text="#"+arr[3]
-                keyword3.text="#"+arr[5]
+                keyword2.text="#"+arr[2]
+                keyword3.text="#"+arr[3]
             }
             waitingNum.text=restaurantList.currWaiting.toString()
             itemView.setOnClickListener {
