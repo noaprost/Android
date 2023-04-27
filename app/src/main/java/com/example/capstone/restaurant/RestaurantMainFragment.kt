@@ -1,6 +1,7 @@
 package com.example.capstone.restaurant
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,12 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.capstone.MainActivity
 import com.example.capstone.R
 import com.example.capstone.Restaurants
 import com.example.capstone.databinding.FragmentRestaurantMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import java.net.URL
 
 class RestaurantMainFragment : Fragment() {
 
@@ -51,15 +54,10 @@ class RestaurantMainFragment : Fragment() {
         // 2. TabLayout 과 ViewPager2를 연결하고, TabItem 의 메뉴명을 설정한다.
         TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
 
-
         binding.mainScrollView.run{
             header=binding.headerView
-            stickListener = { _ ->
-                Log.d("LOGGER_TAG", "stickListener")
-            }
-            freeListener = { _ ->
-                Log.d("LOGGER_TAG", "freeListener")
-            }
+            stickListener = { _ -> Log.d("LOGGER_TAG", "stickListener") }
+            freeListener = { _ -> Log.d("LOGGER_TAG", "freeListener") }
         }
 
         binding.backButton.setOnClickListener {
@@ -108,7 +106,16 @@ class RestaurantMainFragment : Fragment() {
         return root
     }
     fun attach(){
-        //if(resInfo.resImg!=null) binding.imageView.setBackgroundResource(resInfo.resImg)
+        if(resInfo.resImg!=null) {
+            //todo 이미지 url 수정
+            val url="http://ec2-13-125-237-193.ap-northeast-2.compute.amazonaws.com:3000/1d2a9e7a-44aa-42bd-9753-ff560d9df62a.PNG"
+            Glide.with(this)
+                .load(url) // 불러올 이미지 url
+                .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
+                .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                .into(binding.imageView) // 이미지를 넣을 뷰
+
+        }
         binding.textView.text=resInfo.resName
         binding.star.text=resInfo.resRating.toString()
         binding.totalReview.text="("+resInfo.revCnt.toString()+")"
