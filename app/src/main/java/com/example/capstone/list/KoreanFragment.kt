@@ -44,7 +44,7 @@ class KoreanFragment : Fragment() {
             arr = splitedAddr
         }
         val requestString=arr[1]
-        showRestaurants(resAddress(resAddress = requestString))
+        showRestaurantsByCategory(resAddressCategory(resAddress = requestString, category = category))
         Log.d("retrofit", "resAddress:${arr} ${requestString}")
 
         return root
@@ -100,9 +100,9 @@ class KoreanFragment : Fragment() {
             holder.bind(post)
         }
     }
-    private fun showRestaurants(resAddress: resAddress){
+    private fun showRestaurantsByCategory(resAddressCategory: resAddressCategory){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.showRestaurants(resAddress=resAddress) ?:return
+        val call = iRetrofit?.showRestaurantsByCategory(resAddressCategory=resAddressCategory) ?:return
 
         call.enqueue(object : Callback<RestaurantList> {
 

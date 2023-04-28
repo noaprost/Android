@@ -1,5 +1,8 @@
 package com.example.capstone
 
+import android.media.Image
+import okhttp3.MultipartBody
+import java.io.File
 import java.io.Serializable
 import java.time.format.DateTimeFormatter
 
@@ -28,14 +31,16 @@ data class MyReview(
 ): Serializable
 
 data class WriteReview(
+    val myFile:String,
     val UserID: String,
     val ResID: String,
-    val Rating: Long,
+    val Rating: Double,
     val RevTxt: String,
     val RevKeyWord: String,
     val RevSatis: Boolean,
     val RevRecom: Boolean,
     val RevTime: String
+
 )
 
 data class Restaurant(
@@ -69,6 +74,10 @@ data class Restaurants(
 
 data class resAddress(
     val resAddress:String
+)
+data class resAddressCategory(
+    val resAddress:String,
+    val category:String
 )
 data class resName(
     val resName:String
