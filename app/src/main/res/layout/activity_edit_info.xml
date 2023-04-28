@@ -127,40 +127,6 @@
         android:padding="5sp">
 
         <LinearLayout
-            android:id="@+id/my_logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <ImageView
-                android:id="@+id/imageView22"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_logout" />
-
-            <TextView
-                android:id="@+id/textView31"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="로그아웃"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/imageView23"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_next" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/my_delete_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

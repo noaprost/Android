@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.capstone.*
 import com.example.capstone.databinding.FragmentRestaurantReviewBinding
 import com.example.capstone.retrofit.API
@@ -28,6 +29,7 @@ class RestaurantReviewFragment : Fragment() {
     private var _binding: FragmentRestaurantReviewBinding? = null
     private val binding get() = _binding!!
     lateinit var resInfo: Restaurants
+    private var imgUrl=""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -87,9 +89,18 @@ class RestaurantReviewFragment : Fragment() {
             }
             if(review.RevImgID!=null){
                 reviewImage.visibility=View.VISIBLE
-                //todo 이미지 등록
-            }
+                getReviewImage(RevIdx(review.RevIdx))
+                val url="http://ec2-13-125-237-193.ap-northeast-2.compute.amazonaws.com:3000/${imgUrl}"
+                Glide.with(this@RestaurantReviewFragment)
+                    .load(url) // 불러올 이미지 url
+                    .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
+                    .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                    .into(reviewImage) // 이미지를 넣을 뷰
+            }else{reviewImage.visibility=View.INVISIBLE}
             reviewComment.text= review.RevTxt
+            if(review.RevSatis!=0){
+                isSatisfied.setImageResource(R.drawable.ic_unsatisfied)
+            }
         }
 
     }
@@ -128,6 +139,23 @@ class RestaurantReviewFragment : Fragment() {
             }
             override fun onFailure(call: Call<RestaurantReviewList>, t: Throwable) {
                 Log.d("retrofit", "음식점 리뷰 리스트 - 응답 실패 / t: $t")
+            }
+        })
+    }
+    private fun getReviewImage(RevIdx:RevIdx){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.getReviewImage(RevIdx) ?:return
+
+        call.enqueue(object : Callback<ReturnRevImg> {
+
+            override fun onResponse(call: Call<ReturnRevImg>, response: Response<ReturnRevImg>) {
+                Log.d("retrofit", "리뷰 이미지 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                val arr= response.body()?.result
+                imgUrl=response.body()!!.result[0].RevImg
+
+            }
+            override fun onFailure(call: Call<ReturnRevImg>, t: Throwable) {
+                Log.d("retrofit", "리뷰 이미지 - 응답 실패 / t: $t")
             }
         })
     }

@@ -25,6 +25,16 @@ class MainActivity : AppCompatActivity() {
     private var userId by Delegates.notNull<Long>()
     var isMember by Delegates.notNull<Boolean>()
     lateinit var userInfo: SharedPreferences
+    init {
+        instance = this
+    }
+    companion object {
+        private var instance: MainActivity? = null
+
+        fun getInstance(): MainActivity? 		{
+            return instance
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =  ActivityMainBinding.inflate(layoutInflater)
