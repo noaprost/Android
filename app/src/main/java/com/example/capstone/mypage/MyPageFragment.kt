@@ -56,9 +56,12 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
             mainAct.ChangePage(R.id.navigation_history)
         }
         binding.myReviewBox.setOnClickListener{
-            //val bundle=Bundle()
-            //val mainAct = activity as MainActivity
-            //mainAct.ChangeFragment("MyReview", bundle)
+            val bundle=Bundle()
+            val mainAct = activity as MainActivity
+            mainAct.ChangeFragment("MyReview", bundle)
+        }
+        binding.myAnnounce.setOnClickListener {
+            //임시
             val intent = Intent(activity, WriteReviewActivity::class.java)
             startActivity(intent)
         }
@@ -66,7 +69,14 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
             val intent = Intent(activity, StampActivity::class.java)
             startActivity(intent)
         }
-
+        binding.myLogout.setOnClickListener {
+            userInfo.edit().putBoolean("isMember", false).apply()
+            userInfo.edit().putString("userId", "01012345678").apply()
+            userInfo.edit().putString("userPassword", "0000").apply()
+            userInfo.edit().putString("userLocation", "").apply()
+            val mainact = activity as MainActivity
+            mainact.ChangePage(R.id.navigation_home)
+        }
         binding.myEdit.setOnClickListener {
             val intent = Intent(activity, EditInfoActivity::class.java)
             startActivity(intent)

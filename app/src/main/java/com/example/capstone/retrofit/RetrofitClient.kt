@@ -66,7 +66,7 @@ object RetrofitClient {
                .baseUrl(baseUrl)
                .addConverterFactory(GsonConverterFactory.create())
                //위에서 설정한 클라이언트로 레트로핏 클라이언트 설정
-               //.client(client.build())
+               .client(client.build())
                .build()
         }
         return retrofitClient

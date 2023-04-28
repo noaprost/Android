@@ -1,12 +1,8 @@
 package com.example.capstone.retrofit
 
 import com.example.capstone.*
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
-import java.io.File
-import java.net.URL
 
 interface IRetrofit {
 
@@ -30,5 +26,11 @@ interface IRetrofit {
 
     @DELETE("/mypage/leaveId")
     fun deleteAccount(@Body userIdPassword: UserIdPassword):Call<UserIdPassword>
+
+    @POST("/review/image")
+    fun getReviewImage(@Body RevIdx: RevIdx):Call<ReturnRevImg>
+
+    @GET("/mypage/review")
+    fun myReview(@Body userId: UserId):Call<MyReview>
 
 }

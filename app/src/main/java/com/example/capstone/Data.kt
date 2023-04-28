@@ -19,17 +19,6 @@ data class Review(
     val RevTime:String
 ): Serializable
 
-data class MyReview(
-    val image:Int,
-    val comment:String,
-    val date:String,
-    val score:Long,
-    val keyword1:String,
-    val keyword2:String,
-    val keyword3:String,
-    val restaurant:String
-): Serializable
-
 data class WriteReview(
     val myFile:String,
     val UserID: String,
@@ -104,4 +93,39 @@ data class AddWaiting(
 data class UserIdPassword(
     val userID: String,
     val userPassword:String
+)
+// 리뷰이미지
+data class RevIdx(
+    val RevIdx:Int
+)
+data class RevImg(
+    val RevImg:String
+)
+data class ReturnRevImg(
+    val RevIdx:String,
+    val result:List<RevImg>
+)
+
+//내가 작성한 리뷰
+data class MyReviewData(
+    val RevIdx:Int,
+    val UserID:String,
+    val ResID:String,
+    val Rating:Double,
+    val RevTxt:String,
+    val RevKeyWord:String,
+    val RevSatis:Int,
+    val RevRecom:Int,
+    val RevTime:String,
+    val RevImg:String,
+    val resIdx:String,
+    val resName:String,
+): Serializable
+
+data class MyReview(
+    val code:Int,
+    val message:List<MyReviewData>
+)
+data class UserId(
+    val userId:String
 )
