@@ -107,7 +107,7 @@ class KoreanFragment : Fragment() {
         call.enqueue(object : Callback<RestaurantList> {
 
             override fun onResponse(call: Call<RestaurantList>, response: Response<RestaurantList>) {
-                Log.d("retrofit", "음식점 리스트 - 응답 성공 / t : ${response.raw()} ${response.body()?.results}")
+                Log.d("retrofit", "음식점 리스트 -  ${category} 응답 성공 / t : ${response.raw()} ${response.body()?.results}")
                 val arr= response.body()?.results
                 if (arr != null) {
                     binding.restaurantListRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -118,7 +118,7 @@ class KoreanFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<RestaurantList>, t: Throwable) {
-                Log.d("retrofit", "음식점 리스트 - 한식 응답 실패 / t: $t")
+                Log.d("retrofit", "음식점 리스트 - ${category} 응답 실패 / t: $t")
             }
         })
     }

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.Cursor
+import okhttp3.*
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -29,9 +30,8 @@ import com.example.capstone.databinding.ActivityWriteReviewBinding
 import com.example.capstone.retrofit.API
 import com.example.capstone.retrofit.IRetrofit
 import com.example.capstone.retrofit.RetrofitClient
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,7 +48,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private lateinit var userInfo: SharedPreferences
     private lateinit var userId:String
     private lateinit var resId:String
-    private lateinit var reviewImagePath:MultipartBody.Part
+    private lateinit var reviewImagePath:File
     var reviewText=""
     private var keyword:MutableList<String> = mutableListOf("", "", "")
 
@@ -57,12 +57,13 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =  ActivityWriteReviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE)
-        userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "010-1234-5678").toString()
+        userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "1").toString()
         //resId= intent.getStringExtra("resId").toString() //todo resId 연결
        //binding.writeReviewName.text=intent.getStringExtra("resName").toString()//todo resName 연결
         binding.writeReviewComment.addTextChangedListener(object : TextWatcher {
@@ -117,23 +118,22 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                 binding.writeReviewKeyword10.id->keyword[1]=binding.writeReviewKeyword10.text.toString()
                 binding.writeReviewKeyword11.id->keyword[1]=binding.writeReviewKeyword11.text.toString()
                 binding.writeReviewKeyword12.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword13.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword14.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword15.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword16.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
+                binding.writeReviewKeyword13.id->keyword[1]=binding.writeReviewKeyword13.text.toString()
+                binding.writeReviewKeyword14.id->keyword[1]=binding.writeReviewKeyword14.text.toString()
+                binding.writeReviewKeyword15.id->keyword[1]=binding.writeReviewKeyword15.text.toString()
+                binding.writeReviewKeyword16.id->keyword[1]=binding.writeReviewKeyword16.text.toString()
             }
         }
         binding.chipGroup3.setOnCheckedStateChangeListener { _, checkedIds ->
             when(checkedIds[0]){
-                binding.writeReviewKeyword17.id->keyword[2]=binding.writeReviewKeyword8.text.toString()
-                binding.writeReviewKeyword18.id->keyword[2]=binding.writeReviewKeyword9.text.toString()
-                binding.writeReviewKeyword19.id->keyword[2]=binding.writeReviewKeyword10.text.toString()
-                binding.writeReviewKeyword20.id->keyword[2]=binding.writeReviewKeyword11.text.toString()
-                binding.writeReviewKeyword21.id->keyword[2]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword22.id->keyword[2]=binding.writeReviewKeyword12.text.toString()
+                binding.writeReviewKeyword17.id->keyword[2]=binding.writeReviewKeyword17.text.toString()
+                binding.writeReviewKeyword18.id->keyword[2]=binding.writeReviewKeyword18.text.toString()
+                binding.writeReviewKeyword19.id->keyword[2]=binding.writeReviewKeyword19.text.toString()
+                binding.writeReviewKeyword20.id->keyword[2]=binding.writeReviewKeyword20.text.toString()
+                binding.writeReviewKeyword21.id->keyword[2]=binding.writeReviewKeyword21.text.toString()
+                binding.writeReviewKeyword22.id->keyword[2]=binding.writeReviewKeyword22.text.toString()
             }
         }
-
 
         binding.writeReviewButton.setOnClickListener{
             dialog1 = CustomDialog(this, "리뷰를 등록하시겠습니까?", 0, 0)
@@ -156,11 +156,9 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                     .into(binding.addReviewImage)
                 binding.reviewImageBox.visibility= View.VISIBLE
                 binding.addReviewImage.clipToOutline = true
-                val file = File(absolutelyPath(uri, this))
-                val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-                reviewImagePath = MultipartBody.Part.createFormData("proFile", file.name, requestFile)
-            }
-
+            val file = File(absolutelyPath(uri, this))
+            reviewImagePath = file
+        }
     }
     private fun absolutelyPath(path: Uri?, context : Context): String { //이미지 절대경로 변환 함수
         val proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
@@ -192,17 +190,27 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                     val current = LocalDateTime.now()
                     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     val date = current.format(formatter).toString()
-                    writeReview(WriteReview(userId, "3", binding.ratingBar2.rating.toLong(), reviewText, keyword.toString(), isSatisfied, true, date ))
-                    sendImage("3", reviewImagePath)
-                    dialog1.dismiss()
+
+                     val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+                         .addFormDataPart("UserID", userId)
+                         .addFormDataPart("ResID", "3") //todo 레스토랑 아이디 연결
+                         .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
+                         .addFormDataPart("RevTxt", reviewText)
+                         .addFormDataPart("RevKeyWord", keyword.toString())
+                         .addFormDataPart("RevSatis", isSatisfied.toString())
+                         .addFormDataPart("RevRecom", isSatisfied.toString()) //todo 수정
+                         .addFormDataPart("RevTime", date)
+                         .addFormDataPart("myFile", reviewImagePath.name, RequestBody.create(MultipartBody.FORM,reviewImagePath))
+                         .build()
+                    writeReview(requestBody)
                 }
             }
         }
     }
-    private fun writeReview(writeReview: WriteReview){
+
+    private fun writeReview(requestBody: RequestBody){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.writeReview(writeReview= writeReview) ?:return
-        Log.d("hy", writeReview.toString())
+        val call = iRetrofit?.writeReview(requestBody) ?:return
         call.enqueue(object : Callback<WriteReview> {
 
             override fun onResponse(call: Call<WriteReview>, response: Response<WriteReview>) {
@@ -212,29 +220,11 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                 dialog.show(this@WriteReviewActivity.supportFragmentManager, "ConfirmDialog")
                 Handler(Looper.getMainLooper()).postDelayed({
                     finish()
-                }, 500)
+                }, 1000)
             }
             override fun onFailure(call: Call<WriteReview>, t: Throwable) {
-                Log.d("retrofit", "리뷰 작성 - 한식 응답 실패 / t: $t")
+                Log.d("retrofit", "리뷰 작성 -  응답 실패 / t: $t")
             }
         })
     }
-    private fun sendImage(RevIdx : String ,image : MultipartBody.Part){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.sendImage(RevIdx = RevIdx, myFile = image) ?:return
-
-        Log.d("hy", image.toString())
-        call.enqueue(object : Callback<String> {
-
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                Log.d("retrofit", "리뷰 작성 사진 등록 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-
-            }
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.d("retrofit", "리뷰 작성 사진 등록 - 응답 실패 / t: $t")
-
-            }
-        })
-    }
-
 }
