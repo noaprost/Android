@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.media.Rating
+import okhttp3.*
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -30,7 +30,6 @@ import com.example.capstone.databinding.ActivityWriteReviewBinding
 import com.example.capstone.retrofit.API
 import com.example.capstone.retrofit.IRetrofit
 import com.example.capstone.retrofit.RetrofitClient
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -58,7 +57,6 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
-    val requestMap: HashMap<String, RequestBody> = HashMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,20 +118,20 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                 binding.writeReviewKeyword10.id->keyword[1]=binding.writeReviewKeyword10.text.toString()
                 binding.writeReviewKeyword11.id->keyword[1]=binding.writeReviewKeyword11.text.toString()
                 binding.writeReviewKeyword12.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword13.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword14.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword15.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword16.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
+                binding.writeReviewKeyword13.id->keyword[1]=binding.writeReviewKeyword13.text.toString()
+                binding.writeReviewKeyword14.id->keyword[1]=binding.writeReviewKeyword14.text.toString()
+                binding.writeReviewKeyword15.id->keyword[1]=binding.writeReviewKeyword15.text.toString()
+                binding.writeReviewKeyword16.id->keyword[1]=binding.writeReviewKeyword16.text.toString()
             }
         }
         binding.chipGroup3.setOnCheckedStateChangeListener { _, checkedIds ->
             when(checkedIds[0]){
-                binding.writeReviewKeyword17.id->keyword[2]=binding.writeReviewKeyword8.text.toString()
-                binding.writeReviewKeyword18.id->keyword[2]=binding.writeReviewKeyword9.text.toString()
-                binding.writeReviewKeyword19.id->keyword[2]=binding.writeReviewKeyword10.text.toString()
-                binding.writeReviewKeyword20.id->keyword[2]=binding.writeReviewKeyword11.text.toString()
-                binding.writeReviewKeyword21.id->keyword[2]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword22.id->keyword[2]=binding.writeReviewKeyword12.text.toString()
+                binding.writeReviewKeyword17.id->keyword[2]=binding.writeReviewKeyword17.text.toString()
+                binding.writeReviewKeyword18.id->keyword[2]=binding.writeReviewKeyword18.text.toString()
+                binding.writeReviewKeyword19.id->keyword[2]=binding.writeReviewKeyword19.text.toString()
+                binding.writeReviewKeyword20.id->keyword[2]=binding.writeReviewKeyword20.text.toString()
+                binding.writeReviewKeyword21.id->keyword[2]=binding.writeReviewKeyword21.text.toString()
+                binding.writeReviewKeyword22.id->keyword[2]=binding.writeReviewKeyword22.text.toString()
             }
         }
 
@@ -159,9 +157,8 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                 binding.reviewImageBox.visibility= View.VISIBLE
                 binding.addReviewImage.clipToOutline = true
             val file = File(absolutelyPath(uri, this))
-            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             reviewImagePath = file
-            }
+        }
     }
     private fun absolutelyPath(path: Uri?, context : Context): String { //이미지 절대경로 변환 함수
         val proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
@@ -196,8 +193,8 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
 
                      val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                          .addFormDataPart("UserID", userId)
-                         .addFormDataPart("ResID", "1")
-                         .addFormDataPart("Rating",binding.ratingBar2.toString())
+                         .addFormDataPart("ResID", "3") //todo 레스토랑 아이디 연결
+                         .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
                          .addFormDataPart("RevTxt", reviewText)
                          .addFormDataPart("RevKeyWord", keyword.toString())
                          .addFormDataPart("RevSatis", isSatisfied.toString())
@@ -205,7 +202,6 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                          .addFormDataPart("RevTime", date)
                          .addFormDataPart("myFile", reviewImagePath.name, RequestBody.create(MultipartBody.FORM,reviewImagePath))
                          .build()
-
                     writeReview(requestBody)
                 }
             }
@@ -224,12 +220,11 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                 dialog.show(this@WriteReviewActivity.supportFragmentManager, "ConfirmDialog")
                 Handler(Looper.getMainLooper()).postDelayed({
                     finish()
-                }, 500)
+                }, 1000)
             }
             override fun onFailure(call: Call<WriteReview>, t: Throwable) {
-                Log.d("retrofit", "리뷰 작성 - 한식 응답 실패 / t: $t")
+                Log.d("retrofit", "리뷰 작성 -  응답 실패 / t: $t")
             }
         })
     }
-
 }

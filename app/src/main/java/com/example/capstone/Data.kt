@@ -20,7 +20,7 @@ data class Review(
 ): Serializable
 
 data class WriteReview(
-    val myFile:String,
+    val myFile:File,
     val UserID: String,
     val ResID: String,
     val Rating: Double,
@@ -123,7 +123,7 @@ data class MyReviewData(
 ): Serializable
 
 data class MyReview(
-    val code:Int,
+    val code:String,
     val message:List<MyReviewData>
 )
 data class UserId(
