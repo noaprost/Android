@@ -35,6 +35,7 @@ class DeleteAccountActivity : AppCompatActivity(), ConfirmDialogInterface {
         userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE)
         val userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "01012345678")
         val userPassword = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userPassword", "0000")
+        binding.backButton.setOnClickListener { finish() }
 
         binding.editTextPhone1.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}

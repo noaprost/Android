@@ -41,7 +41,7 @@ class ViewPagerAdapter (fragment : ListFragment) : FragmentStateAdapter(fragment
             }
             5 -> {
                 val bundle= Bundle()
-                bundle.putString("category", "카페/ 베이커리")
+                bundle.putString("category", "카페/베이커리")
                 val fragment:Fragment= KoreanFragment()
                 fragment.arguments=bundle
                 fragment
