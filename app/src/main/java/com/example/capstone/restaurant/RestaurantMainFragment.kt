@@ -17,6 +17,7 @@ import com.example.capstone.MainActivity
 import com.example.capstone.R
 import com.example.capstone.Restaurants
 import com.example.capstone.databinding.FragmentRestaurantMainBinding
+import com.example.capstone.retrofit.API
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.net.URL
@@ -108,7 +109,7 @@ class RestaurantMainFragment : Fragment() {
     fun attach(){
         if(resInfo.resImg!=null) {
             //todo 이미지 url 수정
-            val url="http://ec2-13-125-237-193.ap-northeast-2.compute.amazonaws.com:3000/1d2a9e7a-44aa-42bd-9753-ff560d9df62a.PNG"
+            val url="${API.BASE_URL}/${resInfo.resImg}"
             Glide.with(this)
                 .load(url) // 불러올 이미지 url
                 .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지

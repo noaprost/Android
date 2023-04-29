@@ -92,7 +92,7 @@ class RestaurantReviewDetail : AppCompatActivity() {
             if(review.RevImgID!=null){
                 reviewImage.visibility=View.VISIBLE
                 getReviewImage(RevIdx(review.RevIdx))
-                val url="http://ec2-13-125-237-193.ap-northeast-2.compute.amazonaws.com:3000/${imgUrl}"
+                val url="${API.BASE_URL}/${imgUrl}"
                 Glide.with(this@RestaurantReviewDetail)
                     .load(url) // 불러올 이미지 url
                     .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
