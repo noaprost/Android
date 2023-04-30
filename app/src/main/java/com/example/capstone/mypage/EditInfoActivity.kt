@@ -18,7 +18,9 @@ class EditInfoActivity : AppCompatActivity(), ConfirmDialogInterface {
         binding =  ActivityEditInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE)
-        val userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "00")
+        binding.textView80.text=userInfo.getString("userPhoneNum", "")
+        binding.textView82.text=userInfo.getString("userPassword", "")
+        binding.textView84.text=userInfo.getString("userNickname", "")
 
         binding.myDeleteAccount.setOnClickListener {
             val intent = Intent(this, DeleteAccountActivity::class.java)

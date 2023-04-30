@@ -127,7 +127,7 @@ class RestaurantReviewFragment : Fragment() {
             override fun onResponse(call: Call<RestaurantReviewList>, response: Response<RestaurantReviewList>) {
                 Log.d("retrofit", "음식점 리뷰 리스트 - 응답 성공 / t : ${response.raw()} ${response.body()}")
                 val arr= response.body()?.result
-                if (arr != null) {
+                if (!arr.isNullOrEmpty()) {
                     binding.textView3.text=arr.size.toString()+"건"
                     binding.restaurantReviewRecyclerView.layoutManager= LinearLayoutManager(context)
                     binding.restaurantReviewRecyclerView.adapter=MyAdapter(arr)

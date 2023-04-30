@@ -41,9 +41,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         userInfo = getSharedPreferences("userInfo", 0)
         userInfo.edit().putBoolean("isMember", false).apply()
-        userInfo.edit().putString("userId", "01012345678").apply()
-        userInfo.edit().putString("userPassword", "0000").apply()
+        userInfo.edit().putString("userId", "").apply()
+        userInfo.edit().putString("userPassword", "").apply()
         userInfo.edit().putString("userLocation", "").apply()
+        userInfo.edit().putString("userPhoneNum", "").apply()
+        userInfo.edit().putString("userNickname", "").apply()
         userId = userInfo.getString("userInfo", "2")!!.toLong()
         isMember = userInfo.getBoolean("isMember", false)
 

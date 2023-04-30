@@ -66,7 +66,7 @@ data class resAddress(
 )
 data class resAddressCategory(
     val resAddress:String,
-    val category:String
+    val resCategory:String
 )
 data class resName(
     val resName:String

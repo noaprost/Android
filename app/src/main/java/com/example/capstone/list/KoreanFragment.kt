@@ -44,9 +44,8 @@ class KoreanFragment : Fragment() {
             arr = splitedAddr
         }
         val requestString=arr[1]
-        showRestaurantsByCategory(resAddressCategory(resAddress = requestString, category = category))
-        Log.d("retrofit", "resAddress:${arr} ${requestString}")
-
+        if(category=="전체") showRestaurants(resAddress(requestString))
+        else showRestaurantsByCategory(resAddressCategory(requestString, category))
         return root
     }
     inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -83,9 +82,7 @@ class KoreanFragment : Fragment() {
                 val mainAct = activity as MainActivity
                 mainAct.ChangeFragment("Restaurant", bundle)
             }
-
         }
-
     }
     inner class MyAdapter(private val list:List<Restaurants>): RecyclerView.Adapter<MyViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -100,6 +97,31 @@ class KoreanFragment : Fragment() {
             holder.bind(post)
         }
     }
+    private fun showRestaurants(resAddress: resAddress){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.showRestaurants(resAddress=resAddress) ?:return
+
+        call.enqueue(object : Callback<RestaurantList> {
+
+            override fun onResponse(call: Call<RestaurantList>, response: Response<RestaurantList>) {
+                Log.d("retrofit", "음식점 리스트 - 응답 성공 / t : ${response.raw()} ${response.body()?.results}")
+                val arr= response.body()?.results
+                if (arr != null) {
+                    binding.textView87.visibility=View.INVISIBLE
+                    binding.restaurantListRecyclerView.visibility=View.VISIBLE
+                    binding.restaurantListRecyclerView.layoutManager = LinearLayoutManager(context)
+                    binding.restaurantListRecyclerView.adapter = MyAdapter(arr)
+                }else{
+                    binding.textView87.visibility=View.VISIBLE
+                    binding.restaurantListRecyclerView.visibility=View.INVISIBLE
+                }
+            }
+            override fun onFailure(call: Call<RestaurantList>, t: Throwable) {
+                Log.d("retrofit", "음식점  리스트 - 응답 실패 / t: $t")
+                Toast.makeText(activity, "리스트를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
     private fun showRestaurantsByCategory(resAddressCategory: resAddressCategory){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.showRestaurantsByCategory(resAddressCategory=resAddressCategory) ?:return
@@ -110,15 +132,19 @@ class KoreanFragment : Fragment() {
                 Log.d("retrofit", "음식점 리스트 -  ${category} 응답 성공 / t : ${response.raw()} ${response.body()?.results}")
                 val arr= response.body()?.results
                 if (arr != null) {
+                    binding.textView87.visibility=View.INVISIBLE
+                    binding.restaurantListRecyclerView.visibility=View.VISIBLE
                     binding.restaurantListRecyclerView.layoutManager = LinearLayoutManager(context)
                     binding.restaurantListRecyclerView.adapter = MyAdapter(arr)
                 }else{
-                    Toast.makeText(activity, "리스트를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+                    binding.textView87.visibility=View.VISIBLE
+                    binding.restaurantListRecyclerView.visibility=View.INVISIBLE
                 }
             }
 
             override fun onFailure(call: Call<RestaurantList>, t: Throwable) {
                 Log.d("retrofit", "음식점 리스트 - ${category} 응답 실패 / t: $t")
+                Toast.makeText(activity, "리스트를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
             }
         })
     }

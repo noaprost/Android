@@ -185,7 +185,7 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         call.enqueue(object : Callback<RestaurantList> {
 
             override fun onResponse(call: Call<RestaurantList>, response: Response<RestaurantList>) {
-                Log.d("retrofit", "음식점 리스트 - 응답 성공 / t : ${response.raw()} ${response.body()?.results}")
+                Log.d("retrofit", "음식점 지도 리스트 - 응답 성공 / t : ${response.raw()} ${response.body()?.results}")
                 var list:List<Address>?
                 val geocoder = Geocoder(requireContext(), Locale.KOREA)
                 var n=0
@@ -199,7 +199,7 @@ class ListFragment : Fragment(), OnMapReadyCallback {
                 }
             }
             override fun onFailure(call: Call<RestaurantList>, t: Throwable) {
-                Log.d("retrofit", "음식점 리스트 - 한식 응답 실패 / t: $t")
+                Log.d("retrofit", "음식점 지도 리스트 - 응답 실패 / t: $t")
             }
         })
     }
