@@ -131,14 +131,12 @@ class RestaurantReviewDetail : AppCompatActivity() {
                 if (arr != null) {
                     binding.reviewRecyclerView.layoutManager= LinearLayoutManager(this@RestaurantReviewDetail)
                     binding.reviewRecyclerView.adapter=MyAdapter(arr)
-                }else{
-                    Log.d("hy", ResID.toString())
-                    Toast.makeText(this@RestaurantReviewDetail, "리뷰를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
                 }
 
             }
             override fun onFailure(call: Call<RestaurantReviewList>, t: Throwable) {
                 Log.d("retrofit", "음식점 리뷰 리스트 - 응답 실패 / t: $t")
+                Toast.makeText(this@RestaurantReviewDetail, "리뷰를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
             }
         })
     }

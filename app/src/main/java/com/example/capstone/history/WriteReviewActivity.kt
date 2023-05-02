@@ -96,43 +96,52 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         }
 
         binding.chipGroup1.setOnCheckedStateChangeListener { _, checkedIds ->
-            when(checkedIds[0]){
-                binding.writeReviewKeyword1.id->keyword[0]=binding.writeReviewKeyword1.text.toString()
-                binding.writeReviewKeyword2.id->keyword[0]=binding.writeReviewKeyword2.text.toString()
-                binding.writeReviewKeyword3.id->keyword[0]=binding.writeReviewKeyword3.text.toString()
-                binding.writeReviewKeyword4.id->keyword[0]=binding.writeReviewKeyword4.text.toString()
-                binding.writeReviewKeyword5.id->keyword[0]=binding.writeReviewKeyword5.text.toString()
-                binding.writeReviewKeyword6.id->keyword[0]=binding.writeReviewKeyword6.text.toString()
-                binding.writeReviewKeyword7.id->keyword[0]=binding.writeReviewKeyword7.text.toString()
-                binding.writeReviewKeyword8.id->keyword[0]=binding.writeReviewKeyword8.text.toString()
-                binding.writeReviewKeyword9.id->keyword[0]=binding.writeReviewKeyword9.text.toString()
-                binding.writeReviewKeyword10.id->keyword[0]=binding.writeReviewKeyword10.text.toString()
-                binding.writeReviewKeyword11.id->keyword[0]=binding.writeReviewKeyword11.text.toString()
-                binding.writeReviewKeyword12.id->keyword[0]=binding.writeReviewKeyword12.text.toString()
+            if(checkedIds.size!=0){
+                when(checkedIds[0]){
+                    binding.writeReviewKeyword1.id->keyword[0]=binding.writeReviewKeyword1.text.toString()
+                    binding.writeReviewKeyword2.id->keyword[0]=binding.writeReviewKeyword2.text.toString()
+                    binding.writeReviewKeyword3.id->keyword[0]=binding.writeReviewKeyword3.text.toString()
+                    binding.writeReviewKeyword4.id->keyword[0]=binding.writeReviewKeyword4.text.toString()
+                    binding.writeReviewKeyword5.id->keyword[0]=binding.writeReviewKeyword5.text.toString()
+                    binding.writeReviewKeyword6.id->keyword[0]=binding.writeReviewKeyword6.text.toString()
+                    binding.writeReviewKeyword7.id->keyword[0]=binding.writeReviewKeyword7.text.toString()
+                    binding.writeReviewKeyword8.id->keyword[0]=binding.writeReviewKeyword8.text.toString()
+                    binding.writeReviewKeyword9.id->keyword[0]=binding.writeReviewKeyword9.text.toString()
+                    binding.writeReviewKeyword10.id->keyword[0]=binding.writeReviewKeyword10.text.toString()
+                    binding.writeReviewKeyword11.id->keyword[0]=binding.writeReviewKeyword11.text.toString()
+                    binding.writeReviewKeyword12.id->keyword[0]=binding.writeReviewKeyword12.text.toString()
+                }
             }
+
         }
         binding.chipGroup2.setOnCheckedStateChangeListener { _, checkedIds ->
-            when(checkedIds[0]){
-                binding.writeReviewKeyword8.id->keyword[1]=binding.writeReviewKeyword8.text.toString()
-                binding.writeReviewKeyword9.id->keyword[1]=binding.writeReviewKeyword9.text.toString()
-                binding.writeReviewKeyword10.id->keyword[1]=binding.writeReviewKeyword10.text.toString()
-                binding.writeReviewKeyword11.id->keyword[1]=binding.writeReviewKeyword11.text.toString()
-                binding.writeReviewKeyword12.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
-                binding.writeReviewKeyword13.id->keyword[1]=binding.writeReviewKeyword13.text.toString()
-                binding.writeReviewKeyword14.id->keyword[1]=binding.writeReviewKeyword14.text.toString()
-                binding.writeReviewKeyword15.id->keyword[1]=binding.writeReviewKeyword15.text.toString()
-                binding.writeReviewKeyword16.id->keyword[1]=binding.writeReviewKeyword16.text.toString()
+            if(checkedIds.size!=0){
+                when(checkedIds[0]){
+                    binding.writeReviewKeyword8.id->keyword[1]=binding.writeReviewKeyword8.text.toString()
+                    binding.writeReviewKeyword9.id->keyword[1]=binding.writeReviewKeyword9.text.toString()
+                    binding.writeReviewKeyword10.id->keyword[1]=binding.writeReviewKeyword10.text.toString()
+                    binding.writeReviewKeyword11.id->keyword[1]=binding.writeReviewKeyword11.text.toString()
+                    binding.writeReviewKeyword12.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
+                    binding.writeReviewKeyword13.id->keyword[1]=binding.writeReviewKeyword13.text.toString()
+                    binding.writeReviewKeyword14.id->keyword[1]=binding.writeReviewKeyword14.text.toString()
+                    binding.writeReviewKeyword15.id->keyword[1]=binding.writeReviewKeyword15.text.toString()
+                    binding.writeReviewKeyword16.id->keyword[1]=binding.writeReviewKeyword16.text.toString()
+                }
             }
+
         }
         binding.chipGroup3.setOnCheckedStateChangeListener { _, checkedIds ->
-            when(checkedIds[0]){
-                binding.writeReviewKeyword17.id->keyword[2]=binding.writeReviewKeyword17.text.toString()
-                binding.writeReviewKeyword18.id->keyword[2]=binding.writeReviewKeyword18.text.toString()
-                binding.writeReviewKeyword19.id->keyword[2]=binding.writeReviewKeyword19.text.toString()
-                binding.writeReviewKeyword20.id->keyword[2]=binding.writeReviewKeyword20.text.toString()
-                binding.writeReviewKeyword21.id->keyword[2]=binding.writeReviewKeyword21.text.toString()
-                binding.writeReviewKeyword22.id->keyword[2]=binding.writeReviewKeyword22.text.toString()
+            if(checkedIds.size!=0){
+                when(checkedIds[0]){
+                    binding.writeReviewKeyword17.id->keyword[2]=binding.writeReviewKeyword17.text.toString()
+                    binding.writeReviewKeyword18.id->keyword[2]=binding.writeReviewKeyword18.text.toString()
+                    binding.writeReviewKeyword19.id->keyword[2]=binding.writeReviewKeyword19.text.toString()
+                    binding.writeReviewKeyword20.id->keyword[2]=binding.writeReviewKeyword20.text.toString()
+                    binding.writeReviewKeyword21.id->keyword[2]=binding.writeReviewKeyword21.text.toString()
+                    binding.writeReviewKeyword22.id->keyword[2]=binding.writeReviewKeyword22.text.toString()
+                }
             }
+
         }
 
         binding.writeReviewButton.setOnClickListener{

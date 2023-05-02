@@ -37,16 +37,15 @@
       />
 
             <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginStart="5sp"
-        android:text="22건"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/review"
-        app:layout_constraintTop_toTopOf="parent"
-      />
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:text="0건"
+                android:textColor="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/review"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
         android:id="@+id/viewReviewButton"
