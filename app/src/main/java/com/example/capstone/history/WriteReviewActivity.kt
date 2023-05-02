@@ -48,7 +48,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private lateinit var userInfo: SharedPreferences
     private lateinit var userId:String
     private lateinit var resId:String
-    private lateinit var reviewImagePath:File
+    var reviewImagePath: File? = null
     var reviewText=""
     private var keyword:MutableList<String> = mutableListOf("", "", "")
 
@@ -64,7 +64,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         setContentView(binding.root)
         userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE)
         userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "1").toString()
-        //resId= intent.getStringExtra("resId").toString() //todo resId 연결
+        resId= intent.getStringExtra("resId").toString() //todo resId 연결
         //binding.writeReviewName.text=intent.getStringExtra("resName").toString()//todo resName 연결
         binding.writeReviewComment.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -191,18 +191,32 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     val date = current.format(formatter).toString()
 
-                    val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("UserID", userId)
-                        .addFormDataPart("ResID", "3") //todo 레스토랑 아이디 연결
-                        .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
-                        .addFormDataPart("RevTxt", reviewText)
-                        .addFormDataPart("RevKeyWord", keyword.toString())
-                        .addFormDataPart("RevSatis", isSatisfied.toString())
-                        .addFormDataPart("RevRecom", isSatisfied.toString()) //todo 수정
-                        .addFormDataPart("RevTime", date)
-                        .addFormDataPart("myFile", reviewImagePath.name, RequestBody.create(MultipartBody.FORM,reviewImagePath))
-                        .build()
-                    writeReview(requestBody)
+                    if(reviewImagePath==null){
+                        val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+                            .addFormDataPart("UserID", userId)
+                            .addFormDataPart("ResID", "3") //todo 레스토랑 아이디 연결
+                            .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
+                            .addFormDataPart("RevTxt", reviewText)
+                            .addFormDataPart("RevKeyWord", keyword.toString())
+                            .addFormDataPart("RevSatis", isSatisfied.toString())
+                            .addFormDataPart("RevRecom", isSatisfied.toString()) //todo 수정
+                            .addFormDataPart("RevTime", date)
+                            .build()
+                            writeReview(requestBody)
+                    }else{
+                        val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+                            .addFormDataPart("UserID", userId)
+                            .addFormDataPart("ResID", "3") //todo 레스토랑 아이디 연결
+                            .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
+                            .addFormDataPart("RevTxt", reviewText)
+                            .addFormDataPart("RevKeyWord", keyword.toString())
+                            .addFormDataPart("RevSatis", isSatisfied.toString())
+                            .addFormDataPart("RevRecom", isSatisfied.toString()) //todo 수정
+                            .addFormDataPart("RevTime", date)
+                            .addFormDataPart("myFile", "", RequestBody.create(MultipartBody.FORM, ""))
+                            .build()
+                        writeReview(requestBody)
+                    }
                 }
             }
         }

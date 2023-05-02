@@ -108,15 +108,26 @@ class RestaurantMainFragment : Fragment() {
     }
     fun attach(){
         if(resInfo.resImg!=null) {
+            /*
             //todo 이미지 url 수정
             val url="${API.BASE_URL}/${resInfo.resImg}"
             Glide.with(this)
                 .load(url) // 불러올 이미지 url
-                .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
+                .error(R.drawable.ic_flag) // 로딩 에러 발생 시 표시할 이미지
                 .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                .override(500, 300)
                 .into(binding.imageView) // 이미지를 넣을 뷰
 
+             */
         }
+        //캡쳐용 코드
+        if(resInfo.resCategory=="한식") binding.imageView.setImageResource(R.drawable.dummy_korean)
+        else if(resInfo.resCategory=="중식") binding.imageView.setImageResource(R.drawable.dummy_chinese)
+        else if(resInfo.resCategory=="양식") binding.imageView.setImageResource(R.drawable.dummy_restaurant_image)
+        else if(resInfo.resCategory=="일식") binding.imageView.setImageResource(R.drawable.dummy_japanese)
+        else if(resInfo.resCategory=="카페/베이커리") binding.imageView.setImageResource(R.drawable.dummy_bakery)
+        else binding.imageView.setImageResource(R.drawable.dummy_alcohol)
+
         binding.textView.text=resInfo.resName
         binding.star.text=resInfo.resRating.toString()
         binding.totalReview.text="("+resInfo.revCnt.toString()+")"

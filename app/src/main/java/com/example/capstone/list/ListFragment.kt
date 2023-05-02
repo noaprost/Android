@@ -18,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.capstone.*
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentListBinding
@@ -107,13 +108,34 @@ class ListFragment : Fragment(), OnMapReadyCallback {
                 if(restaurant.keyWord !=null){
                     var arr:List<String> =listOf("", "", "")
                     for (addr in restaurant.keyWord) {
-                        val splitedAddr = restaurant.keyWord.split("\": \"", "\", \"", "\"}")
+                        val splitedAddr = restaurant.keyWord.split("[\"", "\", \"", "\"]")
                         arr = splitedAddr
                     }
                     Log.d("hy", arr.toString())
                     binding.maKeyword1.text="#"+arr[1]
-                    binding.maKeyword2.text="#"+arr[3]
-                    binding.maKeyword3.text="#"+arr[5]
+                    binding.maKeyword2.text="#"+arr[2]
+                    binding.maKeyword3.text="#"+arr[3]
+                }
+                if(restaurant.resImg!=null) {
+                    /*
+                    val url="${API.BASE_URL}/${restaurant.resImg}"
+                    Glide.with(this)
+                        .load(url) // 불러올 이미지 url
+                        .error(R.drawable.ic_flag) // 로딩 에러 발생 시 표시할 이미지
+                        .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                        .override(500, 300)
+                        .into(binding.imageView24) // 이미지를 넣을 뷰
+
+                     */
+                }
+                //캡쳐용 코드
+                when (restaurant.resCategory) {
+                    "한식" -> binding.imageView28.setImageResource(R.drawable.dummy_korean)
+                    "중식" -> binding.imageView28.setImageResource(R.drawable.dummy_chinese)
+                    "양식" -> binding.imageView28.setImageResource(R.drawable.dummy_restaurant_image)
+                    "일식" -> binding.imageView28.setImageResource(R.drawable.dummy_japanese)
+                    "카페/베이커리" -> binding.imageView28.setImageResource(R.drawable.dummy_bakery)
+                    else -> binding.imageView28.setImageResource(R.drawable.dummy_alcohol)
                 }
                 binding.cardView.visibility = View.VISIBLE
                 binding.cardView.setOnClickListener {

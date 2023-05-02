@@ -99,18 +99,23 @@ class RestaurantStateFragment : Fragment() {
         var seatKeywordMaxList:List<TextView> =listOf(binding.seat1Max, binding.seat2Max, binding.seat3Max, binding.seat4Max, binding.seat5Max, binding.seat6Max, binding.seat7Max, binding.seat8Max)
         var arr:List<String> =listOf("", "", "")
         var arr1:List<String> =listOf("", "", "")
-        for (addr in resInfo.resSeat) {
-            arr =  resInfo.resSeat.split(", ")
-            arr1 =  resInfo.resSeatCnt.split(",")
+        if(resInfo.resSeat.isNullOrEmpty()){
+            seatKeywordList[0].text="해당 가게는 좌석 정보를 제공하지 않습니다."
+            seatKeywordBox[0].visibility=View.VISIBLE
+            seatKeywordMaxList[0].text=""
+        }else{
+            for (addr in resInfo.resSeat) {
+                arr =  resInfo.resSeat.split(", ")
+                arr1 =  resInfo.resSeatCnt.split(",")
+            }
+            var n=0
+            for(i in arr){
+                seatKeywordList[n].text="#"+arr[n]
+                seatKeywordBox[n].visibility=View.VISIBLE
+                seatKeywordMaxList[n].text=arr1[n]
+                n+=1
+            }
         }
-        var n=0
-        for(i in arr){
-            seatKeywordList[n].text="#"+arr[n]
-            seatKeywordBox[n].visibility=View.VISIBLE
-            seatKeywordMaxList[n].text=arr1[n]
-            n+=1
-        }
-
         return root
     }
     inner class MyXAxisFormatter : ValueFormatter() {
