@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter
 data class Review(
     val RevIdx:Int,
     val UserID: String,
+    val UserName:String,
     val ResID: String,
     val Rating:Long,
     val RevTxt: String,
@@ -128,4 +129,20 @@ data class MyReview(
 )
 data class UserId(
     val userId:String
+)
+
+//통계
+data class PreferenceByAge(
+    val ResID : String,
+    val cnt10 : Int,
+    val cnt20 : Int,
+    val cnt30 : Int,
+    val cnt40 : Int,
+    val cnt50 : Int
+)
+
+data class PreferenceByGender(
+    val ResID : String,
+    val cntM : Int,
+    val cntF : Int,
 )

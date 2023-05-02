@@ -34,4 +34,10 @@ interface IRetrofit {
     @GET("/mypage/review")
     fun myReview(@Query("userId") userId: UserId):Call<MyReview>
 
+    @POST("/restaurant/age") //연령별 선호도
+    fun preferenceByAge(@Body ResID: ResID):Call<PreferenceByAge>
+
+    @POST("/restaurant/gender") //성별별 선호도
+    fun preferenceByGender(@Body ResID: ResID):Call<PreferenceByGender>
+
 }
