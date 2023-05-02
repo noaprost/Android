@@ -25,7 +25,6 @@ class HistoryFragment : Fragment() {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
         previousWaitingList.apply {
             add(
                 PreviousWaiting("2022-12-09", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점")
@@ -69,6 +68,9 @@ class HistoryFragment : Fragment() {
         binding.previousWaitingRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.previousWaitingRecyclerView.setHasFixedSize(true)
         binding.previousWaitingRecyclerView.adapter = PreviousWaitingAdapter(previousWaitingList)
+
+
+
         return root
     }
 
@@ -77,6 +79,7 @@ class HistoryFragment : Fragment() {
 
         fun bind(prewait: PreviousWaiting){
             this.prewait = prewait
+
 
             itemView.setOnClickListener {
 
@@ -98,6 +101,11 @@ class HistoryFragment : Fragment() {
             val post=preList[position]
             holder.bind(post)
         }
+
+        override fun getItemId(position: Int): Long {
+            return super.getItemId(position)
+        }
+
     }
 
 }

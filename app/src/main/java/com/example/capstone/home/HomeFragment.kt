@@ -21,10 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.ConfirmDialogInterface
 import com.example.capstone.CustomDialog
+import com.example.capstone.MainActivity
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHomeBinding
-import com.example.capstone.hot.HotRestaurantActivity
-import com.example.capstone.matching.MatchingRestaurantActivity
+import com.example.capstone.hot.HotRestaurantFragment
+import com.example.capstone.matching.MatchingRestaurantFragment
 import com.google.android.gms.location.*
 import java.io.IOException
 import java.util.*
@@ -66,13 +67,15 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
         }
 
         binding.title1.setOnClickListener {
-            val intent = Intent(activity, MatchingRestaurantActivity::class.java)
-            startActivity(intent)
+            val bundle = Bundle()
+            val mainAct = activity as MainActivity
+            mainAct.ChangeFragment("Matching", bundle)
         }
 
         binding.title2.setOnClickListener {
-            val intent = Intent(activity, HotRestaurantActivity::class.java)
-            startActivity(intent)
+            val bundle = Bundle()
+            val mainAct = activity as MainActivity
+            mainAct.ChangeFragment("Hot", bundle)
         }
 
         // 추천 음식점 데이터
@@ -168,7 +171,9 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
             this.restaurantItem = restaurantItem
 
             itemView.setOnClickListener {
-
+                val bundle = Bundle()
+                val mainAct = activity as MainActivity
+                mainAct.ChangeFragment("Restaurant", bundle)
             }
         }
     }

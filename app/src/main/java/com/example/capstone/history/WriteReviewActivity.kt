@@ -65,7 +65,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE)
         userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "1").toString()
         //resId= intent.getStringExtra("resId").toString() //todo resId 연결
-       //binding.writeReviewName.text=intent.getStringExtra("resName").toString()//todo resName 연결
+        //binding.writeReviewName.text=intent.getStringExtra("resName").toString()//todo resName 연결
         binding.writeReviewComment.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -149,13 +149,13 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private val activityResult:ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){ it ->
         if(it.resultCode== RESULT_OK && it.data != null){
-               val uri = it.data!!.data
-                uri!!.also { reviewImage = it }
-                Glide.with(this)
-                    .load(uri) //이미지
-                    .into(binding.addReviewImage)
-                binding.reviewImageBox.visibility= View.VISIBLE
-                binding.addReviewImage.clipToOutline = true
+            val uri = it.data!!.data
+            uri!!.also { reviewImage = it }
+            Glide.with(this)
+                .load(uri) //이미지
+                .into(binding.addReviewImage)
+            binding.reviewImageBox.visibility= View.VISIBLE
+            binding.addReviewImage.clipToOutline = true
             val file = File(absolutelyPath(uri, this))
             reviewImagePath = file
         }
@@ -191,17 +191,17 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     val date = current.format(formatter).toString()
 
-                     val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                         .addFormDataPart("UserID", userId)
-                         .addFormDataPart("ResID", "3") //todo 레스토랑 아이디 연결
-                         .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
-                         .addFormDataPart("RevTxt", reviewText)
-                         .addFormDataPart("RevKeyWord", keyword.toString())
-                         .addFormDataPart("RevSatis", isSatisfied.toString())
-                         .addFormDataPart("RevRecom", isSatisfied.toString()) //todo 수정
-                         .addFormDataPart("RevTime", date)
-                         .addFormDataPart("myFile", reviewImagePath.name, RequestBody.create(MultipartBody.FORM,reviewImagePath))
-                         .build()
+                    val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("UserID", userId)
+                        .addFormDataPart("ResID", "3") //todo 레스토랑 아이디 연결
+                        .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
+                        .addFormDataPart("RevTxt", reviewText)
+                        .addFormDataPart("RevKeyWord", keyword.toString())
+                        .addFormDataPart("RevSatis", isSatisfied.toString())
+                        .addFormDataPart("RevRecom", isSatisfied.toString()) //todo 수정
+                        .addFormDataPart("RevTime", date)
+                        .addFormDataPart("myFile", reviewImagePath.name, RequestBody.create(MultipartBody.FORM,reviewImagePath))
+                        .build()
                     writeReview(requestBody)
                 }
             }

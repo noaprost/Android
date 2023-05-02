@@ -32,7 +32,7 @@ class SearchFragment : Fragment() {
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        /*binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d("hy", query.toString())
                 if(query!=null) searchRestaurants(resName(query))
@@ -43,7 +43,7 @@ class SearchFragment : Fragment() {
                 binding.restaurantSearchRecyclerView.visibility=View.GONE
                 return true
             }
-        })
+        })*/
         return root
     }
 
@@ -68,12 +68,12 @@ class SearchFragment : Fragment() {
             if(Restaurants.keyWord !=null){
                 var arr:List<String> =listOf("", "", "")
                 for (addr in Restaurants.keyWord) {
-                    val splitedAddr = Restaurants.keyWord.split("[\"", "\", \"", "\"]")
+                    val splitedAddr = Restaurants.keyWord.split("\": \"", "\", \"", "\"}")
                     arr = splitedAddr
                 }
                 keyword1.text="#"+arr[1]
-                keyword2.text="#"+arr[2]
-                keyword3.text="#"+arr[3]
+                keyword2.text="#"+arr[3]
+                keyword3.text="#"+arr[5]
             }
 
             waitingNum.text=Restaurants.currWaiting.toString()

@@ -20,10 +20,11 @@
 
             <ImageButton
                 android:id="@+id/matchingBackBtn"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.15"
+                android:background="@color/white"
                 app:srcCompat="@drawable/ic_back" />
 
             <TextView
