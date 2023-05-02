@@ -73,7 +73,7 @@ class RestaurantReviewFragment : Fragment() {
 
                 writingDate.text="${arr[0]} ${arr[1]}:${arr[2]}"
             }else writingDate.text=""
-
+            userName.text=review.UserName
             reviewScore.text=review.Rating.toString()
             if(review.RevKeyWord !=null){
                 var arr:List<String> =listOf("", "", "")
@@ -110,7 +110,7 @@ class RestaurantReviewFragment : Fragment() {
         return MyViewHolder(view)
     }
 
-        override fun getItemCount(): Int = 2
+        override fun getItemCount(): Int = if(2 <list.size){ 2 }else list.size
 
         @RequiresApi(Build.VERSION_CODES.O)
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

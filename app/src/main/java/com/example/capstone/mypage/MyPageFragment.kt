@@ -29,9 +29,10 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
         val root: View = binding.root
         userInfo = this.requireActivity().getSharedPreferences("userInfo", MODE_PRIVATE)
         val isMember = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)
-        val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "00")
+        val userNickname = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userNickname", "")
 
         if(isMember){ //로그인 돼있으면
+            binding.myName.text=userNickname
             binding.myBox1.visibility=View.VISIBLE
             binding.goSignIn.visibility=View.GONE
             binding.myBox2.visibility=View.VISIBLE
@@ -61,7 +62,7 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
             mainAct.ChangeFragment("MyReview", bundle)
         }
         binding.myAnnounce.setOnClickListener {
-            //임시
+            //todo 알림 페이지로 연결
             val intent = Intent(activity, WriteReviewActivity::class.java)
             startActivity(intent)
         }
@@ -97,6 +98,7 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
     override fun onYesButtonClick(num: Int, theme: Int) {
         when(num){
             0->{//로그아웃
+                //todo 로그아웃 api 연결
                 userInfo.edit().putString("userId", "0").putBoolean("isMember", false).apply() //정보변경
                 val mainAct = activity as MainActivity
                 mainAct.ChangePage(R.id.navigation_myPage)
