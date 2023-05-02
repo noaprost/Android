@@ -31,8 +31,8 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        /*binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        val root: View = binding.root/*
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d("hy", query.toString())
                 if(query!=null) searchRestaurants(resName(query))

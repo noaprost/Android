@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <androidx.constraintlayout.widget.ConstraintLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,38 +16,32 @@
         tools:ignore="NotSibling">
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="vertical">
-
-            <TextView
-            android:id="@+id/txtWaitingDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/Gray"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="16dp"
-            android:text="2022-11-09" />
-
-            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="16dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                  android:layout_width="1dp"
-                  android:layout_height="80dp">
+            <TextView
+                android:id="@+id/txtWaitingDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Gray"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="16dp"
+                android:text="2022-11-09" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="horizontal"
-                  android:gravity="center">
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
 
                     <ImageView
                         android:id="@+id/waitingImg"
@@ -56,6 +50,7 @@
                         android:layout_marginHorizontal="16dp"
                         android:gravity="center"
                         android:scaleType="centerCrop"
+                        android:background="@drawable/background_round_rectangular"
                         app:srcCompat="@drawable/dummy_restaurant_image" />
 
                     <LinearLayout
@@ -64,47 +59,39 @@
                         android:orientation="vertical">
 
                         <TextView
-                          android:id="@+id/txtWatingTitle"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:layout_marginVertical="8dp"
-                          android:text="온리원 파스타 송도점"
-                          android:textColor="@color/black"
-                          android:textSize="15dp"
-                          android:textStyle="bold" />
+                            android:id="@+id/txtWatingTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="8dp"
+                            android:text="온리원 파스타 송도점"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
 
-                        <LinearLayout
-                          android:layout_width="match_parent"
-                          android:layout_height="match_parent"
-                          android:orientation="horizontal">
-
-<!--                        디자인 수정 필요-->
-                            <Button
-                                android:id="@+id/historyDetailBtn"
-                                android:layout_width="100dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/background_round_rectangular"
-                                android:textColor="@color/white"
-                                android:text="상세 정보"
-                                android:textSize="14dp"
-                                android:layout_marginRight="8dp"
-                                android:textStyle="bold"/>
-
-                            <Button
-                                android:id="@+id/historyReviewBtn"
-                                android:layout_width="100dp"
-                                android:layout_height="40dp"
-                                android:layout_marginLeft="8dp"
-                                android:background="@drawable/background_round_rectangular"
-                                android:textColor="@color/white"
-                                android:text="리뷰 쓰기"
-                                android:textSize="14dp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+                        <Button
+                            android:id="@+id/historyDetailBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="38dp"
+                            android:background="@color/white"
+                            android:textColor="@color/white"
+                            android:layout_gravity="right"
+                            android:text="상세정보 보러가기"
+                            android:layout_marginTop="8dp"
+                            android:textSize="14sp"
+                            android:textStyle="bold"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView89"
+            android:layout_marginTop="20dp"
+            android:layout_width="380dp"
+            android:layout_gravity="center"
+            android:layout_height="1px"
+            android:text=""
+            android:background="@color/LightGray"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
