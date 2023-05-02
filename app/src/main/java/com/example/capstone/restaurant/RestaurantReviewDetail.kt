@@ -74,7 +74,7 @@ class RestaurantReviewDetail : AppCompatActivity() {
 
                 writingDate.text="${arr[0]} ${arr[1]}:${arr[2]}"
             }else writingDate.text=""
-
+            userName.text=review.UserName
             reviewScore.text=review.Rating.toString()
             if(review.RevKeyWord !=null){
                 var arr:List<String> =listOf("", "", "")
