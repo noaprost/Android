@@ -1,5 +1,6 @@
 package com.example.capstone.hot
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.capstone.HotRestaurant
 import com.example.capstone.MainActivity
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHotRestaurantBinding
+import com.example.capstone.restaurant.RestaurantWaitingActivity
 
 class HotRestaurantFragment : Fragment() {
     private var _binding : FragmentHotRestaurantBinding? = null
@@ -71,7 +73,7 @@ class HotRestaurantFragment : Fragment() {
             itemView.setOnClickListener {
                 val bundle = Bundle()
                 val mainAct = activity as MainActivity
-                mainAct.ChangeFragment("hotRes", bundle)
+                mainAct.ChangeFragment("Restaurant", bundle)
             }
         }
     }

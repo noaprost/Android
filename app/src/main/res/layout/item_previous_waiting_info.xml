@@ -68,14 +68,15 @@
                             android:textSize="18dp"
                             android:textStyle="bold" />
 
-                        <Button
-                            android:id="@+id/historyDetailBtn"
+                        <TextView
+                            android:id="@+id/writeReviewBtn"
                             android:layout_width="match_parent"
                             android:layout_height="38dp"
-                            android:background="@color/white"
-                            android:textColor="@color/white"
-                            android:layout_gravity="right"
-                            android:text="상세정보 보러가기"
+                            android:backgroundTint="@color/semiWhite"
+                            android:background="@drawable/background_round_rectangular"
+                            android:textColor="@color/INUBlue"
+                            android:gravity="center"
+                            android:text="리뷰 작성 하러 가기"
                             android:layout_marginTop="8dp"
                             android:textSize="14sp"
                             android:textStyle="bold"/>

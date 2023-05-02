@@ -26,6 +26,7 @@ import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHomeBinding
 import com.example.capstone.hot.HotRestaurantFragment
 import com.example.capstone.matching.MatchingRestaurantFragment
+import com.example.capstone.restaurant.RestaurantWaitingActivity
 import com.google.android.gms.location.*
 import java.io.IOException
 import java.util.*
