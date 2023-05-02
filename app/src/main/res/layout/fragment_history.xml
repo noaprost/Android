@@ -2,21 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content"
->
+  android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
+        android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_marginVertical="4dp"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView26"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_margin="15dp"
             android:gravity="center_vertical"
             android:text="이전 대기 내역"
@@ -28,9 +29,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/previousWaitingRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_previous_waiting_info"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_height="wrap_content"
+            app:fastScrollVerticalThumbDrawable="@layout/item_previous_waiting_info"
+            app:fastScrollHorizontalTrackDrawable="@layout/item_previous_waiting_info"
+            tools:listitem="@layout/item_previous_waiting_info" />
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

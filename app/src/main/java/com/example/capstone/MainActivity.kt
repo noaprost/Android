@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import com.example.capstone.databinding.ActivityMainBinding
 import com.example.capstone.history.HistoryFragment
 import com.example.capstone.home.HomeFragment
+import com.example.capstone.hot.HotRestaurantFragment
 import com.example.capstone.like.LikeFragment
 import com.example.capstone.list.ListFragment
+import com.example.capstone.matching.MatchingRestaurantFragment
 import com.example.capstone.mypage.MyPageFragment
 import com.example.capstone.mypage.MyReviewFragment
 import com.example.capstone.restaurant.RestaurantMainFragment
@@ -108,6 +110,18 @@ class MainActivity : AppCompatActivity() {
                 //bundle.putString("bundleData", "번들데이터의데이터")
                 //fragment.arguments=bundle
                 transaction.addToBackStack(null)
+                transaction.replace(R.id.fragmentContainerView, fragment)
+            }
+            "Matching" -> {
+                val fragment:Fragment=MatchingRestaurantFragment()
+                transaction.addToBackStack(null)
+                fragment.arguments=bundle
+                transaction.replace(R.id.fragmentContainerView, fragment)
+            }
+            "Hot" -> {
+                val fragment:Fragment=HotRestaurantFragment()
+                transaction.addToBackStack(null)
+                fragment.arguments=bundle
                 transaction.replace(R.id.fragmentContainerView, fragment)
             }
         }

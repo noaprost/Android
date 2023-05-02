@@ -1,5 +1,6 @@
 package com.example.capstone.history
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone.MainActivity
 
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHistoryBinding
@@ -17,6 +19,7 @@ class HistoryFragment : Fragment() {
     private val binding get() = _binding!!
     private var previousWaitingList = ArrayList<PreviousWaiting>()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,7 +27,6 @@ class HistoryFragment : Fragment() {
 
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
 
         previousWaitingList.apply {
             add(
@@ -69,6 +71,9 @@ class HistoryFragment : Fragment() {
         binding.previousWaitingRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.previousWaitingRecyclerView.setHasFixedSize(true)
         binding.previousWaitingRecyclerView.adapter = PreviousWaitingAdapter(previousWaitingList)
+
+
+
         return root
     }
 
@@ -78,8 +83,11 @@ class HistoryFragment : Fragment() {
         fun bind(prewait: PreviousWaiting){
             this.prewait = prewait
 
+
             itemView.setOnClickListener {
 
+                val intent = Intent(getActivity(), WriteReviewActivity::class.java)
+                startActivity(intent)
             }
         }
     }
@@ -98,6 +106,11 @@ class HistoryFragment : Fragment() {
             val post=preList[position]
             holder.bind(post)
         }
+
+        override fun getItemId(position: Int): Long {
+            return super.getItemId(position)
+        }
+
     }
 
 }

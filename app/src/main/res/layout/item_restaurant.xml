@@ -66,7 +66,6 @@
     <TextView
         android:id="@+id/restaurantName"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:text="온리원 파스타 송도점"
         android:textColor="@color/black"

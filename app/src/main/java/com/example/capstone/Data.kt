@@ -40,6 +40,13 @@ data class Restaurant(
     val name: String,
     val waiting: Int
 )
+data class HotRestaurant(
+    val title : String,
+    val info : String,
+    val rating: Double,
+    val commentNumber: Int,
+    val address : String
+)
 
 data class Restaurants(
     val resIdx: Int,
@@ -60,6 +67,7 @@ data class Restaurants(
     val keyWord:String,
     val ResComment:String
     //resMngNum:String
+
 ):Serializable
 
 data class resAddress(

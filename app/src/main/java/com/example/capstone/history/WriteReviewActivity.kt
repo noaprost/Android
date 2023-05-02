@@ -149,13 +149,13 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private val activityResult:ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){ it ->
         if(it.resultCode== RESULT_OK && it.data != null){
-               val uri = it.data!!.data
-                uri!!.also { reviewImage = it }
-                Glide.with(this)
-                    .load(uri) //이미지
-                    .into(binding.addReviewImage)
-                binding.reviewImageBox.visibility= View.VISIBLE
-                binding.addReviewImage.clipToOutline = true
+            val uri = it.data!!.data
+            uri!!.also { reviewImage = it }
+            Glide.with(this)
+                .load(uri) //이미지
+                .into(binding.addReviewImage)
+            binding.reviewImageBox.visibility= View.VISIBLE
+            binding.addReviewImage.clipToOutline = true
             val file = File(absolutelyPath(uri, this))
             reviewImagePath = file
         }
@@ -190,6 +190,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                     val current = LocalDateTime.now()
                     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     val date = current.format(formatter).toString()
+
                     if(reviewImagePath==null){
                         val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                             .addFormDataPart("UserID", userId)
