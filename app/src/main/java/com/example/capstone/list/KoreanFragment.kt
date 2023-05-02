@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.capstone.*
 import com.example.capstone.databinding.FragmentKoreanBinding
 import com.example.capstone.retrofit.API
@@ -81,6 +83,28 @@ class KoreanFragment : Fragment() {
                 bundle.putSerializable("restaurant", restaurantList)
                 val mainAct = activity as MainActivity
                 mainAct.ChangeFragment("Restaurant", bundle)
+            }
+            when (restaurantList.resCategory) {
+                "한식" -> restaurantImg.setBackgroundResource(R.drawable.dummy_korean)
+                "중식" -> restaurantImg.setBackgroundResource(R.drawable.dummy_chinese)
+                "양식" -> restaurantImg.setBackgroundResource(R.drawable.dummy_restaurant_image)
+                "일식" -> restaurantImg.setBackgroundResource(R.drawable.dummy_japanese)
+                "카페/베이커리" -> restaurantImg.setBackgroundResource(R.drawable.dummy_bakery)
+                else -> restaurantImg.setBackgroundResource(R.drawable.dummy_alcohol)
+            }
+            if(restaurantList.resImg!=null) {
+                /*
+                val url="${API.BASE_URL}/${restaurantList.resImg}"
+                Glide.with(this@KoreanFragment)
+                    .load(url) // 불러올 이미지 url
+                    .error(R.drawable.ic_flag) // 로딩 에러 발생 시 표시할 이미지
+                    .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                    .override(500, 300)
+                    .into(restaurantImg) // 이미지를 넣을 뷰
+
+                 */
+                //캡쳐용 코드
+
             }
         }
     }
