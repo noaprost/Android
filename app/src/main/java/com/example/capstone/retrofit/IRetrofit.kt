@@ -40,4 +40,7 @@ interface IRetrofit {
     @POST("/restaurant/gender") //성별별 선호도
     fun preferenceByGender(@Body ResID: ResID):Call<PreferenceByGender>
 
+    @POST("/user/waiting/ordernumber") //대기 내역 확인
+    fun waitingInfoCheck(@Body requestBody: RequestBody): Call<WaitingInfoCheck>
+
 }

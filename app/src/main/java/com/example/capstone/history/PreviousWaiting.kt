@@ -1,6 +1,3 @@
 package com.example.capstone.history
 
-import android.widget.Button
-
-
-class PreviousWaiting (val txtWaitingDate : String, val waitingImg : Int, val waitingTitle: String)
+class PreviousWaiting (var txtWaitingDate : String, var waitingImg : Int, var waitingTitle: String)
