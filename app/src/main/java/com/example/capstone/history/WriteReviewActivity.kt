@@ -211,7 +211,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                             .addFormDataPart("RevRecom", isSatisfied.toString()) //todo 수정
                             .addFormDataPart("RevTime", date)
                             .build()
-                            writeReview(requestBody)
+                        writeReview(requestBody)
                     }else{
                         val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                             .addFormDataPart("UserID", userId)

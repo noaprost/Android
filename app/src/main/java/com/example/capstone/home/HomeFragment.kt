@@ -2,37 +2,45 @@ package com.example.capstone.home
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
+import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.ConfirmDialogInterface
-import com.example.capstone.CustomDialog
 import com.example.capstone.MainActivity
 import com.example.capstone.R
+import com.example.capstone.WaitingCustomDialog
 import com.example.capstone.databinding.FragmentHomeBinding
-import com.example.capstone.hot.HotRestaurantFragment
-import com.example.capstone.matching.MatchingRestaurantFragment
-import com.example.capstone.restaurant.RestaurantWaitingActivity
 import com.google.android.gms.location.*
 import java.io.IOException
 import java.util.*
+import com.example.capstone.*
+import com.example.capstone.retrofit.API
+import com.example.capstone.retrofit.IRetrofit
+import com.example.capstone.retrofit.RetrofitClient
+import okhttp3.Callback
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Response
 import kotlin.collections.ArrayList
 
-class HomeFragment : Fragment(), ConfirmDialogInterface {
+class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -42,9 +50,16 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
     private lateinit var mLocationRequest: LocationRequest // 위치 정보 요청의 매개변수를 저장하는
     private val REQUEST_PERMISSION_LOCATION = 10
-    lateinit var userInfo: SharedPreferences
     private var presentLocation = ""
 
+    private lateinit var userInfo: SharedPreferences
+    private lateinit var userId : String
+    private lateinit var resPhNum : String
+    private lateinit var UserPhone : String
+    private lateinit var waitingInfoDialog: WaitingCustomDialog
+    private lateinit var requestBody:RequestBody
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,10 +67,10 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        userInfo = this.requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        userInfo = this.requireActivity().getSharedPreferences("userInfo", MODE_PRIVATE)
 
         // 대기 내역이 있는 경우에만 대기 정보 버튼이 보이도록 설정
-        var isExistWatingInfo = true // 불러온 데이터의 존재여부로 판단되도혹 수정 필요
+        var isExistWatingInfo = true // 불러온 데이터의 존재 여부로 판단되도혹 수정 필요
         binding.watingInfoBtn.visibility = if(isExistWatingInfo){
             View.VISIBLE
         }else{
@@ -64,7 +79,18 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
 
         // 대기 정보 버튼을 누를 경우 팝업 연결
         binding.watingInfoBtn.setOnClickListener {
-            val dialog = CustomDialog(this,"", 0, 0)
+            /*resPhNum = this.requireActivity().getSharedPreferences("resPhNum", MODE_PRIVATE).getString("resPhNum", "010-7777-7777").toString()
+            UserPhone = this.requireActivity().getSharedPreferences("UserPhone", MODE_PRIVATE).getString("UserPhone", "032 525 3745").toString()
+
+            requestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("UserPhone", UserPhone)
+                .addFormDataPart("resPhNum", resPhNum)
+                .build()
+            waitingInfoCheck(requestBody)*/
+
+            waitingInfoDialog = WaitingCustomDialog(this@HomeFragment, "현재 0팀이 앞에 있습니다.", 0, 0)
+            waitingInfoDialog.isCancelable = true
+            waitingInfoDialog.show(this@HomeFragment.parentFragmentManager, "WaitingCustomDialog")
         }
 
         binding.title1.setOnClickListener {
@@ -208,10 +234,6 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
         }
     }
 
-    override fun onYesButtonClick(num: Int, theme: Int) {
-        TODO("Not yet implemented")
-    }
-
     private fun startLocationUpdates() {
         //FusedLocationProviderClient의 인스턴스를 생성.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
@@ -290,4 +312,22 @@ class HomeFragment : Fragment(), ConfirmDialogInterface {
         super.onPause()
         if(presentLocation!="") mFusedLocationProviderClient!!.removeLocationUpdates(mLocationCallback)
     }
+
+    /*private fun waitingInfoCheck(requestBody: RequestBody){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.waitingInfoCheck(requestBody) ?:return
+        call.enqueue(object : retrofit2.Callback<WaitingInfoCheck>{
+
+            override fun onResponse(call: Call<WaitingInfoCheck>, response: Response<WaitingInfoCheck>) {
+                Log.d("retrofit", "대기 내역 확인 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                waitingInfoDialog = WaitingCustomDialog(this@HomeFragment, response.body()!!.toString(), 0, 0)
+                waitingInfoDialog.isCancelable = true
+                waitingInfoDialog.show(this@HomeFragment.parentFragmentManager, "WaitingCustomDialog")
+            }
+
+            override fun onFailure(call: Call<WaitingInfoCheck>, t: Throwable) {
+                Log.d("retrofit", "대기 내역 확인 -  응답 실패 / t: $t")
+            }
+        })
+    }*/
 }

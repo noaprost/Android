@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone.MainActivity
-
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentHistoryBinding
 
@@ -18,7 +16,6 @@ class HistoryFragment : Fragment() {
     private var _binding : FragmentHistoryBinding? = null
     private val binding get() = _binding!!
     private var previousWaitingList = ArrayList<PreviousWaiting>()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,49 +27,16 @@ class HistoryFragment : Fragment() {
 
         previousWaitingList.apply {
             add(
-                PreviousWaiting("2022-12-09", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점")
+                PreviousWaiting("2023-05-03", R.drawable.dummy_restaurant_image, "명태어장")
             )
-
             add(
-                PreviousWaiting("2022-12-12", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점")
-                )
-
-            add(
-                PreviousWaiting("2022-12-13", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점")
-                )
-
-            add(
-                PreviousWaiting("2022-12-22", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점")
-                )
-
-            add(
-                PreviousWaiting("2022-12-25", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점")
-
-                )
-
-            add(
-                PreviousWaiting("2022-12-31", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점")
-
-                )
-
-            add(
-                PreviousWaiting("2023-01-08", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점")
-                )
-
-            add(
-                PreviousWaiting("2023-01-22", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점")
-                )
-
-            add(
-                PreviousWaiting("2023-02-14", R.drawable.dummy_restaurant_image, "온리원 파스타 송도점")
-                )
+                PreviousWaiting("2023-05-04", R.drawable.dummy_restaurant_image, "명태어장")
+            )
         }
 
-        binding.previousWaitingRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.previousWaitingRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.previousWaitingRecyclerView.setHasFixedSize(true)
         binding.previousWaitingRecyclerView.adapter = PreviousWaitingAdapter(previousWaitingList)
-
-
 
         return root
     }
@@ -80,12 +44,10 @@ class HistoryFragment : Fragment() {
     inner class PreViewHolder(view: View): RecyclerView.ViewHolder(view){
         private lateinit var prewait: PreviousWaiting
 
-        fun bind(prewait: PreviousWaiting){
+        fun bind(prewait : PreviousWaiting) : Unit{
             this.prewait = prewait
 
-
             itemView.setOnClickListener {
-
                 val intent = Intent(getActivity(), WriteReviewActivity::class.java)
                 startActivity(intent)
             }
@@ -99,7 +61,7 @@ class HistoryFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return previousWaitingList.size
+            return preList.size
         }
 
         override fun onBindViewHolder(holder: PreViewHolder, position: Int) {

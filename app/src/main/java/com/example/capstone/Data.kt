@@ -154,3 +154,7 @@ data class PreferenceByGender(
     val cntM : Int,
     val cntF : Int,
 )
+
+data class WaitingInfoCheck(
+    val massage : String
+)

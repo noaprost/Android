@@ -23,7 +23,7 @@
             android:background="@drawable/background_round_rectangular"
             android:cropToPadding="false"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/dummy_restaurant_image" />
+            app:srcCompat="@drawable/dummy_korean" />
 
         <LinearLayout
             android:layout_width="match_parent"
