@@ -273,6 +273,7 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         mapView.onStart()
     }
 
+    /*
     override fun onStop() {
         super.onStop()
         mapView.onStop()
@@ -288,6 +289,8 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         mapView.onPause()
     }
 
+
+
     override fun onLowMemory() {
         super.onLowMemory()
         mapView.onLowMemory()
@@ -297,5 +300,7 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         super.onDestroy()
         mapView.onDestroy()
     }
+    
+     */
 
 }
