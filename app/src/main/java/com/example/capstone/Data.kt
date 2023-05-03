@@ -11,7 +11,7 @@ data class Review(
     val UserID: String,
     val UserName:String,
     val ResID: String,
-    val Rating:Long,
+    val Rating:Double,
     val RevTxt: String,
     val RevImgID:Int,
     val RevKeyWord: String,
