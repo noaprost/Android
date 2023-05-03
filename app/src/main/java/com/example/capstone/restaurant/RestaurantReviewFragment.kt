@@ -93,8 +93,8 @@ class RestaurantReviewFragment : Fragment() {
                 val url="${API.BASE_URL}/${imgUrl}"
                 Glide.with(this@RestaurantReviewFragment)
                     .load(url) // 불러올 이미지 url
-                    .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
-                    .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                    .error(R.drawable.dummy_chinese) // 로딩 에러 발생 시 표시할 이미지
+                    .fallback(R.drawable.dummy_chinese) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
                     .into(reviewImage) // 이미지를 넣을 뷰
             }else{reviewImage.visibility=View.INVISIBLE}
             reviewComment.text= review.RevTxt
