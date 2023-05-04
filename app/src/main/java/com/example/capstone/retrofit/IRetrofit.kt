@@ -40,6 +40,12 @@ interface IRetrofit {
     @POST("/restaurant/gender") //성별별 선호도
     fun preferenceByGender(@Body ResID: ResID):Call<PreferenceByGender>
 
+    @POST("/restaurant/hour") //시간별 복잡도
+    fun complexityByHour(@Body resPhNum: resPhNum):Call<List<complexityByHour>>
+
+    @POST("/restaurant/date") //요일별 복잡도
+    fun complexityByDate(@Body resPhNum: resPhNum):Call<List<complexityByDate>>
+
     @POST("/user/waiting/ordernumber") //대기 내역 확인
     fun waitingInfoCheck(@Body requestBody: RequestBody): Call<WaitingInfoCheck>
 

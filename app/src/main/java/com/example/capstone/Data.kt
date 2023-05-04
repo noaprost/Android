@@ -83,6 +83,9 @@ data class resName(
 data class ResID(
     val ResID:Int
 )
+data class resPhNum(
+    val resPhNum:String
+)
 data class RestaurantList(
     val results: List<Restaurants>
 )
@@ -153,6 +156,33 @@ data class PreferenceByGender(
     val ResID : String,
     val cntM : Int,
     val cntF : Int,
+)
+
+data class complexityByDate(
+    val resPhNum: String,
+    val Mon : Int,
+    val Tue: Int,
+    val Wed: Int,
+    val Thu: Int,
+    val Fri: Int,
+    val Sat: Int,
+    val Sun: Int
+)
+
+data class complexityByHour(
+    val resPhNum: String,
+    val _0 : Int,
+    val _2 : Int,
+    val _4 : Int,
+    val _6 : Int,
+    val _8 : Int,
+    val _10 : Int,
+    val _12 : Int,
+    val _14 : Int,
+    val _16 : Int,
+    val _18 : Int,
+    val _20 : Int,
+    val _22 : Int
 )
 
 data class WaitingInfoCheck(
