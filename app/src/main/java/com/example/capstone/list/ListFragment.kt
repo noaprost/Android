@@ -52,8 +52,8 @@ class ListFragment : Fragment(), OnMapReadyCallback {
     private val REQUEST_PERMISSION_LOCATION = 10
     private lateinit var mMap: GoogleMap
 
-    private var mlat by Delegates.notNull<Double>()
-    private var mlng by Delegates.notNull<Double>()
+    private var mlat:Double =37.3748023
+    private var mlng:Double = 126.6346218
     lateinit var userInfo: SharedPreferences
     private var presentLocation = ""
 
@@ -97,6 +97,8 @@ class ListFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         mMap=map
         if(checkPermissionForLocation(requireContext())) startLocationUpdates()
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mlat, mlng),15f)) //기본위치
+
         map.setOnMarkerClickListener {
             if(it.tag!=null){
                 val restaurant:Restaurants = it.tag as Restaurants
@@ -143,6 +145,7 @@ class ListFragment : Fragment(), OnMapReadyCallback {
                     bundle.putSerializable("restaurant", restaurant)
                     val mainAct = activity as MainActivity
                     mainAct.ChangeFragment("Restaurant", bundle)
+                    binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
                 }
             }else{
                 binding.cardView.visibility = View.GONE
@@ -169,6 +172,7 @@ class ListFragment : Fragment(), OnMapReadyCallback {
             mlat=location!!.latitude
             mlng= location.longitude
             val position = LatLng(mlat , mlng)
+            Log.d("hy", "${mlat}, ${mlng}")
             //내위치 표시
             onAddMarker(mlat, mlng, mMap, restaurant = null)
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,15f))
@@ -275,20 +279,27 @@ class ListFragment : Fragment(), OnMapReadyCallback {
 
     override fun onStop() {
         super.onStop()
+        if (binding.mainFrame.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }
         mapView.onStop()
     }
 
     override fun onResume() {
         super.onResume()
+        if (binding.mainFrame.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }
         mapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
+        if (binding.mainFrame.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            binding.mainFrame.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }
         mapView.onPause()
     }
-
-
 
     override fun onLowMemory() {
         super.onLowMemory()

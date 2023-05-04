@@ -15,8 +15,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -193,9 +195,9 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
     inner class RestaurantViewHolder(view : View): RecyclerView.ViewHolder(view){
         private lateinit var restaurantItem: Restaurant
-
+        private val restaurantImg : ImageView = itemView.findViewById(R.id.restaurantImage)
         fun bind(restaurantItem : Restaurant){
-            this.restaurantItem = restaurantItem
+            restaurantImg.clipToOutline=true
 
             itemView.setOnClickListener {
                 val bundle = Bundle()
