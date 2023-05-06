@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StarBooks</string>
+    <string name="app_name">내 자리 내놔</string>
     <string-array name="spinner_array">
         <item>2명</item>
         <item>3명</item>

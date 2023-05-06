@@ -42,9 +42,9 @@ object RetrofitClient {
         })
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS)
         client.addInterceptor(loggingInterceptor) //위에서 설정한 로깅 인터셉터 추가
-        client.connectTimeout(100, TimeUnit.SECONDS)
-            .readTimeout(100, TimeUnit.SECONDS)
-            .writeTimeout(100,TimeUnit.SECONDS)
+        client.connectTimeout(500, TimeUnit.SECONDS)
+            .readTimeout(500, TimeUnit.SECONDS)
+            .writeTimeout(500,TimeUnit.SECONDS)
         //기본파라메터 추가
         val baseParameterInterceptor : Interceptor = (object :Interceptor{
             override fun intercept(chain: Interceptor.Chain): Response {
@@ -57,6 +57,7 @@ object RetrofitClient {
                     .url(addedUrl)
                     .method(originalRequest.method, originalRequest.body)
                     .addHeader("Connection","close")
+                    .get()
                     .build()
                 return chain.proceed(finalRequest)
             }

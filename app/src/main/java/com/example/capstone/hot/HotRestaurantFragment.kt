@@ -1,23 +1,34 @@
 package com.example.capstone.hot
 
-import android.content.Intent
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone.HotRestaurant
-import com.example.capstone.MainActivity
-import com.example.capstone.R
+import com.bumptech.glide.Glide
+import com.example.capstone.*
 import com.example.capstone.databinding.FragmentHotRestaurantBinding
-import com.example.capstone.restaurant.RestaurantWaitingActivity
+import com.example.capstone.retrofit.API
+import com.example.capstone.retrofit.IRetrofit
+import com.example.capstone.retrofit.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HotRestaurantFragment : Fragment() {
     private var _binding : FragmentHotRestaurantBinding? = null
     private val binding get() = _binding!!
-    private var hotRestaurantList = ArrayList<HotRestaurant>()
+    lateinit var userInfo: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,67 +37,66 @@ class HotRestaurantFragment : Fragment() {
     ): View? {
         _binding = FragmentHotRestaurantBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        userInfo = this.requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "")
 
+        recommendRestaurant(UserId(userId!!))
         binding.hotBackBtn.setOnClickListener {
-            this.onDestroy()
+            destroy()
         }
 
         binding.hotCategoryBtn.setOnClickListener {
             // 카테고리별로 필터 적용되는 기능 추가
         }
 
-        hotRestaurantList.apply {
-            add(
-                HotRestaurant("온리원 파스타 송도점", "파스타 전문점입니다:)", 5.0, 34, "인천광역시 연수구 송도동")
-            )
-            add(
-                HotRestaurant("온리원 파스타 송도점", "파스타 전문점입니다:)", 4.3, 23, "인천광역시 연수구 송도동")
-            )
-            add(
-                HotRestaurant("온리원 파스타 송도점", "파스타 전문점입니다:)", 4.1, 66, "인천광역시 연수구 송도동")
-            )
-            add(
-                HotRestaurant("온리원 파스타 송도점", "파스타 전문점입니다:)", 5.0, 34, "인천광역시 연수구 송도동")
-            )
-            add(
-                HotRestaurant("온리원 파스타 송도점", "파스타 전문점입니다:)", 4.3, 23, "인천광역시 연수구 송도동")
-            )
-            add(
-                HotRestaurant("온리원 파스타 송도점", "파스타 전문점입니다:)", 4.1, 66, "인천광역시 연수구 송도동")
-            )
-        }
-
-        binding.hotRestaurantRecyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.hotRestaurantRecyclerView.setHasFixedSize(true)
-        binding.hotRestaurantRecyclerView.adapter = HotAdapter(hotRestaurantList)
-
         return root
     }
 
     inner class HotViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private lateinit var hotRes: HotRestaurant
+        private lateinit var hotRes: RestaurantInfo
+        private val matchResImg : AppCompatImageView = itemView.findViewById(R.id.matchResImg)
+        private val matchTitle : TextView = itemView.findViewById(R.id.title)
+        private val matchRating : TextView = itemView.findViewById(R.id.rating)
+        private val matchCommentNumber : TextView = itemView.findViewById(R.id.commentNumber)
+        private val matchAddress : TextView = itemView.findViewById(R.id.address)
+        private val keywordBox: LinearLayout = itemView.findViewById(R.id.keywordBox)
 
-        fun bind(hotRes: HotRestaurant) {
+        fun bind(hotRes: RestaurantInfo) {
             this.hotRes = hotRes
-
+            keywordBox.visibility=View.GONE
+            if(hotRes.resImg != null) {
+                val url="${API.BASE_URL}/${hotRes.resImg}"
+                Glide.with(this@HotRestaurantFragment)
+                    .load(url) // 불러올 이미지 url
+                    .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
+                    .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                    .override(500, 300)
+                    .into(matchResImg) // 이미지를 넣을 뷰
+            }
+            matchTitle.text = hotRes.resName
+            matchRating.text = hotRes.resRating.toString()
+            matchCommentNumber.text = hotRes.revCnt.toString()
+            if(hotRes.keyWord !=null){
+                var arr:List<String> =listOf("", "", "")
+                for (addr in hotRes.keyWord) {
+                    val splitedAddr = hotRes.keyWord.split("[\"", "\", \"", "\"]")
+                    arr = splitedAddr
+                }
+            }
             itemView.setOnClickListener {
                 val bundle = Bundle()
+                bundle.putSerializable("resID", hotRes.resIdx)
                 val mainAct = activity as MainActivity
                 mainAct.ChangeFragment("Restaurant", bundle)
             }
         }
     }
 
-    inner class HotAdapter(private val hotRestaurantList: List<HotRestaurant>) :
+    inner class HotAdapter(private val hotRestaurantList: List<RestaurantInfo>) :
         RecyclerView.Adapter<HotViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotViewHolder {
-            val view = layoutInflater.inflate(
-                R.layout.item_main_restaurant,
-                parent,
-                false
-            )
+            val view = layoutInflater.inflate(R.layout.item_main_restaurant, parent, false)
             return HotViewHolder(view)
         }
 
@@ -98,6 +108,33 @@ class HotRestaurantFragment : Fragment() {
         override fun getItemCount(): Int {
             return hotRestaurantList.size
         }
+    }
+    private fun recommendRestaurant(userId: UserId){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.recommendRestaurant(userId) ?:return
+
+        call.enqueue(object : Callback<RecommendRestaurants> {
+
+            override fun onResponse(call: Call<RecommendRestaurants>, response: Response<RecommendRestaurants>){
+                Log.d("retrofit", "핫한 음식점 - 응답 성공 / t : ${response.raw()} ${response.body()?.message}")
+                val matcharr = response.body()?.message
+                if(matcharr != null){
+                    binding.hotRestaurantRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    binding.hotRestaurantRecyclerView.setHasFixedSize(true)
+                    binding.hotRestaurantRecyclerView.adapter = HotAdapter(matcharr)
+                }
+            }
+            override fun onFailure(call : Call<RecommendRestaurants>, t: Throwable){
+                Log.d("retrofit", "핫한 음식점 - 응답 실패 / t: $t")
+                binding.hotRestaurantRecyclerView.visibility=View.GONE
+            }
+        })
+    }
+    private fun destroy(){
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.beginTransaction().remove(this@HotRestaurantFragment).commit()
+        fragmentManager.popBackStack()
+
     }
 }
 
