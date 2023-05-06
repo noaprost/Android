@@ -1,15 +1,20 @@
 package com.example.capstone.matching
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.capstone.MainActivity
 import com.example.capstone.*
 import com.example.capstone.databinding.FragmentMatchingRestaurantBinding
@@ -24,6 +29,7 @@ import retrofit2.Response
 class MatchingRestaurantFragment : Fragment() {
     private var _binding : FragmentMatchingRestaurantBinding? = null
     private val binding get() = _binding!!
+    lateinit var userInfo: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,9 +38,14 @@ class MatchingRestaurantFragment : Fragment() {
     ): View? {
         _binding = FragmentMatchingRestaurantBinding.inflate(layoutInflater, container, false)
         val root: View = binding.root
+        userInfo = this.requireActivity().getSharedPreferences("userInfo", MODE_PRIVATE)
+        val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "")
+        val userNickname = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userNickname", "")
 
+        binding.textView66.text="${userNickname}님을 위한 추천 음식점"
+        recommendRestaurant(UserId("2"))
         binding.matchingBackBtn.setOnClickListener {
-            this.onDestroy()
+            destroy()
         }
 
         binding.matchingCategoryBtn.setOnClickListener {
@@ -44,33 +55,51 @@ class MatchingRestaurantFragment : Fragment() {
     }
 
     inner class MatchingViewHolder(view: View): RecyclerView.ViewHolder(view){
-        private lateinit var matchingRes: Restaurants
+        private lateinit var matchingRes: RestaurantInfo
         private val matchResImg : AppCompatImageView = itemView.findViewById(R.id.matchResImg)
         private val matchTitle : TextView = itemView.findViewById(R.id.title)
-        private val matchInfo : TextView = itemView.findViewById(R.id.info)
+        private val tag1 : TextView = itemView.findViewById(R.id.tag1)
+        private val tag2 : TextView = itemView.findViewById(R.id.tag2)
+        private val tag3 : TextView = itemView.findViewById(R.id.tag3)
         private val matchRating : TextView = itemView.findViewById(R.id.rating)
         private val matchCommentNumber : TextView = itemView.findViewById(R.id.commentNumber)
         private val matchAddress : TextView = itemView.findViewById(R.id.address)
 
-        fun bind(Restaurants : Restaurants){
+        fun bind(Restaurants : RestaurantInfo){
             this.matchingRes = Restaurants
-            if(Restaurants.resImg != null) matchResImg.setBackgroundResource(Restaurants.resImg.toInt())
+            val url="${API.BASE_URL}/${Restaurants.resImg}"
+            if(Restaurants.resImg != null) {
+                val url="${API.BASE_URL}/${Restaurants.resImg}"
+                Glide.with(this@MatchingRestaurantFragment)
+                    .load(url) // 불러올 이미지 url
+                    .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
+                    .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                    .override(500, 300)
+                    .into(matchResImg) // 이미지를 넣을 뷰
+            }
             matchTitle.text = Restaurants.resName
-            matchInfo.text = "파스타 전문점입니다:)"
             matchRating.text = Restaurants.resRating.toString()
             matchCommentNumber.text = Restaurants.revCnt.toString()
-            matchAddress.text = Restaurants.resAddress
-
+            if(Restaurants.keyWord !=null){
+                var arr:List<String> =listOf("", "", "")
+                for (addr in Restaurants.keyWord) {
+                    val splitedAddr = Restaurants.keyWord.split("[\"", "\", \"", "\"]")
+                    arr = splitedAddr
+                }
+                tag1.text="#"+arr[1]
+                tag2.text="#"+arr[2]
+                tag3.text="#"+arr[3]
+            }
             itemView.setOnClickListener {
                 val bundle=Bundle()
-                bundle.putSerializable("matchingRes", matchingRes)
+                bundle.putSerializable("resID", Restaurants.resIdx)
                 val mainAct = activity as MainActivity
                 mainAct.ChangeFragment("Restaurant", bundle)
             }
         }
     }
 
-    inner class MatchingAdapter(private val matchingRestaurantList: List<Restaurants>): RecyclerView.Adapter<MatchingViewHolder>(){
+    inner class MatchingAdapter(private val matchingRestaurantList: List<RestaurantInfo>): RecyclerView.Adapter<MatchingViewHolder>(){
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchingViewHolder {
             val view = layoutInflater.inflate(R.layout.item_main_restaurant, parent, false)
@@ -82,32 +111,34 @@ class MatchingRestaurantFragment : Fragment() {
             holder.bind(post)
         }
 
-        override fun getItemCount(): Int {
-            return 10
-        }
+        override fun getItemCount(): Int = matchingRestaurantList.size
     }
 
-    // 추천 음식점 목록으로 변경 필요
-    private fun matchingRestaurant(resAddress: resAddress){
+    private fun recommendRestaurant(userId: UserId){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.showRestaurants(resAddress = resAddress) ?:return
+        val call = iRetrofit?.recommendRestaurant(userId) ?:return
 
-        call.enqueue(object : Callback<RestaurantList> {
+        call.enqueue(object : Callback<RecommendRestaurants> {
 
-            override fun onResponse(call: Call<RestaurantList>, response: Response<RestaurantList>){
-                Log.d("retrofit", "음식점 검색 - 응답 성공 / t : ${response.raw()} ${response.body()?.results}")
-                val matcharr = response.body()?.results
+            override fun onResponse(call: Call<RecommendRestaurants>, response: Response<RecommendRestaurants>){
+                Log.d("retrofit", "음식점 매칭- 응답 성공 / t : ${response.raw()} ${response.body()?.message}")
+                val matcharr = response.body()?.message
                 if(matcharr != null){
                     binding.matchingRestaurantRecyclerView.visibility=View.VISIBLE
                     binding.matchingRestaurantRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    binding.matchingRestaurantRecyclerView.setHasFixedSize(true)
                     binding.matchingRestaurantRecyclerView.adapter = MatchingAdapter(matcharr)
                 }
             }
-            override fun onFailure(call : Call<RestaurantList>, t: Throwable){
-                Log.d("retrofit", "음식점 검색 - 응답 실패 / t: $t")
+            override fun onFailure(call : Call<RecommendRestaurants>, t: Throwable){
+                Log.d("retrofit", "음식점 매칭 - 응답 실패 / t: $t")
                 binding.matchingRestaurantRecyclerView.visibility=View.GONE
             }
         })
+    }
+    private fun destroy(){
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.beginTransaction().remove(this@MatchingRestaurantFragment).commit()
+        fragmentManager.popBackStack()
+
     }
 }

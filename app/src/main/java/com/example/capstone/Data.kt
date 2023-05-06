@@ -1,10 +1,7 @@
 package com.example.capstone
 
-import android.media.Image
-import okhttp3.MultipartBody
 import java.io.File
 import java.io.Serializable
-import java.time.format.DateTimeFormatter
 
 data class Review(
     val RevIdx:Int,
@@ -102,6 +99,16 @@ data class AddWaiting(
     val WaitisAccepted : Boolean
 ):Serializable
 
+data class WaitingInfo(
+    val WaitIndex:Int,
+    val userID : String,
+    val ResID : String,
+    val Waitheadcount : Int,
+    val WaitTime : String,
+    val WaitSeat : String,
+    val WaitisAccepted : Boolean
+):Serializable
+
 data class UserIdPassword(
     val userID: String,
     val userPassword:String
@@ -185,6 +192,21 @@ data class complexityByHour(
     val _22 : Int
 )
 
+//홈화면
 data class WaitingInfoCheck(
     val massage : String
+)
+
+data class RecommendRestaurants(
+    val code:Int,
+    val message:List<RestaurantInfo>
+)
+
+data class RestaurantInfo(
+    val keyWord: String,
+    val resIdx : String,
+    val resName : String,
+    val resImg : String,
+    val resRating : Double,
+    val revCnt : Int
 )

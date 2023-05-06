@@ -16,8 +16,8 @@ interface IRetrofit {
     @POST("/restaurant/name")
     fun searchRestaurants(@Body resName: resName):Call<RestaurantList>
 
-    @POST("/user/waiting/insert")
-    fun addWaiting(@Body addWaiting: AddWaiting):Call<AddWaiting>
+    @POST("/user/waiting/insert2")
+    fun addWaiting(@Body addWaiting: AddWaiting):Call<WaitingInfo>
 
     @POST("/restaurant/reviews")
     fun showRestaurantReview(@Body ResID: ResID):Call<RestaurantReviewList>
@@ -48,5 +48,11 @@ interface IRetrofit {
 
     @POST("/user/waiting/ordernumber") //대기 내역 확인
     fun waitingInfoCheck(@Body requestBody: RequestBody): Call<WaitingInfoCheck>
+
+    @GET("/main/recommend")
+    fun recommendRestaurant(@Query("userId") userId: UserId):Call<RecommendRestaurants>
+
+    @GET("/main/hot")
+    fun hotRestaurant(@Query("userId") userId: UserId):Call<RecommendRestaurants>
 
 }
