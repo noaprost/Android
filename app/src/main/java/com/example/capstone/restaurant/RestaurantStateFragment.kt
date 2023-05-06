@@ -112,7 +112,7 @@ class RestaurantStateFragment : Fragment() {
                 textColor = ContextCompat.getColor(context, R.color.black) //라벨 색상
                 textSize = 11f // 텍스트 크기
                 valueFormatter =
-                    RestaurantMatchingFragment.MyXAxisFormatter() // X축 라벨값(밑에 표시되는 글자) 바꿔주기 위해 설정
+                    StateFragmentXAxisFormatter() // X축 라벨값(밑에 표시되는 글자) 바꿔주기 위해 설정
             }
             axisRight.isEnabled = false // 오른쪽 Y축을 안보이게 해줌.
             setTouchEnabled(false) // 그래프 터치해도 아무 변화없게 막음
@@ -191,7 +191,7 @@ class RestaurantStateFragment : Fragment() {
             invalidate()
         }
     }
-    inner class MyXAxisFormatter : ValueFormatter() {
+    inner class StateFragmentXAxisFormatter : ValueFormatter() {
         private val days = arrayOf("0시","2시","4시","6시","8시","10시","12시","14시", "16시" ,"18시","20시" ,"22시" )
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             return days.getOrNull(value.toInt()-1) ?: value.toString()

@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         userInfo.edit().putString("userLocation", "").apply()
         userInfo.edit().putString("userPhoneNum", "").apply()
         userInfo.edit().putString("userNickname", "").apply()
+        userInfo.edit().putString("WaitIndex", "").apply()
         userId = userInfo.getString("userInfo", "2")!!.toLong()
         isMember = userInfo.getBoolean("isMember", false)
 

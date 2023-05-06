@@ -1,7 +1,6 @@
 package com.example.capstone.restaurant
 
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
-import androidx.core.content.withStyledAttributes
 import com.example.capstone.*
 import com.example.capstone.databinding.ActivityRestaurantWaitingBinding
 import com.example.capstone.retrofit.API
@@ -30,7 +28,7 @@ import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.properties.Delegates
+
 
 class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
     private lateinit var binding: ActivityRestaurantWaitingBinding
@@ -94,23 +92,6 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
         builder.setSpan(ForegroundColorSpan(resources.getColor(R.color.INUYellow)), 7, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.textView20.text = builder
 
-        /*
-        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
-            when(checkedId){
-                binding.seatKeyword1.id->searKeyword=binding.seatKeyword1.text.toString()
-                binding.seatKeyword2.id->searKeyword=binding.seatKeyword2.text.toString()
-                binding.seatKeyword3.id->searKeyword=binding.seatKeyword3.text.toString()
-                binding.seatKeyword4.id->searKeyword=binding.seatKeyword4.text.toString()
-                binding.seatKeyword5.id->searKeyword=binding.seatKeyword5.text.toString()
-                binding.seatKeyword6.id->searKeyword=binding.seatKeyword6.text.toString()
-                binding.seatKeyword7.id->searKeyword=binding.seatKeyword7.text.toString()
-                binding.seatKeyword8.id->searKeyword=binding.seatKeyword8.text.toString()
-            }
-            isSeatKeywordSelected=true
-            binding.checkBox.isChecked=false
-        }
-
-         */
         binding.chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
             if(checkedIds.size==0) {
                 binding.checkBox.isChecked=true
@@ -176,11 +157,12 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.addWaiting(addWaiting = addWaiting) ?:return
 
-        call.enqueue(object : Callback<AddWaiting> {
+        call.enqueue(object : Callback<WaitingInfo> {
 
-            override fun onResponse(call: Call<AddWaiting>, response: Response<AddWaiting>) {
+            override fun onResponse(call: Call<WaitingInfo>, response: Response<WaitingInfo>) {
                 Log.d("hy", addWaiting.toString())
                 Log.d("retrofit", "대기 신청 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                userInfo.edit().putString("WaitIndex", response.body()?.WaitIndex.toString()).apply()
                 val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기 신청이 완료되었습니다.", 0, 1)
                 dialog.isCancelable = true
                 dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
@@ -188,7 +170,7 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
                     finish()
                 }, 500)
             }
-            override fun onFailure(call: Call<AddWaiting>, t: Throwable) {
+            override fun onFailure(call: Call<WaitingInfo>, t: Throwable) {
                 Log.d("retrofit", "대기 신청 - 한식 응답 실패 / t: $t")
                 val dialog = CustomDialog(this@RestaurantWaitingActivity, "잠시 후 다시 실행해주세요.", 0, 1)
                 dialog.isCancelable = true
