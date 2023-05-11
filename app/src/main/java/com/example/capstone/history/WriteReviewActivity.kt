@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.media.Rating
 import okhttp3.*
 import android.net.Uri
 import android.os.Build
@@ -63,9 +64,10 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         binding =  ActivityWriteReviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE)
-        userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "1").toString()
-        resId= intent.getStringExtra("resId").toString() //todo resId 연결
-        //binding.writeReviewName.text=intent.getStringExtra("resName").toString()//todo resName 연결
+        userId = userInfo.getString("userId", "0").toString()
+        resId= intent.getStringExtra("resId").toString()
+        binding.writeReviewName.text=intent.getStringExtra("resName").toString()
+
         binding.writeReviewComment.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -98,18 +100,18 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         binding.chipGroup1.setOnCheckedStateChangeListener { _, checkedIds ->
             if(checkedIds.size!=0){
                 when(checkedIds[0]){
-                    binding.writeReviewKeyword1.id->keyword[0]=binding.writeReviewKeyword1.text.toString()
-                    binding.writeReviewKeyword2.id->keyword[0]=binding.writeReviewKeyword2.text.toString()
-                    binding.writeReviewKeyword3.id->keyword[0]=binding.writeReviewKeyword3.text.toString()
-                    binding.writeReviewKeyword4.id->keyword[0]=binding.writeReviewKeyword4.text.toString()
-                    binding.writeReviewKeyword5.id->keyword[0]=binding.writeReviewKeyword5.text.toString()
-                    binding.writeReviewKeyword6.id->keyword[0]=binding.writeReviewKeyword6.text.toString()
-                    binding.writeReviewKeyword7.id->keyword[0]=binding.writeReviewKeyword7.text.toString()
-                    binding.writeReviewKeyword8.id->keyword[0]=binding.writeReviewKeyword8.text.toString()
-                    binding.writeReviewKeyword9.id->keyword[0]=binding.writeReviewKeyword9.text.toString()
-                    binding.writeReviewKeyword10.id->keyword[0]=binding.writeReviewKeyword10.text.toString()
-                    binding.writeReviewKeyword11.id->keyword[0]=binding.writeReviewKeyword11.text.toString()
-                    binding.writeReviewKeyword12.id->keyword[0]=binding.writeReviewKeyword12.text.toString()
+                    binding.writeReviewKeyword1.id->keyword[0]=binding.writeReviewKeyword1.text.toString().replace("#","")
+                    binding.writeReviewKeyword2.id->keyword[0]=binding.writeReviewKeyword2.text.toString().replace("#","")
+                    binding.writeReviewKeyword3.id->keyword[0]=binding.writeReviewKeyword3.text.toString().replace("#","")
+                    binding.writeReviewKeyword4.id->keyword[0]=binding.writeReviewKeyword4.text.toString().replace("#","")
+                    binding.writeReviewKeyword5.id->keyword[0]=binding.writeReviewKeyword5.text.toString().replace("#","")
+                    binding.writeReviewKeyword6.id->keyword[0]=binding.writeReviewKeyword6.text.toString().replace("#","")
+                    binding.writeReviewKeyword7.id->keyword[0]=binding.writeReviewKeyword7.text.toString().replace("#","")
+                    binding.writeReviewKeyword8.id->keyword[0]=binding.writeReviewKeyword8.text.toString().replace("#","")
+                    binding.writeReviewKeyword9.id->keyword[0]=binding.writeReviewKeyword9.text.toString().replace("#","")
+                    binding.writeReviewKeyword10.id->keyword[0]=binding.writeReviewKeyword10.text.toString().replace("#","")
+                    binding.writeReviewKeyword11.id->keyword[0]=binding.writeReviewKeyword11.text.toString().replace("#","")
+                    binding.writeReviewKeyword12.id->keyword[0]=binding.writeReviewKeyword12.text.toString().replace("#","")
                 }
             }
 
@@ -117,28 +119,27 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         binding.chipGroup2.setOnCheckedStateChangeListener { _, checkedIds ->
             if(checkedIds.size!=0){
                 when(checkedIds[0]){
-                    binding.writeReviewKeyword8.id->keyword[1]=binding.writeReviewKeyword8.text.toString()
-                    binding.writeReviewKeyword9.id->keyword[1]=binding.writeReviewKeyword9.text.toString()
-                    binding.writeReviewKeyword10.id->keyword[1]=binding.writeReviewKeyword10.text.toString()
-                    binding.writeReviewKeyword11.id->keyword[1]=binding.writeReviewKeyword11.text.toString()
-                    binding.writeReviewKeyword12.id->keyword[1]=binding.writeReviewKeyword12.text.toString()
-                    binding.writeReviewKeyword13.id->keyword[1]=binding.writeReviewKeyword13.text.toString()
-                    binding.writeReviewKeyword14.id->keyword[1]=binding.writeReviewKeyword14.text.toString()
-                    binding.writeReviewKeyword15.id->keyword[1]=binding.writeReviewKeyword15.text.toString()
-                    binding.writeReviewKeyword16.id->keyword[1]=binding.writeReviewKeyword16.text.toString()
+                    binding.writeReviewKeyword8.id->keyword[1]=binding.writeReviewKeyword8.text.toString().replace("#","")
+                    binding.writeReviewKeyword9.id->keyword[1]=binding.writeReviewKeyword9.text.toString().replace("#","")
+                    binding.writeReviewKeyword10.id->keyword[1]=binding.writeReviewKeyword10.text.toString().replace("#","")
+                    binding.writeReviewKeyword11.id->keyword[1]=binding.writeReviewKeyword11.text.toString().replace("#","")
+                    binding.writeReviewKeyword12.id->keyword[1]=binding.writeReviewKeyword12.text.toString().replace("#","")
+                    binding.writeReviewKeyword13.id->keyword[1]=binding.writeReviewKeyword13.text.toString().replace("#","")
+                    binding.writeReviewKeyword14.id->keyword[1]=binding.writeReviewKeyword14.text.toString().replace("#","")
+                    binding.writeReviewKeyword15.id->keyword[1]=binding.writeReviewKeyword15.text.toString().replace("#","")
+                    binding.writeReviewKeyword16.id->keyword[1]=binding.writeReviewKeyword16.text.toString().replace("#","")
                 }
             }
-
         }
         binding.chipGroup3.setOnCheckedStateChangeListener { _, checkedIds ->
             if(checkedIds.size!=0){
                 when(checkedIds[0]){
-                    binding.writeReviewKeyword17.id->keyword[2]=binding.writeReviewKeyword17.text.toString()
-                    binding.writeReviewKeyword18.id->keyword[2]=binding.writeReviewKeyword18.text.toString()
-                    binding.writeReviewKeyword19.id->keyword[2]=binding.writeReviewKeyword19.text.toString()
-                    binding.writeReviewKeyword20.id->keyword[2]=binding.writeReviewKeyword20.text.toString()
-                    binding.writeReviewKeyword21.id->keyword[2]=binding.writeReviewKeyword21.text.toString()
-                    binding.writeReviewKeyword22.id->keyword[2]=binding.writeReviewKeyword22.text.toString()
+                    binding.writeReviewKeyword17.id->keyword[2]=binding.writeReviewKeyword17.text.toString().replace("#","")
+                    binding.writeReviewKeyword18.id->keyword[2]=binding.writeReviewKeyword18.text.toString().replace("#","")
+                    binding.writeReviewKeyword19.id->keyword[2]=binding.writeReviewKeyword19.text.toString().replace("#","")
+                    binding.writeReviewKeyword20.id->keyword[2]=binding.writeReviewKeyword20.text.toString().replace("#","")
+                    binding.writeReviewKeyword21.id->keyword[2]=binding.writeReviewKeyword21.text.toString().replace("#","")
+                    binding.writeReviewKeyword22.id->keyword[2]=binding.writeReviewKeyword22.text.toString().replace("#","")
                 }
             }
 
@@ -225,7 +226,13 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                             .addFormDataPart("myFile", "", RequestBody.create(MultipartBody.FORM, ""))
                             .build()
                         writeReview(requestBody)
+                        Log.d("테스트", userId)
+                        Log.d("테스트", binding.ratingBar2.rating.toString())
+                        Log.d("테스트", reviewText)
+                        Log.d("테스트", keyword.toString())
+                        Log.d("테스트", date)
                     }
+
                 }
             }
         }
@@ -234,6 +241,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private fun writeReview(requestBody: RequestBody){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.writeReview(requestBody) ?:return
+
         call.enqueue(object : Callback<WriteReview> {
 
             override fun onResponse(call: Call<WriteReview>, response: Response<WriteReview>) {
