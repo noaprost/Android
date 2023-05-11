@@ -49,8 +49,7 @@ class MainActivity : AppCompatActivity() {
         userInfo.edit().putString("userPhoneNum", "").apply()
         userInfo.edit().putString("userNickname", "").apply()
         userInfo.edit().putString("WaitIndex", "").apply()
-        userId = userInfo.getString("userInfo", "2")!!.toLong()
-        isMember = userInfo.getBoolean("isMember", false)
+
 
         val bnv_main = findViewById<BottomNavigationView>(R.id.nav_view)
 

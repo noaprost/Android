@@ -33,7 +33,7 @@ class DeleteAccountActivity : AppCompatActivity(), ConfirmDialogInterface {
         binding =  ActivityDeleteAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE)
-        val userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "01012345678")
+        val userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userPhoneNum", "01012345678")
         val userPassword = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userPassword", "0000")
         binding.backButton.setOnClickListener { finish() }
 
