@@ -44,8 +44,8 @@ class RestaurantStateFragment : Fragment() {
         val root: View = binding.root
         val bundle = arguments
         resInfo=bundle!!.getSerializable("restaurant") as Restaurants
-        complexityByHour(resPhNum("032 934 6188"))
-        complexityByDate(resPhNum("032 934 6188"))
+        complexityByHour(resPhNum(resInfo.resPhNum))
+        complexityByDate(resPhNum(resInfo.resPhNum))
 
         val seatKeywordBox:List<LinearLayout> =listOf(binding.seatKeywordBox1,binding.seatKeywordBox2, binding.seatKeywordBox3, binding.seatKeywordBox4, binding.seatKeywordBox5, binding.seatKeywordBox6, binding.seatKeywordBox7, binding.seatKeywordBox8 )
         val seatKeywordList:List<TextView> =listOf(binding.seatKeyword1, binding.seatKeyword2, binding.seatKeyword3, binding.seatKeyword4, binding.seatKeyword5, binding.seatKeyword6, binding.seatKeyword7, binding.seatKeyword8)
@@ -212,9 +212,11 @@ class RestaurantStateFragment : Fragment() {
             override fun onResponse(call: Call<List<complexityByHour>>, response: Response<List<complexityByHour>>) {
                 Log.d("retrofit", "시간 복잡도 - 응답 성공 / t : ${response.raw()} ${response.body()}")
                 val data=response.body()
-                HourData= data!![0]
-                total=HourData._0+HourData._2+HourData._4+HourData._6+HourData._8+HourData._10+HourData._12+HourData._14+HourData._16+HourData._18+HourData._20+HourData._22.toFloat()
-                showComplexityByHour()
+                if(data!!.isNotEmpty()){
+                    HourData= data!![0]
+                    total=HourData._0+HourData._2+HourData._4+HourData._6+HourData._8+HourData._10+HourData._12+HourData._14+HourData._16+HourData._18+HourData._20+HourData._22.toFloat()
+                    showComplexityByHour()
+                }
             }
             override fun onFailure(call: Call<List<complexityByHour>>, t: Throwable) {
                 Log.d("retrofit", "시간 복잡도 -  응답 실패 / t: $t")
@@ -229,9 +231,12 @@ class RestaurantStateFragment : Fragment() {
             override fun onResponse(call: Call<List<complexityByDate>>, response: Response<List<complexityByDate>>) {
                 Log.d("retrofit", "요일 복잡도 - 응답 성공 / t : ${response.raw()} ${response.body()}")
                 val data=response.body()
-                DateData= data!![0]
-                total2=DateData.Mon+DateData.Tue+DateData.Wed+DateData.Thu+DateData.Fri+DateData.Sat+DateData.Sun.toFloat()
-                showComplexityByDate()
+                if(data!!.isNotEmpty()){
+                    DateData= data!![0]
+                    total2=DateData.Mon+DateData.Tue+DateData.Wed+DateData.Thu+DateData.Fri+DateData.Sat+DateData.Sun.toFloat()
+                    showComplexityByDate()
+                }
+
             }
             override fun onFailure(call: Call<List<complexityByDate>>, t: Throwable) {
                 Log.d("retrofit", "요일 복잡도 -  응답 실패 / t: $t")
