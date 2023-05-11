@@ -32,7 +32,7 @@ class RestaurantReviewDetail : AppCompatActivity() {
         binding =  ActivityRestaurantReviewDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         resInfo=intent.getSerializableExtra("resInfo") as Restaurants
-        showRestaurantReview(ResID(resInfo.resIdx))
+        showRestaurantReview(ResID(resInfo.resIdx.toString()))
         binding.textView6.text=resInfo.resName
         binding.textView9.text=resInfo.resRating.toString()
         if(resInfo.keyWord !=null){
@@ -82,23 +82,22 @@ class RestaurantReviewDetail : AppCompatActivity() {
                     val splitedAddr = review.RevKeyWord.split("[\"", "\", \"", "\"]")
                     arr = splitedAddr
                 }
-                Log.d("hy", review.RevKeyWord)
-                Log.d("hy", arr.toString())
                 keyword1.text="#"+arr[1]
                 keyword2.text="#"+arr[2]
                 keyword3.text="#"+arr[3]
             }
 
-            if(review.RevImgID!=null){
+            if(review.RevImg!=null){
                 reviewImage.visibility=View.VISIBLE
-                getReviewImage(RevIdx(review.RevIdx))
-                val url="${API.BASE_URL}/${imgUrl}"
+                val url="${API.BASE_URL}/${review.RevImg}"
+                Log.d("응답", url)
+
                 Glide.with(this@RestaurantReviewDetail)
                     .load(url) // 불러올 이미지 url
                     .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
                     .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
                     .into(reviewImage) // 이미지를 넣을 뷰
-            }else{reviewImage.visibility=View.INVISIBLE}
+            }else{reviewImage.visibility=View.GONE}
             reviewComment.text= review.RevTxt
             if(review.RevSatis!=0){
                 isSatisfied.setImageResource(R.drawable.ic_unsatisfied)
@@ -137,23 +136,6 @@ class RestaurantReviewDetail : AppCompatActivity() {
             override fun onFailure(call: Call<RestaurantReviewList>, t: Throwable) {
                 Log.d("retrofit", "음식점 리뷰 리스트 - 응답 실패 / t: $t")
                 Toast.makeText(this@RestaurantReviewDetail, "리뷰를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
-            }
-        })
-    }
-    private fun getReviewImage(RevIdx:RevIdx){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.getReviewImage(RevIdx) ?:return
-
-        call.enqueue(object : Callback<ReturnRevImg> {
-
-            override fun onResponse(call: Call<ReturnRevImg>, response: Response<ReturnRevImg>) {
-                Log.d("retrofit", "리뷰 이미지 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-                val arr= response.body()?.result
-                imgUrl=response.body()!!.result[0].RevImg
-
-            }
-            override fun onFailure(call: Call<ReturnRevImg>, t: Throwable) {
-                Log.d("retrofit", "리뷰 이미지 - 응답 실패 / t: $t")
             }
         })
     }

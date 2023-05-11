@@ -10,7 +10,7 @@ data class Review(
     val ResID: String,
     val Rating:Double,
     val RevTxt: String,
-    val RevImgID:Int,
+    val RevImg:String,
     val RevKeyWord: String,
     val RevSatis:Int,
     val RevRecom:Int,
@@ -78,7 +78,7 @@ data class resName(
     val resName:String
 )
 data class ResID(
-    val ResID:Int
+    val ResID:String
 )
 data class resPhNum(
     val resPhNum:String
@@ -115,7 +115,7 @@ data class UserIdPassword(
 )
 // 리뷰이미지
 data class RevIdx(
-    val RevIdx:Int
+    val RevIdx:String
 )
 data class RevImg(
     val RevImg:String
@@ -145,7 +145,7 @@ data class MyReview(
     val code:String,
     val message:List<MyReviewData>
 )
-data class UserId(
+data class userId(
     val userId:String
 )
 

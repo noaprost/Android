@@ -14,14 +14,19 @@ import androidx.core.view.get
 import androidx.core.widget.EdgeEffectCompat.getDistance
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.example.capstone.MainActivity
-import com.example.capstone.R
-import com.example.capstone.Restaurants
+import com.example.capstone.*
 import com.example.capstone.databinding.FragmentRestaurantMainBinding
+import com.example.capstone.retrofit.API
+import com.example.capstone.retrofit.IRetrofit
+import com.example.capstone.retrofit.RetrofitClient
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 import kotlin.math.pow
 
@@ -31,6 +36,7 @@ class RestaurantMainFragment : Fragment() {
     private val binding get() = _binding!!
     private var isLiked=false
     lateinit var resInfo: Restaurants
+    lateinit var resId:String
     lateinit var userLocation: Location
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +50,7 @@ class RestaurantMainFragment : Fragment() {
 
         val bundle = arguments
         resInfo=bundle!!.getSerializable("restaurant") as Restaurants
+
 
         val viewPager: ViewPager2 = binding.pager
         val tabLayout: TabLayout = binding.tabLayout

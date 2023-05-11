@@ -28,11 +28,11 @@ interface IRetrofit {
     @DELETE("/mypage/leaveId")
     fun deleteAccount(@Body userIdPassword: UserIdPassword):Call<UserIdPassword>
 
-    @POST("/review/image")
-    fun getReviewImage(@Body RevIdx: RevIdx):Call<ReturnRevImg>
+    //@POST("/review/image")
+    //fun getReviewImage(@Body RevIdx: RevIdx):Call<ReturnRevImg>
 
-    @GET("/mypage/review")
-    fun myReview(@Query("userId") userId: UserId):Call<MyReview>
+    @POST("/mypage/review")
+    fun myReview(@Body userId: userId):Call<MyReview>
 
     @POST("/restaurant/age") //연령별 선호도
     fun preferenceByAge(@Body ResID: ResID):Call<PreferenceByAge>
@@ -49,10 +49,12 @@ interface IRetrofit {
     @POST("/user/waiting/ordernumber") //대기 내역 확인
     fun waitingInfoCheck(@Body requestBody: RequestBody): Call<WaitingInfoCheck>
 
-    @GET("/main/recommend")
-    fun recommendRestaurant(@Query("userId") userId: UserId):Call<RecommendRestaurants>
+    @POST("/main/recommend")
+    fun recommendRestaurant(@Body userId: userId):Call<RecommendRestaurants>
 
-    @GET("/main/hot")
-    fun hotRestaurant(@Query("userId") userId: UserId):Call<RecommendRestaurants>
+    @POST("/main/hot")
+    fun hotRestaurant():Call<RecommendRestaurants>
 
+    @POST("/restaurant/id")
+    fun getResInfo(@Body ResID: ResID):Call<Restaurants>
 }

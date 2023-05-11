@@ -18,11 +18,14 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         //todo 레트로핏 연결해서 로직 처리 필요
         userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE)
-        val userId = this.getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "00")
 
         binding.button6.setOnClickListener {
             if(isAccepted){// 로그인이 유효하면
-                userInfo.edit().putString("userId", "123").putBoolean("isMember", true).apply() //정보저장
+                userInfo.edit().putBoolean("isMember", true).apply()
+                userInfo.edit().putString("userId", "2").apply()
+                userInfo.edit().putString("userPassword", "pw1234").apply()
+                userInfo.edit().putString("userPhoneNum", "010-1234-5678").apply()
+                userInfo.edit().putString("userNickname", "내이름은온리원").apply()
                 //인텐트 종료하면서 정보 전달
                 intent.putExtra("isSignedIn",true )
                 setResult(RESULT_OK, intent)

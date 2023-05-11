@@ -28,7 +28,6 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
     private val binding get() = _binding!!
     var hasReview = false
     lateinit var list:List<MyReviewData>
-    private var imgUrl=""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +42,7 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
         val isMember = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)
 
         if(isMember){//로그인이 돼있으면
-            myReview(UserId(userId!!))
+            myReview(userId(userId!!))
         }else{
             binding.textView64.visibility=View.VISIBLE
             binding.myReviewRecyclerView.visibility=View.GONE
@@ -85,8 +84,6 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
                     val splitedAddr = review.RevKeyWord.split("[\"", "\", \"", "\"]")
                     arr = splitedAddr
                 }
-                Log.d("hy", review.RevKeyWord)
-                Log.d("hy", arr.toString())
                 keyword1.text="#"+arr[1]
                 keyword2.text="#"+arr[2]
                 keyword3.text="#"+arr[3]
@@ -96,14 +93,13 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
             }
             if(review.RevImg!=null){
                 img.visibility=View.VISIBLE
-                getReviewImage(RevIdx(review.RevIdx))
-                val url="${API.BASE_URL}/${imgUrl}"
+                val url="${API.BASE_URL}/${review.RevImg}"
                 Glide.with(this@MyReviewFragment)
                     .load(url) // 불러올 이미지 url
                     .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
                     .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
                     .into(img) // 이미지를 넣을 뷰
-            }else{img.visibility=View.INVISIBLE}
+            }else{img.visibility=View.GONE}
 
             myReviewInfoBox.setOnClickListener {
                 val bundle=Bundle()
@@ -130,7 +126,7 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
             holder.bind(post)
         }
     }
-    private fun myReview(userId: UserId){
+    private fun myReview(userId: userId){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.myReview(userId) ?:return
 
@@ -138,37 +134,23 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
 
             override fun onResponse(call: Call<MyReview>, response: Response<MyReview>) {
                 Log.d("retrofit", "내 리뷰 목록 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-                if(response.body()!!.message.isNotEmpty()){
-                    hasReview=true
-                    binding.textView64.visibility=View.GONE
-                    binding.myReviewRecyclerView.visibility=View.VISIBLE
-                    binding.myReviewRecyclerView.layoutManager= LinearLayoutManager(context)
-                    binding.myReviewRecyclerView.adapter=MyAdapter(response.body()!!.message)
-                }else{
-                    binding.textView64.visibility=View.VISIBLE
-                    binding.myReviewRecyclerView.visibility=View.GONE
+                if(response.body()!=null){
+                    if(response.body()!!.message.isNullOrEmpty()){
+                        binding.textView64.visibility=View.VISIBLE
+                        binding.myReviewRecyclerView.visibility=View.INVISIBLE
+                    }else{
+                        hasReview=true
+                        binding.textView64.visibility=View.GONE
+                        binding.myReviewRecyclerView.visibility=View.VISIBLE
+                        binding.myReviewRecyclerView.layoutManager= LinearLayoutManager(context)
+                        binding.myReviewRecyclerView.adapter=MyAdapter(response.body()!!.message)
+
+                    }
                 }
             }
             override fun onFailure(call: Call<MyReview>, t: Throwable) {
-                Log.d("retrofit", "내 리뷰 목록 - 한식 응답 실패 / t: $t")
+                Log.d("retrofit", "내 리뷰 목록 - 응답 실패 / t: $t")
 
-            }
-        })
-    }
-    private fun getReviewImage(RevIdx:RevIdx){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.getReviewImage(RevIdx) ?:return
-
-        call.enqueue(object : Callback<ReturnRevImg> {
-
-            override fun onResponse(call: Call<ReturnRevImg>, response: Response<ReturnRevImg>) {
-                Log.d("retrofit", "리뷰 이미지 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-                val arr= response.body()?.result
-                imgUrl=response.body()!!.result[0].RevImg
-
-            }
-            override fun onFailure(call: Call<ReturnRevImg>, t: Throwable) {
-                Log.d("retrofit", "리뷰 이미지 - 응답 실패 / t: $t")
             }
         })
     }

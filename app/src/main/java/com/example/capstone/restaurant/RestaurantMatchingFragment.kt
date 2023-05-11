@@ -50,8 +50,8 @@ class RestaurantMatchingFragment : Fragment() {
 
         val bundle = arguments
         resInfo=bundle!!.getSerializable("restaurant") as Restaurants
-        preferenceByAge(ResID(resInfo.resIdx))
-        preferenceByGender(ResID(resInfo.resIdx))
+        preferenceByAge(ResID(resInfo.resIdx.toString()))
+        preferenceByGender(ResID(resInfo.resIdx.toString()))
 
         if(resInfo.keyWord !=null){
             var arr:List<String> =listOf("", "", "")
