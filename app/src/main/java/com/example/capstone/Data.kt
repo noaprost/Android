@@ -17,32 +17,12 @@ data class Review(
     val RevTime:String
 ): Serializable
 
-data class WriteReview(
-    val myFile:File,
-    val UserID: String,
-    val ResID: String,
-    val Rating: Double,
-    val RevTxt: String,
-    val RevKeyWord: String,
-    val RevSatis: Boolean,
-    val RevRecom: Boolean,
-    val RevTime: String
-
-)
-
 data class Restaurant(
     val restaurantImg: Int,
     val rating: Double,
     val commentNumber: Int,
     val name: String,
     val waiting: Int
-)
-data class HotRestaurant(
-    val title : String,
-    val info : String,
-    val rating: Double,
-    val commentNumber: Int,
-    val address : String
 )
 
 data class Restaurants(
@@ -111,33 +91,18 @@ data class UserIdPassword(
     val userID: String,
     val userPassword:String
 )
-// 리뷰이미지
-data class RevIdx(
-    val RevIdx:String
-)
-data class RevImg(
-    val RevImg:String
-)
-data class ReturnRevImg(
-    val RevIdx:String,
-    val result:List<RevImg>
-)
 
 //내가 작성한 리뷰
 data class MyReviewData(
-    val RevIdx:Int,
-    val UserID:String,
-    val ResID:String,
-    val Rating:Double,
-    val RevTxt:String,
-    val RevKeyWord:String,
-    val RevSatis:Int,
-    val RevRecom:Int,
-    val RevTime:String,
-    val RevImg:String,
-    val resIdx:String,
+    val ResIdx:String,
     val resName:String,
-): Serializable
+    val RevImg:String,
+    val RevTxt:String,
+    val Rating:String,
+    val RevTime:String,
+    val RevSatis:Int,
+    val RevKeyWord:String
+    ): Serializable
 
 data class MyReview(
     val code:String,
@@ -209,7 +174,8 @@ data class RestaurantInfo(
     val resName : String,
     val resImg : String,
     val resRating : Double,
-    val revCnt : Int
+    val revCnt : Int,
+    val resAddress:String
 )
 
 data class WaitingHistoryList(

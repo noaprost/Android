@@ -25,14 +25,8 @@ interface IRetrofit {
     @POST("/restaurant/reviews")
     fun showRestaurantReview(@Body ResID: ResID):Call<RestaurantReviewList>
 
-    @POST("/review")
-    fun writeReview(@Body requestBody: RequestBody):Call<WriteReview>
-
     @DELETE("/mypage/leaveId")
     fun deleteAccount(@Body userIdPassword: UserIdPassword):Call<UserIdPassword>
-
-    //@POST("/review/image")
-    //fun getReviewImage(@Body RevIdx: RevIdx):Call<ReturnRevImg>
 
     @POST("/mypage/review")
     fun myReview(@Body userId: userId):Call<MyReview>

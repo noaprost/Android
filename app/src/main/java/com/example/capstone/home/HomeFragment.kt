@@ -9,21 +9,20 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone.ConfirmDialogInterface
+import com.bumptech.glide.Glide
 import com.example.capstone.MainActivity
 import com.example.capstone.R
 import com.example.capstone.WaitingCustomDialog
@@ -35,10 +34,9 @@ import com.example.capstone.*
 import com.example.capstone.retrofit.API
 import com.example.capstone.retrofit.IRetrofit
 import com.example.capstone.retrofit.RetrofitClient
-import okhttp3.Callback
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
 
@@ -46,8 +44,6 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private var matchingRestaurantList = ArrayList<Restaurant>()
-    private var hotRestaurantList = ArrayList<Restaurant>()
 
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
     private lateinit var mLocationRequest: LocationRequest // 위치 정보 요청의 매개변수를 저장하는
@@ -56,10 +52,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
     private lateinit var userInfo: SharedPreferences
     private lateinit var userId : String
-    private lateinit var resPhNum : String
-    private lateinit var UserPhone : String
     private lateinit var waitingInfoDialog: WaitingCustomDialog
-    private lateinit var requestBody:RequestBody
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -70,6 +63,23 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         userInfo = this.requireActivity().getSharedPreferences("userInfo", MODE_PRIVATE)
+        userId = userInfo.getString("userId", "0").toString()
+        val isMember = userInfo.getBoolean("isMember",false)
+        if(isMember){
+            binding.textView90.visibility=View.GONE
+            binding.restaurantHomeRecyclerView1.visibility=View.VISIBLE
+            recommendRestaurant(userId(userId))
+            binding.title1.setOnClickListener {
+                val bundle = Bundle()
+                val mainAct = activity as MainActivity
+                mainAct.ChangeFragment("Matching", bundle)
+            }
+        }else{
+            binding.textView90.visibility=View.VISIBLE
+            binding.restaurantHomeRecyclerView1.visibility=View.GONE
+        }
+        hotRestaurant()
+
 
         // 대기 내역이 있는 경우에만 대기 정보 버튼이 보이도록 설정
         var isExistWatingInfo = true // 불러온 데이터의 존재 여부로 판단되도혹 수정 필요
@@ -81,25 +91,13 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
         // 대기 정보 버튼을 누를 경우 팝업 연결
         binding.watingInfoBtn.setOnClickListener {
-            /*resPhNum = this.requireActivity().getSharedPreferences("resPhNum", MODE_PRIVATE).getString("resPhNum", "010-7777-7777").toString()
-            UserPhone = this.requireActivity().getSharedPreferences("UserPhone", MODE_PRIVATE).getString("UserPhone", "032 525 3745").toString()
-
-            requestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("UserPhone", UserPhone)
-                .addFormDataPart("resPhNum", resPhNum)
-                .build()
-            waitingInfoCheck(requestBody)*/
 
             waitingInfoDialog = WaitingCustomDialog(this@HomeFragment, "현재 0팀이 앞에 있습니다.", 0, 0)
             waitingInfoDialog.isCancelable = true
             waitingInfoDialog.show(this@HomeFragment.parentFragmentManager, "WaitingCustomDialog")
         }
 
-        binding.title1.setOnClickListener {
-            val bundle = Bundle()
-            val mainAct = activity as MainActivity
-            mainAct.ChangeFragment("Matching", bundle)
-        }
+
 
         binding.title2.setOnClickListener {
             val bundle = Bundle()
@@ -107,76 +105,6 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
             mainAct.ChangeFragment("Hot", bundle)
         }
 
-        // 추천 음식점 데이터
-        matchingRestaurantList.apply{
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 4.9, 20, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 3.8, 82, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 4.1, 5, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-
-        }
-
-        // hot한 음식점 데이터
-        hotRestaurantList.apply {
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 4.4, 29, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 4.8, 72, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 4.1, 5, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-            add(
-                Restaurant(R.drawable.dummy_restaurant_image, 5.0, 19, "온리원 파스타 송도점")
-            )
-        }
-
-        binding.restaurantHomeRecyclerView1.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.restaurantHomeRecyclerView1.setHasFixedSize(true)
-        binding.restaurantHomeRecyclerView1.adapter = MatchingRestaurantAdapter(matchingRestaurantList)
-
-        binding.restaurantHomeRecyclerView2.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.restaurantHomeRecyclerView2.setHasFixedSize(true)
-        binding.restaurantHomeRecyclerView2.adapter = HotRestaurantAdapter(hotRestaurantList)
 
         //위치 관련 코드
         mLocationRequest =  LocationRequest.create().apply {
@@ -194,26 +122,40 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
     }
 
     inner class RestaurantViewHolder(view : View): RecyclerView.ViewHolder(view){
-        private lateinit var restaurantItem: Restaurant
+        private lateinit var restaurantItem: RestaurantInfo
         private val restaurantImg : ImageView = itemView.findViewById(R.id.restaurantImage)
-        fun bind(restaurantItem : Restaurant){
-            restaurantImg.clipToOutline=true
+        private val rating : TextView = itemView.findViewById(R.id.rating)
+        private val commentNumber : TextView = itemView.findViewById(R.id.commentNumber)
+        private val restaurantName : TextView = itemView.findViewById(R.id.restaurantName)
 
+
+        fun bind(restaurantItem : RestaurantInfo){
+            restaurantImg.clipToOutline=true
+            rating.text=restaurantItem.resRating.toString()
+            commentNumber.text=restaurantItem.revCnt.toString()
+            restaurantName.text=restaurantItem.resName
+
+            if(restaurantItem.resImg!=null){
+                val url="${API.BASE_URL}/${restaurantItem.resImg}"
+                Glide.with(this@HomeFragment)
+                    .load(url) // 불러올 이미지 url
+                    .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
+                    .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                    .into(restaurantImg) // 이미지를 넣을 뷰
+            }
             itemView.setOnClickListener {
-                val bundle = Bundle()
-                val mainAct = activity as MainActivity
-                mainAct.ChangeFragment("Restaurant", bundle)
+                getResInfo(ResID(restaurantItem.resIdx))
             }
         }
     }
 
-    inner class MatchingRestaurantAdapter(private val matchingRestaurantList: List<Restaurant>): RecyclerView.Adapter<RestaurantViewHolder>() {
+    inner class MatchingRestaurantAdapter(private val matchingRestaurantList: List<RestaurantInfo>): RecyclerView.Adapter<RestaurantViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
             val view = layoutInflater.inflate(R.layout.item_restaurant, parent, false)
             return RestaurantViewHolder(view)
         }
 
-        override fun getItemCount(): Int = matchingRestaurantList.size
+        override fun getItemCount(): Int = if (matchingRestaurantList.size>5) 5 else matchingRestaurantList.size
 
         override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
             val post = matchingRestaurantList[position]
@@ -221,13 +163,13 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         }
     }
 
-    inner class HotRestaurantAdapter(private val hotRestaurantList: List<Restaurant>): RecyclerView.Adapter<RestaurantViewHolder>() {
+    inner class HotRestaurantAdapter(private val hotRestaurantList: List<RestaurantInfo>): RecyclerView.Adapter<RestaurantViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
             val view = layoutInflater.inflate(R.layout.item_restaurant, parent, false)
             return RestaurantViewHolder(view)
         }
 
-        override fun getItemCount(): Int = hotRestaurantList.size
+        override fun getItemCount(): Int = if (hotRestaurantList.size>5) 5 else hotRestaurantList.size
 
 
         override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
@@ -315,21 +257,64 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         if(presentLocation!="") mFusedLocationProviderClient!!.removeLocationUpdates(mLocationCallback)
     }
 
-    /*private fun waitingInfoCheck(requestBody: RequestBody){
+    private fun hotRestaurant(){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.waitingInfoCheck(requestBody) ?:return
-        call.enqueue(object : retrofit2.Callback<WaitingInfoCheck>{
+        val call = iRetrofit?.hotRestaurant() ?:return
 
-            override fun onResponse(call: Call<WaitingInfoCheck>, response: Response<WaitingInfoCheck>) {
-                Log.d("retrofit", "대기 내역 확인 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-                waitingInfoDialog = WaitingCustomDialog(this@HomeFragment, response.body()!!.toString(), 0, 0)
-                waitingInfoDialog.isCancelable = true
-                waitingInfoDialog.show(this@HomeFragment.parentFragmentManager, "WaitingCustomDialog")
+        call.enqueue(object : retrofit2.Callback<RecommendRestaurants> {
+
+            override fun onResponse(call: Call<RecommendRestaurants>, response: Response<RecommendRestaurants>){
+                Log.d("retrofit", "핫한 음식점 - 응답 성공 / t : ${response.raw()} ${response.body()?.message}")
+                val matcharr = response.body()?.message
+                if(matcharr != null){
+                    binding.restaurantHomeRecyclerView2.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    binding.restaurantHomeRecyclerView2.setHasFixedSize(true)
+                    binding.restaurantHomeRecyclerView2.adapter = HotRestaurantAdapter(matcharr)
+                }
             }
-
-            override fun onFailure(call: Call<WaitingInfoCheck>, t: Throwable) {
-                Log.d("retrofit", "대기 내역 확인 -  응답 실패 / t: $t")
+            override fun onFailure(call : Call<RecommendRestaurants>, t: Throwable){
+                Log.d("retrofit", "핫한 음식점 - 응답 실패 / t: $t")
             }
         })
-    }*/
+    }
+    private fun recommendRestaurant(userId: userId){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.recommendRestaurant(userId) ?:return
+
+        call.enqueue(object : retrofit2.Callback<RecommendRestaurants> {
+
+            override fun onResponse(call: Call<RecommendRestaurants>, response: Response<RecommendRestaurants>){
+                Log.d("retrofit", "음식점 매칭- 응답 성공 / t : ${response.raw()} ${response.body()?.message}")
+                val matcharr = response.body()?.message
+                if(matcharr != null){
+                    binding.restaurantHomeRecyclerView1.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    binding.restaurantHomeRecyclerView1.setHasFixedSize(true)
+                    binding.restaurantHomeRecyclerView1.adapter = MatchingRestaurantAdapter(matcharr)
+                }
+            }
+            override fun onFailure(call : Call<RecommendRestaurants>, t: Throwable){
+                Log.d("retrofit", "음식점 매칭 - 응답 실패 / t: $t")
+            }
+        })
+    }
+    private fun getResInfo(ResID: ResID){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.getResInfo(ResID) ?:return
+
+        call.enqueue(object : Callback<List<Restaurants>> {
+
+            override fun onResponse(call: Call<List<Restaurants>>, response: Response<List<Restaurants>>) {
+                Log.d("retrofit", "레스토랑 정보 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                val bundle=Bundle()
+                bundle.putSerializable("restaurant", response.body()!![0])
+                val mainAct = activity as MainActivity
+                mainAct.ChangeFragment("Restaurant", bundle)
+            }
+            override fun onFailure(call: Call<List<Restaurants>>, t: Throwable) {
+                Log.d("retrofit", "레스토랑 정보 - 응답 실패 / t: $t")
+                Toast.makeText(activity, "레스토랑 정보를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+
+            }
+        })
+    }
 }

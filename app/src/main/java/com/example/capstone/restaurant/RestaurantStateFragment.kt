@@ -52,7 +52,7 @@ class RestaurantStateFragment : Fragment() {
         val seatKeywordMaxList:List<TextView> =listOf(binding.seat1Max, binding.seat2Max, binding.seat3Max, binding.seat4Max, binding.seat5Max, binding.seat6Max, binding.seat7Max, binding.seat8Max)
         var arr:List<String> =listOf("", "", "")
         var arr1:List<String> =listOf("", "", "")
-        if(resInfo.resSeat.isNullOrEmpty()){
+        if(resInfo.resSeat.isNullOrEmpty()||resInfo.resSeatCnt.isNullOrEmpty()){
             seatKeywordList[0].text="해당 가게는 좌석 정보를 제공하지 않습니다."
             seatKeywordBox[0].visibility=View.VISIBLE
             seatKeywordMaxList[0].text=""
