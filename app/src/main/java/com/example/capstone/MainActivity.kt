@@ -42,14 +42,7 @@ class MainActivity : AppCompatActivity() {
         binding =  ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userInfo = getSharedPreferences("userInfo", 0)
-        userInfo.edit().putBoolean("isMember", false).apply()
-        userInfo.edit().putString("userId", "").apply()
-        userInfo.edit().putString("userPassword", "").apply()
         userInfo.edit().putString("userLocation", "").apply()
-        userInfo.edit().putString("userPhoneNum", "").apply()
-        userInfo.edit().putString("userNickname", "").apply()
-        userInfo.edit().putString("WaitIndex", "").apply()
-
 
         val bnv_main = findViewById<BottomNavigationView>(R.id.nav_view)
 

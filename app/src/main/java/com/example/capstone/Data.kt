@@ -91,18 +91,16 @@ data class RestaurantReviewList(
 )
 
 data class AddWaiting(
-    val userID : String,
-    val ResID : String,
+    val UserPhone : String,
+    val resPhNum : String,
     val Waitheadcount : Int,
     val WaitTime : String,
     val WaitSeat : String,
-    val WaitisAccepted : Boolean
 ):Serializable
 
 data class WaitingInfo(
-    val WaitIndex:Int,
-    val userID : String,
-    val ResID : String,
+    val UserPhone : String,
+    val resPhNum : String,
     val Waitheadcount : Int,
     val WaitTime : String,
     val WaitSeat : String,
@@ -147,6 +145,9 @@ data class MyReview(
 )
 data class userId(
     val userId:String
+)
+data class UserPhone(
+    val UserPhone:String
 )
 
 //통계
@@ -209,4 +210,27 @@ data class RestaurantInfo(
     val resImg : String,
     val resRating : Double,
     val revCnt : Int
+)
+
+data class WaitingHistoryList(
+    val result1: List<WaitHistory>
+)
+data class WaitHistory(
+    val UserPhone:String,
+    val resPhNum:String,
+    val acceptedTime:String,
+    val resName : String,
+    val resImg : String,
+    val resId:String
+)
+
+data class getWaitingInfo(
+    val UserPhone:String,
+    val WaitTime:String
+)
+data class WaitIndexList(
+    val result: List<WaitIndex>
+)
+data class WaitIndex(
+    val WaitIndex:Int
 )

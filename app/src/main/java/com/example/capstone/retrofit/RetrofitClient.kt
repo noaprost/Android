@@ -45,6 +45,7 @@ object RetrofitClient {
         client.connectTimeout(500, TimeUnit.SECONDS)
             .readTimeout(500, TimeUnit.SECONDS)
             .writeTimeout(500,TimeUnit.SECONDS)
+
         //기본파라메터 추가
         val baseParameterInterceptor : Interceptor = (object :Interceptor{
             override fun intercept(chain: Interceptor.Chain): Response {
@@ -55,8 +56,8 @@ object RetrofitClient {
                 val addedUrl = originalRequest.url.newBuilder().addQueryParameter("client_id", API.CLIENT_ID).build()
                 val finalRequest=originalRequest.newBuilder()
                     .url(addedUrl)
-                    .method(originalRequest.method, originalRequest.body)
                     .addHeader("Connection","close")
+                    .method(originalRequest.method, originalRequest.body)
                     .get()
                     .build()
                 return chain.proceed(finalRequest)

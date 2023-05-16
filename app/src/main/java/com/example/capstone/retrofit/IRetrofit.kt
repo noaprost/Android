@@ -16,8 +16,11 @@ interface IRetrofit {
     @POST("/restaurant/name")
     fun searchRestaurants(@Body resName: resName):Call<RestaurantList>
 
-    @POST("/user/waiting/insert2")
+    @POST("/user/waiting/insert")
     fun addWaiting(@Body addWaiting: AddWaiting):Call<WaitingInfo>
+
+    @POST("/user/waitindex")
+    fun getWaitingIndex(@Body getWaitingInfo: getWaitingInfo):Call<WaitIndexList>
 
     @POST("/restaurant/reviews")
     fun showRestaurantReview(@Body ResID: ResID):Call<RestaurantReviewList>
@@ -56,5 +59,8 @@ interface IRetrofit {
     fun hotRestaurant():Call<RecommendRestaurants>
 
     @POST("/restaurant/id")
-    fun getResInfo(@Body ResID: ResID):Call<Restaurants>
+    fun getResInfo(@Body ResID: ResID):Call<List<Restaurants>>
+
+    @POST("/user/waited")
+    fun getWaitingHistory(@Body UserPhone: UserPhone):Call<WaitingHistoryList>
 }

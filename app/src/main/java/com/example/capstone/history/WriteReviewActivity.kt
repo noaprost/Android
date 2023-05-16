@@ -19,6 +19,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,16 +30,22 @@ import com.bumptech.glide.Glide
 import com.example.capstone.*
 import com.example.capstone.databinding.ActivityWriteReviewBinding
 import com.example.capstone.retrofit.API
+import com.example.capstone.retrofit.API.BASE_URL
 import com.example.capstone.retrofit.IRetrofit
 import com.example.capstone.retrofit.RetrofitClient
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import okhttp3.OkHttpClient
+import java.io.IOException
 
 
 class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
@@ -100,18 +107,18 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         binding.chipGroup1.setOnCheckedStateChangeListener { _, checkedIds ->
             if(checkedIds.size!=0){
                 when(checkedIds[0]){
-                    binding.writeReviewKeyword1.id->keyword[0]=binding.writeReviewKeyword1.text.toString().replace("#","")
-                    binding.writeReviewKeyword2.id->keyword[0]=binding.writeReviewKeyword2.text.toString().replace("#","")
-                    binding.writeReviewKeyword3.id->keyword[0]=binding.writeReviewKeyword3.text.toString().replace("#","")
-                    binding.writeReviewKeyword4.id->keyword[0]=binding.writeReviewKeyword4.text.toString().replace("#","")
-                    binding.writeReviewKeyword5.id->keyword[0]=binding.writeReviewKeyword5.text.toString().replace("#","")
-                    binding.writeReviewKeyword6.id->keyword[0]=binding.writeReviewKeyword6.text.toString().replace("#","")
-                    binding.writeReviewKeyword7.id->keyword[0]=binding.writeReviewKeyword7.text.toString().replace("#","")
-                    binding.writeReviewKeyword8.id->keyword[0]=binding.writeReviewKeyword8.text.toString().replace("#","")
-                    binding.writeReviewKeyword9.id->keyword[0]=binding.writeReviewKeyword9.text.toString().replace("#","")
-                    binding.writeReviewKeyword10.id->keyword[0]=binding.writeReviewKeyword10.text.toString().replace("#","")
-                    binding.writeReviewKeyword11.id->keyword[0]=binding.writeReviewKeyword11.text.toString().replace("#","")
-                    binding.writeReviewKeyword12.id->keyword[0]=binding.writeReviewKeyword12.text.toString().replace("#","")
+                    binding.writeReviewKeyword1.id->keyword[0]="\""+binding.writeReviewKeyword1.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword2.id->keyword[0]="\""+binding.writeReviewKeyword2.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword3.id->keyword[0]="\""+binding.writeReviewKeyword3.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword4.id->keyword[0]="\""+binding.writeReviewKeyword4.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword5.id->keyword[0]="\""+binding.writeReviewKeyword5.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword6.id->keyword[0]="\""+binding.writeReviewKeyword6.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword7.id->keyword[0]="\""+binding.writeReviewKeyword7.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword8.id->keyword[0]="\""+binding.writeReviewKeyword8.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword9.id->keyword[0]="\""+binding.writeReviewKeyword9.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword10.id->keyword[0]="\""+binding.writeReviewKeyword10.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword11.id->keyword[0]="\""+binding.writeReviewKeyword11.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword12.id->keyword[0]="\""+binding.writeReviewKeyword12.text.toString().replace("#","")+"\""
                 }
             }
 
@@ -119,33 +126,34 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         binding.chipGroup2.setOnCheckedStateChangeListener { _, checkedIds ->
             if(checkedIds.size!=0){
                 when(checkedIds[0]){
-                    binding.writeReviewKeyword8.id->keyword[1]=binding.writeReviewKeyword8.text.toString().replace("#","")
-                    binding.writeReviewKeyword9.id->keyword[1]=binding.writeReviewKeyword9.text.toString().replace("#","")
-                    binding.writeReviewKeyword10.id->keyword[1]=binding.writeReviewKeyword10.text.toString().replace("#","")
-                    binding.writeReviewKeyword11.id->keyword[1]=binding.writeReviewKeyword11.text.toString().replace("#","")
-                    binding.writeReviewKeyword12.id->keyword[1]=binding.writeReviewKeyword12.text.toString().replace("#","")
-                    binding.writeReviewKeyword13.id->keyword[1]=binding.writeReviewKeyword13.text.toString().replace("#","")
-                    binding.writeReviewKeyword14.id->keyword[1]=binding.writeReviewKeyword14.text.toString().replace("#","")
-                    binding.writeReviewKeyword15.id->keyword[1]=binding.writeReviewKeyword15.text.toString().replace("#","")
-                    binding.writeReviewKeyword16.id->keyword[1]=binding.writeReviewKeyword16.text.toString().replace("#","")
+                    binding.writeReviewKeyword8.id->keyword[1]="\""+binding.writeReviewKeyword8.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword9.id->keyword[1]="\""+binding.writeReviewKeyword9.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword10.id->keyword[1]="\""+binding.writeReviewKeyword10.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword11.id->keyword[1]="\""+binding.writeReviewKeyword11.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword12.id->keyword[1]="\""+binding.writeReviewKeyword12.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword13.id->keyword[1]="\""+binding.writeReviewKeyword13.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword14.id->keyword[1]="\""+binding.writeReviewKeyword14.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword15.id->keyword[1]="\""+binding.writeReviewKeyword15.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword16.id->keyword[1]="\""+binding.writeReviewKeyword16.text.toString().replace("#","")+"\""
                 }
             }
         }
         binding.chipGroup3.setOnCheckedStateChangeListener { _, checkedIds ->
             if(checkedIds.size!=0){
                 when(checkedIds[0]){
-                    binding.writeReviewKeyword17.id->keyword[2]=binding.writeReviewKeyword17.text.toString().replace("#","")
-                    binding.writeReviewKeyword18.id->keyword[2]=binding.writeReviewKeyword18.text.toString().replace("#","")
-                    binding.writeReviewKeyword19.id->keyword[2]=binding.writeReviewKeyword19.text.toString().replace("#","")
-                    binding.writeReviewKeyword20.id->keyword[2]=binding.writeReviewKeyword20.text.toString().replace("#","")
-                    binding.writeReviewKeyword21.id->keyword[2]=binding.writeReviewKeyword21.text.toString().replace("#","")
-                    binding.writeReviewKeyword22.id->keyword[2]=binding.writeReviewKeyword22.text.toString().replace("#","")
+                    binding.writeReviewKeyword17.id->keyword[2]="\""+binding.writeReviewKeyword17.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword18.id->keyword[2]="\""+binding.writeReviewKeyword18.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword19.id->keyword[2]="\""+binding.writeReviewKeyword19.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword20.id->keyword[2]="\""+binding.writeReviewKeyword20.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword21.id->keyword[2]="\""+binding.writeReviewKeyword21.text.toString().replace("#","")+"\""
+                    binding.writeReviewKeyword22.id->keyword[2]="\""+binding.writeReviewKeyword22.text.toString().replace("#","")+"\""
                 }
             }
 
         }
 
         binding.writeReviewButton.setOnClickListener{
+            Log.d("retrofit", keyword.toString())
             dialog1 = CustomDialog(this, "리뷰를 등록하시겠습니까?", 0, 0)
             dialog1.isCancelable = false
             dialog1.show(this.supportFragmentManager, "ConfirmDialog")
@@ -168,6 +176,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
             binding.addReviewImage.clipToOutline = true
             val file = File(absolutelyPath(uri, this))
             reviewImagePath = file
+
         }
     }
     private fun absolutelyPath(path: Uri?, context : Context): String { //이미지 절대경로 변환 함수
@@ -204,58 +213,93 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                     if(reviewImagePath==null){
                         val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                             .addFormDataPart("UserID", userId)
-                            .addFormDataPart("ResID", "3") //todo 레스토랑 아이디 연결
+                            .addFormDataPart("ResID", "1") //todo 레스토랑 아이디 연결
                             .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
                             .addFormDataPart("RevTxt", reviewText)
                             .addFormDataPart("RevKeyWord", keyword.toString())
                             .addFormDataPart("RevSatis", isSatisfied.toString())
-                            .addFormDataPart("RevRecom", isSatisfied.toString()) //todo 수정
+                            .addFormDataPart("RevRecom", isSatisfied.toString())
                             .addFormDataPart("RevTime", date)
                             .build()
-                        writeReview(requestBody)
+                        uploadReview(requestBody)
                     }else{
                         val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                             .addFormDataPart("UserID", userId)
-                            .addFormDataPart("ResID", "3") //todo 레스토랑 아이디 연결
+                            .addFormDataPart("ResID", "1") //todo 레스토랑 아이디 연결
                             .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
                             .addFormDataPart("RevTxt", reviewText)
                             .addFormDataPart("RevKeyWord", keyword.toString())
                             .addFormDataPart("RevSatis", isSatisfied.toString())
-                            .addFormDataPart("RevRecom", isSatisfied.toString()) //todo 수정
+                            .addFormDataPart("RevRecom", isSatisfied.toString())
                             .addFormDataPart("RevTime", date)
-                            .addFormDataPart("myFile", "", RequestBody.create(MultipartBody.FORM, ""))
+                            .addFormDataPart("myFile", reviewImagePath!!.name, RequestBody.create(MultipartBody.FORM, reviewImagePath!!))
                             .build()
-                        writeReview(requestBody)
-                        Log.d("테스트", userId)
-                        Log.d("테스트", binding.ratingBar2.rating.toString())
-                        Log.d("테스트", reviewText)
-                        Log.d("테스트", keyword.toString())
-                        Log.d("테스트", date)
+                        uploadReview(requestBody)
                     }
+
 
                 }
             }
         }
     }
 
-    private fun writeReview(requestBody: RequestBody){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.writeReview(requestBody) ?:return
+    private fun uploadReview(requestBody:RequestBody) {
+        val client = OkHttpClient()
 
-        call.enqueue(object : Callback<WriteReview> {
 
-            override fun onResponse(call: Call<WriteReview>, response: Response<WriteReview>) {
-                Log.d("retrofit", "리뷰 작성 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+        val request = Request.Builder()
+            .url(BASE_URL)
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : okhttp3.Callback {
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                // 실패 처리 및 결과 출력
+                runOnUiThread {
+                    Log.d("retrofit fail","업로드 실패: ${e.message}")
+                    Toast.makeText(this@WriteReviewActivity, "[오류 발생]\n잠시 후 다시 시도해주세요.", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                // 성공 처리
+                val responseData = response.body?.string()
+                // 결과를 처리하고 UI 업데이트 등을 수행
+                runOnUiThread {
+                    try {
+                        val jsonObject = JSONObject(responseData!!)
+                        Log.d("retrofit", jsonObject.toString())
+                        val userID = jsonObject.getString("UserID")
+                        val resID = jsonObject.getString("ResID")
+                        val rating = jsonObject.getDouble("Rating")
+                        val revTxt = jsonObject.getString("RevTxt")
+                        val revKeyWordArray = JSONArray(jsonObject.getString("RevKeyWord"))
+                        val revKeyWord = mutableListOf<String>()
+                        for (i in 0 until revKeyWordArray.length()) {
+                            revKeyWord.add(revKeyWordArray.getString(i))
+                        }
+                        val revSatis = jsonObject.getBoolean("RevSatis")
+                        val revRecom = jsonObject.getBoolean("RevRecom")
+                        val revTime = jsonObject.getString("RevTime")
+                        val imgPath = jsonObject.getString("ImgPath")
+                        val message = jsonObject.getString("message")
+
+                        Log.d("retrofit", "UserID: $userID\nResID: $resID\nRating: $rating\nRevTxt: $revTxt\nRevKeyWord: $revKeyWord\nRevSatis: $revSatis\nRevRecom: $revRecom\nRevTime: $revTime\nImgPath: $imgPath\nMessage: $message")
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Log.d("retrofit", "JSON 파싱 오류: ${e.message}")
+                        println(e.message)
+                    }
+                }
                 val dialog = CustomDialog(this@WriteReviewActivity, "리뷰 작성을 완료하였습니다", 0, 1)
                 dialog.isCancelable = true
                 dialog.show(this@WriteReviewActivity.supportFragmentManager, "ConfirmDialog")
                 Handler(Looper.getMainLooper()).postDelayed({
                     finish()
                 }, 1000)
-            }
-            override fun onFailure(call: Call<WriteReview>, t: Throwable) {
-                Log.d("retrofit", "리뷰 작성 -  응답 실패 / t: $t")
+
             }
         })
     }
+
 }
