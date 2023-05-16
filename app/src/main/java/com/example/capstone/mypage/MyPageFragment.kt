@@ -74,8 +74,10 @@ class MyPageFragment : Fragment(), ConfirmDialogInterface {
             userInfo.edit().putBoolean("isMember", false).apply()
             userInfo.edit().putString("userId", "").apply()
             userInfo.edit().putString("userPassword", "").apply()
-            userInfo.edit().putString("userPhoneNum", "010--5678").apply()
+            userInfo.edit().putString("userLocation", "").apply()
+            userInfo.edit().putString("userPhoneNum", "").apply()
             userInfo.edit().putString("userNickname", "").apply()
+            userInfo.edit().putString("WaitIndex", "").apply()
             val mainact = activity as MainActivity
             mainact.ChangePage(R.id.navigation_home)
         }
