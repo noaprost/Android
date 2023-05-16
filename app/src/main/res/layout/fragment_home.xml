@@ -80,7 +80,7 @@
 
         <LinearLayout
             android:id="@+id/mainInfoView1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -114,6 +114,17 @@
                     tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView90"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:gravity="center"
+                android:text="로그인이 필요해요!"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/restaurantHomeRecyclerView1"

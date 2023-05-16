@@ -1,5 +1,6 @@
 package com.example.capstone.mypage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.capstone.*
 import com.example.capstone.databinding.FragmentMyReviewBinding
+import com.example.capstone.restaurant.ReviewImageActivity
 import com.example.capstone.retrofit.API
 import com.example.capstone.retrofit.IRetrofit
 import com.example.capstone.retrofit.RetrofitClient
@@ -100,11 +103,13 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
                     .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
                     .into(img) // 이미지를 넣을 뷰
             }else{img.visibility=View.GONE}
-
+            img.setOnClickListener {
+                val intent = Intent(context, ReviewImageActivity::class.java)
+                intent.putExtra("url", "${API.BASE_URL}/${review.RevImg}")
+                startActivity(intent)
+            }
             myReviewInfoBox.setOnClickListener {
-                val bundle=Bundle()
-                val mainAct = activity as MainActivity
-                mainAct.ChangeFragment("Restaurant", bundle)
+                getResInfo(ResID(review.ResIdx))
             }
             deleteButton.setOnClickListener{
                 val dialog = CustomDialog(this@MyReviewFragment, "리뷰를 삭제하시겠습니까?\n재작성은 불가능합니다.", 0, 0)
@@ -150,6 +155,26 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
             }
             override fun onFailure(call: Call<MyReview>, t: Throwable) {
                 Log.d("retrofit", "내 리뷰 목록 - 응답 실패 / t: $t")
+
+            }
+        })
+    }
+    private fun getResInfo(ResID: ResID){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.getResInfo(ResID) ?:return
+
+        call.enqueue(object : Callback<List<Restaurants>> {
+
+            override fun onResponse(call: Call<List<Restaurants>>, response: Response<List<Restaurants>>) {
+                Log.d("retrofit", "레스토랑 정보 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                val bundle=Bundle()
+                bundle.putSerializable("restaurant", response.body()!![0])
+                val mainAct = activity as MainActivity
+                mainAct.ChangeFragment("Restaurant", bundle)
+            }
+            override fun onFailure(call: Call<List<Restaurants>>, t: Throwable) {
+                Log.d("retrofit", "레스토랑 정보 - 응답 실패 / t: $t")
+                Toast.makeText(activity, "레스토랑 정보를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
 
             }
         })

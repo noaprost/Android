@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
@@ -40,7 +41,7 @@ class HotRestaurantFragment : Fragment() {
         userInfo = this.requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "")
 
-        recommendRestaurant(UserId(userId!!))
+        hotRestaurant()
         binding.hotBackBtn.setOnClickListener {
             destroy()
         }
@@ -76,6 +77,7 @@ class HotRestaurantFragment : Fragment() {
             matchTitle.text = hotRes.resName
             matchRating.text = hotRes.resRating.toString()
             matchCommentNumber.text = hotRes.revCnt.toString()
+            matchAddress.text=hotRes.resAddress
             if(hotRes.keyWord !=null){
                 var arr:List<String> =listOf("", "", "")
                 for (addr in hotRes.keyWord) {
@@ -84,10 +86,8 @@ class HotRestaurantFragment : Fragment() {
                 }
             }
             itemView.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putSerializable("resID", hotRes.resIdx)
-                val mainAct = activity as MainActivity
-                mainAct.ChangeFragment("Restaurant", bundle)
+                getResInfo(ResID(hotRes.resIdx))
+
             }
         }
     }
@@ -109,9 +109,9 @@ class HotRestaurantFragment : Fragment() {
             return hotRestaurantList.size
         }
     }
-    private fun recommendRestaurant(userId: UserId){
+    private fun hotRestaurant(){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.recommendRestaurant(userId) ?:return
+        val call = iRetrofit?.hotRestaurant() ?:return
 
         call.enqueue(object : Callback<RecommendRestaurants> {
 
@@ -127,6 +127,26 @@ class HotRestaurantFragment : Fragment() {
             override fun onFailure(call : Call<RecommendRestaurants>, t: Throwable){
                 Log.d("retrofit", "핫한 음식점 - 응답 실패 / t: $t")
                 binding.hotRestaurantRecyclerView.visibility=View.GONE
+            }
+        })
+    }
+    private fun getResInfo(ResID: ResID){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.getResInfo(ResID) ?:return
+
+        call.enqueue(object : Callback<List<Restaurants>> {
+
+            override fun onResponse(call: Call<List<Restaurants>>, response: Response<List<Restaurants>>) {
+                Log.d("retrofit", "레스토랑 정보 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                val bundle=Bundle()
+                bundle.putSerializable("restaurant", response.body()!![0])
+                val mainAct = activity as MainActivity
+                mainAct.ChangeFragment("Restaurant", bundle)
+            }
+            override fun onFailure(call: Call<List<Restaurants>>, t: Throwable) {
+                Log.d("retrofit", "레스토랑 정보 - 응답 실패 / t: $t")
+                Toast.makeText(activity, "레스토랑 정보를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+
             }
         })
     }

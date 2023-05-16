@@ -1,5 +1,6 @@
 package com.example.capstone.restaurant
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -98,6 +99,11 @@ class RestaurantReviewDetail : AppCompatActivity() {
                     .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
                     .into(reviewImage) // 이미지를 넣을 뷰
             }else{reviewImage.visibility=View.GONE}
+            reviewImage.setOnClickListener {
+                val intent = Intent(this@RestaurantReviewDetail, ReviewImageActivity::class.java)
+                intent.putExtra("url", "${API.BASE_URL}/${review.RevImg}")
+                startActivity(intent)
+            }
             reviewComment.text= review.RevTxt
             if(review.RevSatis!=0){
                 isSatisfied.setImageResource(R.drawable.ic_unsatisfied)

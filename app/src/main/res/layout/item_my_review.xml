@@ -23,9 +23,10 @@
 
             <TextView
                 android:id="@+id/reviewRestaurantName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="온리원파스타"
+                android:maxLength="15"
+                android:text="온리원파스타온리원파스타온리원파스타온리원파스타온리원파스타"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -42,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center"
-                android:text="어제" />
+                android:text="2023-05-11 13:44" />
 
         </LinearLayout>
 
@@ -134,7 +135,7 @@
         <ImageView
             android:id="@+id/reviewImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:scaleType="centerCrop"
