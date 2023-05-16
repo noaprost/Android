@@ -38,16 +38,18 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
     private var numberOfPeople=2
     lateinit var userInfo: SharedPreferences
     lateinit var userId:String
-    lateinit var resId:String
+    lateinit var resPhNum:String
+    lateinit var userPhoneNum:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =  ActivityRestaurantWaitingBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE)
-        userId = this.getSharedPreferences("userInfo", MODE_PRIVATE).getString("userId", "010-1234-5678").toString()
-        Log.d("hy", userId)
-        resId= intent.getStringExtra("resId").toString()
+        userId = userInfo.getString("userId", "010-1234-5678").toString()
+        userPhoneNum = userInfo.getString("userPhoneNum", "010-1234-5678").toString()
+
+        resPhNum= intent.getStringExtra("resPhNum").toString()
         binding.textView14.text=intent.getIntExtra("currWaiting", 0).toString()
         val resSeat=intent.getStringExtra("resSeat").toString()
 
@@ -56,7 +58,7 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
             val splitedAddr = resSeat.split(", ")
             arr = splitedAddr
         }
-        var seatKeyword:List<String> =listOf("", "", "")
+
         var chipList:List<Chip> =listOf(binding.seatKeyword1,binding.seatKeyword2, binding.seatKeyword3, binding.seatKeyword4, binding.seatKeyword5, binding.seatKeyword6, binding.seatKeyword7, binding.seatKeyword8)
         var n=0
         for(i in arr){
@@ -148,7 +150,7 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
                 val current = LocalDateTime.now()
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 val date = current.format(formatter)
-                addWaiting(AddWaiting(userId , resId, numberOfPeople, date, searKeyword, false))
+                addWaiting(AddWaiting(userPhoneNum , resPhNum, numberOfPeople, date, searKeyword))
                 dialog1.dismiss()
             }
         }
@@ -162,7 +164,8 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
             override fun onResponse(call: Call<WaitingInfo>, response: Response<WaitingInfo>) {
                 Log.d("hy", addWaiting.toString())
                 Log.d("retrofit", "대기 신청 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-                userInfo.edit().putString("WaitIndex", response.body()?.WaitIndex.toString()).apply()
+                getWaitingIndex(getWaitingInfo(userPhoneNum, response.body()!!.WaitTime))
+
                 val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기 신청이 완료되었습니다.", 0, 1)
                 dialog.isCancelable = true
                 dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
@@ -171,13 +174,30 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
                 }, 500)
             }
             override fun onFailure(call: Call<WaitingInfo>, t: Throwable) {
-                Log.d("retrofit", "대기 신청 - 한식 응답 실패 / t: $t")
+                Log.d("retrofit", "대기 신청 - 응답 실패 / t: $t ${t.message}")
                 val dialog = CustomDialog(this@RestaurantWaitingActivity, "잠시 후 다시 실행해주세요.", 0, 1)
                 dialog.isCancelable = true
                 dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
                 Handler(Looper.getMainLooper()).postDelayed({
                     finish()
                 }, 500)
+            }
+        })
+    }
+    private fun getWaitingIndex(getWaitingInfo: getWaitingInfo){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.getWaitingIndex(getWaitingInfo = getWaitingInfo) ?:return
+
+        call.enqueue(object : Callback<WaitIndexList> {
+
+            override fun onResponse(call: Call<WaitIndexList>, response: Response<WaitIndexList>) {
+                Log.d("retrofit", "대기 인덱스 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                Log.d("retrofit", "${getWaitingInfo.WaitTime}   ${getWaitingInfo.UserPhone}")
+                userInfo.edit().putString("WaitIndex", response.body()!!.result[0].WaitIndex.toString()).apply()
+            }
+            override fun onFailure(call: Call<WaitIndexList>, t: Throwable) {
+                Log.d("retrofit", "대기 인덱스 - 응답 실패 / t: $t ${t.message}")
+
             }
         })
     }

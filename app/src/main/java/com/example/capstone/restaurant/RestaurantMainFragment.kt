@@ -85,18 +85,20 @@ class RestaurantMainFragment : Fragment() {
             userLocation=getGeoCoding(Location)
             val resLocation = getGeoCoding(resInfo.resAddress)
             val distance = getDistance(resLocation.latitude, resLocation.longitude)
+
             if(distance<=2000){
                 binding.button.visibility=View.VISIBLE
             }else {
                 binding.button.visibility=View.INVISIBLE
                 Toast.makeText(activity, "현재 위치에선 대기가 불가능해요", Toast.LENGTH_LONG).show()
             }
+
         }
 
 
         binding.button.setOnClickListener {
             val intent = Intent(activity, RestaurantWaitingActivity::class.java)
-            intent.putExtra("resId", resInfo.resPhNum)
+            intent.putExtra("resPhNum", resInfo.resPhNum)
             intent.putExtra("currWaiting", resInfo.currWaiting)
             intent.putExtra("resSeat", resInfo.resSeat)
             intent.putExtra("resSeatCnt", resInfo.resSeatCnt)
