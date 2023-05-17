@@ -200,3 +200,22 @@ data class WaitIndexList(
 data class WaitIndex(
     val WaitIndex:Int
 )
+
+data class ResWaitInfo(
+    val message: String,
+    val result: Int
+)
+
+data class ResWaitCancel(
+    val WaitIndex: Int,
+    val message: String
+)
+
+//대기 미루기 프론트 요정에 사용될 클래스
+data class ResDelayInfo(
+    val WaitIndex: String,
+    val resPhNum : String
+)
+data class ResWaitDelay(
+    val message: String
+)
