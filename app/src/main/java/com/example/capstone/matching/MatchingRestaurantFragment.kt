@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
@@ -44,7 +43,7 @@ class MatchingRestaurantFragment : Fragment() {
         val userNickname = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userNickname", "")
 
         binding.textView66.text="${userNickname}님을 위한 추천 음식점"
-        recommendRestaurant(userId(userId!!))
+        //recommendRestaurant(UserId("2"))
         binding.matchingBackBtn.setOnClickListener {
             destroy()
         }
@@ -68,6 +67,7 @@ class MatchingRestaurantFragment : Fragment() {
 
         fun bind(Restaurants : RestaurantInfo){
             this.matchingRes = Restaurants
+            val url="${API.BASE_URL}/${Restaurants.resImg}"
             if(Restaurants.resImg != null) {
                 val url="${API.BASE_URL}/${Restaurants.resImg}"
                 Glide.with(this@MatchingRestaurantFragment)
@@ -80,7 +80,6 @@ class MatchingRestaurantFragment : Fragment() {
             matchTitle.text = Restaurants.resName
             matchRating.text = Restaurants.resRating.toString()
             matchCommentNumber.text = Restaurants.revCnt.toString()
-            matchAddress.text=Restaurants.resAddress
             if(Restaurants.keyWord !=null){
                 var arr:List<String> =listOf("", "", "")
                 for (addr in Restaurants.keyWord) {
@@ -92,7 +91,10 @@ class MatchingRestaurantFragment : Fragment() {
                 tag3.text="#"+arr[3]
             }
             itemView.setOnClickListener {
-                getResInfo(ResID(Restaurants.resIdx))
+                val bundle=Bundle()
+                bundle.putSerializable("resID", Restaurants.resIdx)
+                val mainAct = activity as MainActivity
+                mainAct.ChangeFragment("Restaurant", bundle)
             }
         }
     }
@@ -112,7 +114,7 @@ class MatchingRestaurantFragment : Fragment() {
         override fun getItemCount(): Int = matchingRestaurantList.size
     }
 
-    private fun recommendRestaurant(userId: userId){
+    private fun recommendRestaurant(userId : userId){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.recommendRestaurant(userId) ?:return
 
@@ -130,26 +132,6 @@ class MatchingRestaurantFragment : Fragment() {
             override fun onFailure(call : Call<RecommendRestaurants>, t: Throwable){
                 Log.d("retrofit", "음식점 매칭 - 응답 실패 / t: $t")
                 binding.matchingRestaurantRecyclerView.visibility=View.GONE
-            }
-        })
-    }
-    private fun getResInfo(ResID: ResID){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.getResInfo(ResID) ?:return
-
-        call.enqueue(object : Callback<List<Restaurants>> {
-
-            override fun onResponse(call: Call<List<Restaurants>>, response: Response<List<Restaurants>>) {
-                Log.d("retrofit", "레스토랑 정보 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-                val bundle=Bundle()
-                bundle.putSerializable("restaurant", response.body()!![0])
-                val mainAct = activity as MainActivity
-                mainAct.ChangeFragment("Restaurant", bundle)
-            }
-            override fun onFailure(call: Call<List<Restaurants>>, t: Throwable) {
-                Log.d("retrofit", "레스토랑 정보 - 응답 실패 / t: $t")
-                Toast.makeText(activity, "레스토랑 정보를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
-
             }
         })
     }

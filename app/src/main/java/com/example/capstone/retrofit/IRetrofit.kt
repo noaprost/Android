@@ -16,17 +16,20 @@ interface IRetrofit {
     @POST("/restaurant/name")
     fun searchRestaurants(@Body resName: resName):Call<RestaurantList>
 
-    @POST("/user/waiting/insert")
+    @POST("/user/waiting/insert2")
     fun addWaiting(@Body addWaiting: AddWaiting):Call<WaitingInfo>
-
-    @POST("/user/waitindex")
-    fun getWaitingIndex(@Body getWaitingInfo: getWaitingInfo):Call<WaitIndexList>
 
     @POST("/restaurant/reviews")
     fun showRestaurantReview(@Body ResID: ResID):Call<RestaurantReviewList>
 
+    /*@POST("/review")
+    fun writeReview(@Body requestBody: RequestBody):Call<WriteReview>*/
+
     @DELETE("/mypage/leaveId")
     fun deleteAccount(@Body userIdPassword: UserIdPassword):Call<UserIdPassword>
+
+    //@POST("/review/image")
+    //fun getReviewImage(@Body RevIdx: RevIdx):Call<ReturnRevImg>
 
     @POST("/mypage/review")
     fun myReview(@Body userId: userId):Call<MyReview>
@@ -44,7 +47,7 @@ interface IRetrofit {
     fun complexityByDate(@Body resPhNum: resPhNum):Call<List<complexityByDate>>
 
     @POST("/user/waiting/ordernumber") //대기 내역 확인
-    fun waitingInfoCheck(@Body requestBody: RequestBody): Call<WaitingInfoCheck>
+    fun waitingInfoCheck(@Body waitIndex: WaitIndex): Call<ResWaitInfo>
 
     @POST("/main/recommend")
     fun recommendRestaurant(@Body userId: userId):Call<RecommendRestaurants>
@@ -53,8 +56,5 @@ interface IRetrofit {
     fun hotRestaurant():Call<RecommendRestaurants>
 
     @POST("/restaurant/id")
-    fun getResInfo(@Body ResID: ResID):Call<List<Restaurants>>
-
-    @POST("/user/waited")
-    fun getWaitingHistory(@Body UserPhone: UserPhone):Call<WaitingHistoryList>
+    fun getResInfo(@Body ResID: ResID):Call<Restaurants>
 }
