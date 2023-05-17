@@ -70,11 +70,13 @@
                 android:textStyle="bold"/>
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/editTextTextPersonPhone"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:ems="15"
-                android:inputType="textPersonName"
+                android:inputType="phone"
+                android:hint="전화번호를 입력해주세요"
+                android:textColorHint="@color/LightGray"
                 android:layout_marginBottom="8dp" />
 
             <TextView

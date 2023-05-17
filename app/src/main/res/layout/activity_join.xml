@@ -67,7 +67,9 @@
                     android:layout_marginRight="8dp"
                     android:ems="15"
                     android:textSize="16dp"
-                    android:inputType="textPersonName" />
+                    android:hint="전화번호를 입력해주세요"
+                    android:textColorHint="@color/LightGray"
+                    android:inputType="phone" />
 
                 <Button
                     android:id="@+id/button11"

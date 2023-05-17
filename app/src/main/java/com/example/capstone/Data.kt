@@ -159,8 +159,13 @@ data class complexityByHour(
 )
 
 //홈화면
-data class WaitingInfoCheck(
-    val massage : String
+data class WaitIndex(
+    var WaitIndex: Int
+)
+
+data class ResWaitInfo(
+    val message : String,
+    val result : Int
 )
 
 data class RecommendRestaurants(
@@ -196,7 +201,4 @@ data class getWaitingInfo(
 )
 data class WaitIndexList(
     val result: List<WaitIndex>
-)
-data class WaitIndex(
-    val WaitIndex:Int
 )
