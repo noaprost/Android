@@ -58,9 +58,14 @@ interface IRetrofit {
     @POST("/user/waited")
     fun getWaitingHistory(@Body UserPhone: UserPhone):Call<WaitingHistoryList>
 
-    @DELETE("/user/waiting/delete")
-    fun waitingCancel(@Query("WaitIndex") WaitIndex:WaitIndex): Call<ResWaitCancel>
+    @POST("/user/waiting/delete")
+    fun waitingCancel(@Body WaitIndex:WaitIndex): Call<ResWaitCancel>
 
     @POST("/waiting/postpone")
     fun waitingDelay(@Body ResDelayInfo: ResDelayInfo) : Call<ResWaitDelay>
+
+    @GET("/user/checkId")
+    fun checkId(@Body userPhone : UserPhone) : Call<CheckedInfo>
+
+
 }

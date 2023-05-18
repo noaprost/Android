@@ -61,7 +61,7 @@ class WaitingCustomDialog (
         // 대기 취소 버튼 클릭
         binding.waitingCancelBtn.setOnClickListener {
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
-            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getInt("waitIndex", 22)
+            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "43").toString()
 
             waitingCancel(WaitIndex(waitIndex))
             onDestroyView()
@@ -70,10 +70,10 @@ class WaitingCustomDialog (
         // 대기 미루기 버튼 클릭
         binding.waitingDelayBtn.setOnClickListener {
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
-            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getInt("WaitIndex", 22)
-            val resPhNum = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("resPhNum", "032 937 2359")
+            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("WaitIndex", "43").toString()
+            val resPhNum = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("resPhNum", "032 525 3745")
 
-            waitingDelay(ResDelayInfo("22", "032 937 2359"))
+            waitingDelay(ResDelayInfo("43", "032 525 3745"))
             onDestroyView()
 
         }

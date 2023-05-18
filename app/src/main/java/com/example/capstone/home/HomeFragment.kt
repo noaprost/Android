@@ -94,7 +94,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         // 대기 정보 버튼을 누를 경우 팝업 연결
         binding.watingInfoBtn.setOnClickListener {
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
-            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getInt("waitIndex", 61)
+            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "61").toString()
             waitingInfoCheck(WaitIndex(waitIndex))
         }
 
