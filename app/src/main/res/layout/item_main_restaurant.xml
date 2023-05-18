@@ -147,6 +147,7 @@
                     android:layout_height="24dp"
                     android:layout_marginHorizontal="4dp"
                     android:layout_weight="1"
+                    app:tint="@color/LightGray"
                     android:background="@color/white"
                     android:src="@drawable/ic_heart" />
 

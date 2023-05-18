@@ -18,6 +18,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,6 +54,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
     private lateinit var userInfo: SharedPreferences
     private lateinit var userId : String
     private lateinit var waitingInfoDialog: WaitingCustomDialog
+    private lateinit var waitingInfo : SharedPreferences
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -91,20 +93,16 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
         // 대기 정보 버튼을 누를 경우 팝업 연결
         binding.watingInfoBtn.setOnClickListener {
-
-            waitingInfoDialog = WaitingCustomDialog(this@HomeFragment, "현재 0팀이 앞에 있습니다.", 0, 0)
-            waitingInfoDialog.isCancelable = true
-            waitingInfoDialog.show(this@HomeFragment.parentFragmentManager, "WaitingCustomDialog")
+            waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
+            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getInt("waitIndex", 61)
+            waitingInfoCheck(WaitIndex(waitIndex))
         }
-
-
 
         binding.title2.setOnClickListener {
             val bundle = Bundle()
             val mainAct = activity as MainActivity
             mainAct.ChangeFragment("Hot", bundle)
         }
-
 
         //위치 관련 코드
         mLocationRequest =  LocationRequest.create().apply {
@@ -314,6 +312,26 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
                 Log.d("retrofit", "레스토랑 정보 - 응답 실패 / t: $t")
                 Toast.makeText(activity, "레스토랑 정보를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
 
+            }
+        })
+    }
+
+    // 대기 현황 팝업 레트로핏 연결
+    private fun waitingInfoCheck(WaitIndex : WaitIndex){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.waitingInfoCheck(WaitIndex) ?:return
+
+        call.enqueue(object : Callback<ResWaitInfo> {
+            override fun onResponse(call: Call<ResWaitInfo>, response: Response<ResWaitInfo>){
+                Log.d("retrofit", "대기 현황 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                val mes = response.body()?.message.toString()
+                waitingInfoDialog = WaitingCustomDialog(this@HomeFragment, mes, 0, 0)
+                waitingInfoDialog.isCancelable = true
+                waitingInfoDialog.show(this@HomeFragment.parentFragmentManager, "WaitingCustomDialog")
+            }
+
+            override fun onFailure(call: Call<ResWaitInfo>, t: Throwable) {
+                Log.d("retrofit", "대기 현황 - 응답 실패 / t: $t")
             }
         })
     }
