@@ -65,7 +65,6 @@ interface IRetrofit {
     fun waitingDelay(@Body ResDelayInfo: ResDelayInfo) : Call<ResWaitDelay>
 
     @GET("/user/checkId")
-    fun checkId(@Body userPhone : UserPhone) : Call<CheckedInfo>
-
+    fun checkId(@Query("userPhone") userPhone : UserPhone) : Call<CheckedInfo>
 
 }

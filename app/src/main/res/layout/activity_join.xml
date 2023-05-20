@@ -68,7 +68,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
                     android:ems="15"
                     android:hint="010-0000-0000"
                     android:inputType="phone"
@@ -86,6 +85,17 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/idEmptyTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="아이디는 필수 입력 사항입니다."
+                android:textSize="12sp"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/red"
+                android:visibility="gone"/>
+
+            <TextView
                 android:id="@+id/textView47"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,9 +108,19 @@
                 android:id="@+id/userPw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:ems="20"
                 android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/pwEmptyTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="비밀번호는 필수 입력 사항입니다."
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_marginLeft="4dp"/>
 
             <TextView
                 android:id="@+id/textView48"
@@ -116,8 +136,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="20"
-                android:layout_marginBottom="8dp"
                 android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/pwNotMatchTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:text="비밀번호가 일치하지 않습니다" />
 
             <TextView
                 android:id="@+id/textView49"
@@ -131,7 +161,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:orientation="horizontal">
 
                 <EditText
@@ -152,7 +181,7 @@
                     android:text="ㅡ" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName9"
+                    android:id="@+id/birthMonth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="2"
@@ -162,14 +191,14 @@
                     android:textColorHint="@color/LightGray" />
 
                 <TextView
-                    android:id="@+id/birthMonth"
+                    android:id="@+id/txt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
                     android:text="ㅡ" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName10"
+                    android:id="@+id/birthDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="2"
@@ -181,7 +210,18 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/birthDay"
+                android:id="@+id/birthEmptyTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="생년월일은 필수 입력 사항입니다"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/txt0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="성별"
@@ -231,6 +271,17 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/nameEmptyTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="이름은 필수 입력 사항입니다."
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/red"
+                android:visibility="gone"
+                android:textSize="12sp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
                 android:id="@+id/textView50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -246,6 +297,7 @@
                 android:layout_height="wrap_content"
                 android:text="음식 / 가격"
                 android:textColor="@color/black"
+                app:selectionRequired="false"
                 android:textStyle="bold" />
 
             <com.google.android.material.chip.ChipGroup
@@ -318,6 +370,7 @@
                 android:id="@+id/userChipGroup2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:selectionRequired="false"
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
@@ -398,6 +451,7 @@
                 android:id="@+id/userChipGroup3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:selectionRequired="false"
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip

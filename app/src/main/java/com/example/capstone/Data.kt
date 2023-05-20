@@ -224,3 +224,5 @@ data class CheckedInfo(
     val result : Boolean,
     val msg: String
 )
+
+
