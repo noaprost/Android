@@ -28,6 +28,7 @@ import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import com.example.capstone.home.HomeFragment
 
 
 class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
@@ -172,6 +173,7 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
                 Handler(Looper.getMainLooper()).postDelayed({
                     finish()
                 }, 500)
+
             }
             override fun onFailure(call: Call<WaitingInfo>, t: Throwable) {
                 Log.d("retrofit", "대기 신청 - 응답 실패 / t: $t ${t.message}")

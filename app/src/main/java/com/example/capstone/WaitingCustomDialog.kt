@@ -30,8 +30,7 @@ class WaitingCustomDialog (
     text: String, num: Int, theme:Int
 ) : DialogFragment(){
     //뷰 바인딩 정의
-    private var _binding: DialogWaitingLayoutBinding? = null
-
+    private var _binding: DialogWaitingLayoutBinding?= null
     private val binding get() = _binding!!
 
     private var WaitingInfoCheckInterface: WaitingInfoCheckInterface? = null
@@ -40,6 +39,7 @@ class WaitingCustomDialog (
     private var num: Int? = null
     private var theme: Int? = null
     private lateinit var waitingInfo: SharedPreferences
+    private lateinit var customDialog: CustomDialog
 
     init {
         this.text = text
@@ -61,7 +61,7 @@ class WaitingCustomDialog (
         // 대기 취소 버튼 클릭
         binding.waitingCancelBtn.setOnClickListener {
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
-            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "43").toString()
+            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "58").toString()
 
             waitingCancel(WaitIndex(waitIndex))
             onDestroyView()
@@ -70,12 +70,11 @@ class WaitingCustomDialog (
         // 대기 미루기 버튼 클릭
         binding.waitingDelayBtn.setOnClickListener {
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
-            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("WaitIndex", "43").toString()
-            val resPhNum = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("resPhNum", "032 525 3745")
+            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("WaitIndex", "58").toString()
+            val resPhNum = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("resPhNum", "032 934 6188").toString()
 
-            waitingDelay(ResDelayInfo("43", "032 525 3745"))
+            waitingDelay(ResDelayInfo(waitIndex, resPhNum))
             onDestroyView()
-
         }
 
         if(this.theme==0){
@@ -126,7 +125,7 @@ private fun waitingDelay(ResDelayInfo: ResDelayInfo){
         }
 
         override fun onFailure(call: Call<ResWaitDelay>, t: Throwable) {
-            Log.d("retrofit", "대기 미루기 - 응답 실패 / t: $t")
+            Log.d("retrofit", "대기 미루기 - 응답 실패")
         }
     })
 }

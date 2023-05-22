@@ -44,7 +44,7 @@ interface IRetrofit {
     fun complexityByDate(@Body resPhNum: resPhNum):Call<List<complexityByDate>>
 
     @POST("/user/waiting/waitingnumber") //대기 내역 확인
-    fun waitingInfoCheck(@Body WaitIndex:WaitIndex): Call<ResWaitInfo>
+    fun waitingInfoCheck(@Body WaitCheckForm:WaitCheckForm): Call<ResWaitInfo>
 
     @POST("/main/recommend")
     fun recommendRestaurant(@Body userId: userId):Call<RecommendRestaurants>
@@ -61,7 +61,7 @@ interface IRetrofit {
     @POST("/user/waiting/delete")
     fun waitingCancel(@Body WaitIndex:WaitIndex): Call<ResWaitCancel>
 
-    @POST("/waiting/postpone")
+    @POST("/user/waiting/postpone")
     fun waitingDelay(@Body ResDelayInfo: ResDelayInfo) : Call<ResWaitDelay>
 
     @GET("/user/checkId")

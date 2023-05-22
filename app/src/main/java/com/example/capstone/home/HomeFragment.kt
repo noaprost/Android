@@ -9,6 +9,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
@@ -94,8 +95,9 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         // 대기 정보 버튼을 누를 경우 팝업 연결
         binding.watingInfoBtn.setOnClickListener {
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
-            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "61").toString()
-            waitingInfoCheck(WaitIndex(waitIndex))
+            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "58").toString()
+            val resPhNum = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("resPhNum", "032 934 6188").toString()
+            waitingInfoCheck(WaitCheckForm(waitIndex, resPhNum))
         }
 
         binding.title2.setOnClickListener {
@@ -317,9 +319,9 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
     }
 
     // 대기 현황 팝업 레트로핏 연결
-    private fun waitingInfoCheck(WaitIndex : WaitIndex){
+    private fun waitingInfoCheck(WaitCheckForm : WaitCheckForm){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.waitingInfoCheck(WaitIndex) ?:return
+        val call = iRetrofit?.waitingInfoCheck(WaitCheckForm) ?:return
 
         call.enqueue(object : Callback<ResWaitInfo> {
             override fun onResponse(call: Call<ResWaitInfo>, response: Response<ResWaitInfo>){
@@ -328,6 +330,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
                 waitingInfoDialog = WaitingCustomDialog(this@HomeFragment, mes, 0, 0)
                 waitingInfoDialog.isCancelable = true
                 waitingInfoDialog.show(this@HomeFragment.parentFragmentManager, "WaitingCustomDialog")
+
             }
 
             override fun onFailure(call: Call<ResWaitInfo>, t: Throwable) {
@@ -335,4 +338,5 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
             }
         })
     }
+
 }

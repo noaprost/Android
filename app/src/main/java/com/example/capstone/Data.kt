@@ -201,6 +201,12 @@ data class WaitIndex(
     val WaitIndex:String
 )
 
+//대기 내역 확인 요청 폼
+data class WaitCheckForm(
+    val WaitIndex:String,
+    val resPhNum : String
+)
+
 data class ResWaitInfo(
     val message: String,
     val result: Int
