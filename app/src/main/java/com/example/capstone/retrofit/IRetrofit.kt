@@ -16,7 +16,7 @@ interface IRetrofit {
     @POST("/restaurant/name")
     fun searchRestaurants(@Body resName: resName):Call<RestaurantList>
 
-    @POST("/user/waiting/insert")
+    @POST("/restaurant/waiting")
     fun addWaiting(@Body addWaiting: AddWaiting):Call<WaitingInfo>
 
     @POST("/user/waitindex")

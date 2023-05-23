@@ -134,8 +134,12 @@ class RestaurantReviewDetail : AppCompatActivity() {
                 Log.d("retrofit", "음식점 리뷰 리스트 - 응답 성공 / t : ${response.raw()} ${response.body()}")
                 val arr= response.body()?.result
                 if (arr != null) {
-                    binding.reviewRecyclerView.layoutManager= LinearLayoutManager(this@RestaurantReviewDetail)
+                    val manager=LinearLayoutManager(this@RestaurantReviewDetail)
+                    manager.reverseLayout=true
+                    manager.stackFromEnd=true
+                    binding.reviewRecyclerView.layoutManager= manager
                     binding.reviewRecyclerView.adapter=MyAdapter(arr)
+
                 }
 
             }

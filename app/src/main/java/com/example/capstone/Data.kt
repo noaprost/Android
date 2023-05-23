@@ -74,17 +74,12 @@ data class AddWaiting(
     val UserPhone : String,
     val resPhNum : String,
     val Waitheadcount : Int,
-    val WaitTime : String,
     val WaitSeat : String,
 ):Serializable
 
 data class WaitingInfo(
-    val UserPhone : String,
-    val resPhNum : String,
-    val Waitheadcount : Int,
-    val WaitTime : String,
-    val WaitSeat : String,
-    val WaitisAccepted : Boolean
+    val message:String,
+    val WaitTime : String
 ):Serializable
 
 data class UserIdPassword(
@@ -187,7 +182,7 @@ data class WaitHistory(
     val acceptedTime:String,
     val resName : String,
     val resImg : String,
-    val resId:String
+    val resIdx:String
 )
 
 data class getWaitingInfo(

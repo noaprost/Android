@@ -69,6 +69,10 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         val viewpagerFragmentAdapter = ViewPagerAdapter(this@ListFragment)
         userInfo = this.requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
 
+        mlat = userInfo.getString("userLat", 37.3748023.toString())!!.toDouble()
+        mlng = userInfo.getString("userLng", 126.6346218.toString())!!.toDouble()
+
+        presentLocation= userInfo.getString("userLocation", "")!!
         viewPager.adapter = viewpagerFragmentAdapter
         viewPager.isUserInputEnabled = false
         val tabTitles = listOf("전체","한식", "양식", "중식", "일식", "카페/베이커리", "주점")
@@ -91,13 +95,39 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         binding.infoLayout.setOnClickListener {
             binding.infoLayout.visibility=View.GONE
         }
+
         return root
     }
 
     override fun onMapReady(map: GoogleMap) {
         mMap=map
-        if(checkPermissionForLocation(requireContext())) startLocationUpdates()
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mlat, mlng),15f)) //기본위치
+        //if(checkPermissionForLocation(requireContext())) startLocationUpdates()
+
+        if(presentLocation!=""){
+            var arr: List<String> = listOf("", "", "")
+            for (addr in presentLocation)
+                arr = presentLocation.split(" ")
+            for(i in 1 until arr.size){
+                presentLocation=presentLocation+arr[i]+" "
+            }
+            showRestaurants(resAddress(arr[2]))
+            val position = LatLng(mlat , mlng)
+            //내위치 표시
+            onAddMarker(mlat, mlng, mMap, restaurant = null)
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,15f))
+            val circle = CircleOptions().center(position) // 원점
+                .radius(2000.0)      //반지름 단위 : m, 반경 1km 원
+                .strokeWidth(0f)  //선너비 0f : 선없음
+                .fillColor(Color.parseColor("#41FCAF17")) //배경색
+            mMap.addCircle(circle)
+            Log.d("retrofit",arr.toString() )
+            Log.d("retrofit", mlat.toString())
+            Log.d("retrofit", mlng.toString())
+        }else{
+            Toast.makeText(context, "위치 설정이 필요합니다.", Toast.LENGTH_SHORT).show()
+        }
+
+
 
         map.setOnMarkerClickListener {
             if(it.tag!=null){
@@ -118,8 +148,9 @@ class ListFragment : Fragment(), OnMapReadyCallback {
                     binding.maKeyword2.text="#"+arr[2]
                     binding.maKeyword3.text="#"+arr[3]
                 }
+                /*
                 if(restaurant.resImg!=null) {
-                    /*
+
                     val url="${API.BASE_URL}/${restaurant.resImg}"
                     Glide.with(this)
                         .load(url) // 불러올 이미지 url
@@ -128,9 +159,12 @@ class ListFragment : Fragment(), OnMapReadyCallback {
                         .override(500, 300)
                         .into(binding.imageView24) // 이미지를 넣을 뷰
 
-                     */
+
                 }
+
+                 */
                 //캡쳐용 코드
+
                 when (restaurant.resCategory) {
                     "한식" -> binding.imageView28.setImageResource(R.drawable.dummy_korean)
                     "중식" -> binding.imageView28.setImageResource(R.drawable.dummy_chinese)
@@ -139,6 +173,8 @@ class ListFragment : Fragment(), OnMapReadyCallback {
                     "카페/베이커리" -> binding.imageView28.setImageResource(R.drawable.dummy_bakery)
                     else -> binding.imageView28.setImageResource(R.drawable.dummy_alcohol)
                 }
+
+
                 binding.cardView.visibility = View.VISIBLE
                 binding.cardView.setOnClickListener {
                     val bundle=Bundle()
@@ -163,7 +199,7 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         val marker:Marker= map.addMarker(markerOption)!!
         marker.tag=restaurant
     }
-
+    /*
     // 시스템으로 부터 위치 정보를 콜백으로 받음
     private val mLocationCallback = object : LocationCallback() {
 
@@ -204,6 +240,8 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+
+     */
     private fun showRestaurants(resAddress: resAddress){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.showRestaurants(resAddress=resAddress) ?:return
@@ -253,6 +291,7 @@ class ListFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    /*
     private fun startLocationUpdates() {
         //FusedLocationProviderClient의 인스턴스를 생성.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
@@ -272,6 +311,8 @@ class ListFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
+
+     */
     override fun onStart() {
         super.onStart()
         mapView.onStart()

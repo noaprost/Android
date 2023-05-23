@@ -26,8 +26,12 @@ class RestaurantInfoFragment : Fragment() {
         resInfo=bundle!!.getSerializable("restaurant") as Restaurants
 
         binding.location.text=resInfo.resAddress
-        binding.open.text=resInfo.resOpen+" ~ "+resInfo.resClose
-        binding.waitingTime.text="운영시간 "+ resInfo.resWaitOpen+"분 전 ~ 운영 마감 "+resInfo.resWaitClose+"분 전"
+        if(resInfo.resOpen==null || resInfo.resClose==null){
+            binding.open.text="정보가 없습니다."
+        }else{
+            binding.open.text=resInfo.resOpen+" ~ "+resInfo.resClose
+        }
+        binding.waitingTime.text=resInfo.resWaitOpen+" ~  "+resInfo.resWaitClose
         binding.phone.text=resInfo.resPhNum
         binding.note.text=resInfo.ResComment
         return root

@@ -29,18 +29,12 @@ import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.example.capstone.*
 import com.example.capstone.databinding.ActivityWriteReviewBinding
-import com.example.capstone.retrofit.API
 import com.example.capstone.retrofit.API.BASE_URL
-import com.example.capstone.retrofit.IRetrofit
-import com.example.capstone.retrofit.RetrofitClient
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -213,7 +207,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                     if(reviewImagePath==null){
                         val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                             .addFormDataPart("UserID", userId)
-                            .addFormDataPart("ResID", "1") //todo 레스토랑 아이디 연결
+                            .addFormDataPart("ResID", resId)
                             .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
                             .addFormDataPart("RevTxt", reviewText)
                             .addFormDataPart("RevKeyWord", keyword.toString())
@@ -225,7 +219,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                     }else{
                         val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                             .addFormDataPart("UserID", userId)
-                            .addFormDataPart("ResID", "1") //todo 레스토랑 아이디 연결
+                            .addFormDataPart("ResID", resId)
                             .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
                             .addFormDataPart("RevTxt", reviewText)
                             .addFormDataPart("RevKeyWord", keyword.toString())

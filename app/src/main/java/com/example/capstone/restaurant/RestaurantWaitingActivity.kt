@@ -28,7 +28,6 @@ import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import com.example.capstone.home.HomeFragment
 
 
 class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
@@ -60,7 +59,7 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
             arr = splitedAddr
         }
 
-        var chipList:List<Chip> =listOf(binding.seatKeyword1,binding.seatKeyword2, binding.seatKeyword3, binding.seatKeyword4, binding.seatKeyword5, binding.seatKeyword6, binding.seatKeyword7, binding.seatKeyword8)
+        val chipList:List<Chip> =listOf(binding.seatKeyword1,binding.seatKeyword2, binding.seatKeyword3, binding.seatKeyword4, binding.seatKeyword5, binding.seatKeyword6, binding.seatKeyword7, binding.seatKeyword8)
         var n=0
         for(i in arr){
             if(i!=", ") {
@@ -71,8 +70,8 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
         }
 
 
-       var spinnerData=resources.getStringArray(R.array.spinner_array)
-        var adapter=ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerData)
+       val spinnerData=resources.getStringArray(R.array.spinner_array)
+        val adapter=ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerData)
         binding.spinner.adapter=adapter
         binding.spinner.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -151,7 +150,7 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
                 val current = LocalDateTime.now()
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 val date = current.format(formatter)
-                addWaiting(AddWaiting(userPhoneNum , resPhNum, numberOfPeople, date, searKeyword))
+                addWaiting(AddWaiting(userPhoneNum , resPhNum, numberOfPeople, searKeyword))
                 dialog1.dismiss()
             }
         }
@@ -165,14 +164,31 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
             override fun onResponse(call: Call<WaitingInfo>, response: Response<WaitingInfo>) {
                 Log.d("hy", addWaiting.toString())
                 Log.d("retrofit", "대기 신청 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-                getWaitingIndex(getWaitingInfo(userPhoneNum, response.body()!!.WaitTime))
-
-                val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기 신청이 완료되었습니다.", 0, 1)
-                dialog.isCancelable = true
-                dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
-                Handler(Looper.getMainLooper()).postDelayed({
-                    finish()
-                }, 500)
+                if(response.body()!!.message.contains("한 곳")){
+                    val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기는 한 번에 한 곳만 신청 가능합니다.", 0, 1)
+                    dialog.isCancelable = true
+                    dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 1000)
+                }
+                if(response.body()!!.message.contains("시간")){
+                    val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기 가능 시간이 아닙니다.", 0, 1)
+                    dialog.isCancelable = true
+                    dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 1000)
+                }
+                if(response.body()!!.message.contains("완료")){
+                    getWaitingIndex(getWaitingInfo(userPhoneNum, response.body()!!.WaitTime))
+                    val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기 신청이 완료되었습니다. ", 0, 1)
+                    dialog.isCancelable = true
+                    dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 1000)
+                }
 
             }
             override fun onFailure(call: Call<WaitingInfo>, t: Throwable) {
