@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +29,7 @@ class HistoryFragment : Fragment() {
     private var _binding : FragmentHistoryBinding? = null
     private val binding get() = _binding!!
     lateinit var userInfo: SharedPreferences
+    var reviewData = HashMap<String, String>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,13 +74,13 @@ class HistoryFragment : Fragment() {
 
             writeReviewBtn.setOnClickListener {
                 val intent = Intent(activity, WriteReviewActivity::class.java)
-                intent.putExtra("resId", prewait.resId)
+                intent.putExtra("resId", prewait.resIdx)
                 intent.putExtra("resName", prewait.resName)
                 startActivity(intent)
             }
 
             itemView.setOnClickListener {
-                getResInfo(ResID(prewait.resId))
+                getResInfo(ResID(prewait.resIdx))
             }
         }
     }
@@ -112,7 +112,7 @@ class HistoryFragment : Fragment() {
         call.enqueue(object : Callback<WaitingHistoryList> {
 
             override fun onResponse(call: Call<WaitingHistoryList>, response: Response<WaitingHistoryList>) {
-                Log.d("retrofit", "레스토랑 정보 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                Log.d("retrofit", "대기 내역 - 응답 성공 / t : ${response.raw()} ${response.body()}")
                 if(!response.body()!!.result1.isNullOrEmpty()){
                     binding.previousWaitingRecyclerView.visibility=View.VISIBLE
                     binding.textView88.visibility=View.INVISIBLE
@@ -124,12 +124,13 @@ class HistoryFragment : Fragment() {
                 }
             }
             override fun onFailure(call: Call<WaitingHistoryList>, t: Throwable) {
-                Log.d("retrofit", "레스토랑 정보 - 응답 실패 / t: $t")
+                Log.d("retrofit", "대기 내역 - 응답 실패 / t: $t")
                 Toast.makeText(activity, "대기 내역을 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
 
             }
         })
     }
+
     private fun getResInfo(ResID: ResID){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.getResInfo(ResID) ?:return

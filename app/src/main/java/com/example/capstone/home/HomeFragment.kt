@@ -64,6 +64,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         val root: View = binding.root
         userInfo = this.requireActivity().getSharedPreferences("userInfo", MODE_PRIVATE)
         userId = userInfo.getString("userId", "0").toString()
+        Log.d("hyhyhy", userInfo.getString("userLocation", "").toString())
         val isMember = userInfo.getBoolean("isMember",false)
         if(isMember){
             binding.textView90.visibility=View.GONE
@@ -213,9 +214,11 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
                     for(i in 1 until arr.size){
                         presentLocation=presentLocation+arr[i]+" "
                     }
-                    Log.d("hy", presentLocation)
                     binding.userLocation.text=presentLocation
                     userInfo.edit().putString("userLocation", presentLocation).apply()
+                    userInfo.edit().putString("userLat", lat.toString()).apply()
+                    userInfo.edit().putString("userLng", lng.toString()).apply()
+
                 }
             } catch (e: IOException) {
                 e.printStackTrace()

@@ -146,8 +146,11 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
                     }else{
                         hasReview=true
                         binding.textView64.visibility=View.GONE
+                        val manager=LinearLayoutManager(context)
+                        manager.reverseLayout=true
+                        manager.stackFromEnd=true
                         binding.myReviewRecyclerView.visibility=View.VISIBLE
-                        binding.myReviewRecyclerView.layoutManager= LinearLayoutManager(context)
+                        binding.myReviewRecyclerView.layoutManager= manager
                         binding.myReviewRecyclerView.adapter=MyAdapter(response.body()!!.message)
 
                     }
