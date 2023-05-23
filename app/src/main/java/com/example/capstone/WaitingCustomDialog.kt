@@ -6,12 +6,15 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.example.capstone.databinding.DialogWaitingLayoutBinding
@@ -25,10 +28,12 @@ import com.example.capstone.home.HomeFragment
 import kotlinx.coroutines.withContext
 import okhttp3.RequestBody
 
+private var stampNum = 0
+
 class WaitingCustomDialog (
     WaitingInfoCheckInterface: WaitingInfoCheckInterface,
     text: String, num: Int, theme:Int
-) : DialogFragment(){
+) : DialogFragment(), ConfirmDialogInterface{
     //뷰 바인딩 정의
     private var _binding: DialogWaitingLayoutBinding?= null
     private val binding get() = _binding!!
@@ -39,7 +44,6 @@ class WaitingCustomDialog (
     private var num: Int? = null
     private var theme: Int? = null
     private lateinit var waitingInfo: SharedPreferences
-    private lateinit var customDialog: CustomDialog
 
     init {
         this.text = text
@@ -63,18 +67,20 @@ class WaitingCustomDialog (
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
             val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "58").toString()
 
+            this.WaitingInfoCheckInterface?.onCancelButtonClick(num!!, theme!!)
             waitingCancel(WaitIndex(waitIndex))
-            onDestroyView()
+            dismiss()
         }
 
         // 대기 미루기 버튼 클릭
         binding.waitingDelayBtn.setOnClickListener {
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
-            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("WaitIndex", "58").toString()
+            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("WaitIndex", "23").toString()
             val resPhNum = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("resPhNum", "032 934 6188").toString()
 
-            waitingDelay(ResDelayInfo(waitIndex, resPhNum))
-            onDestroyView()
+            stampNumCheck(WaitIndexInt(23))
+
+            dismiss()
         }
 
         if(this.theme==0){
@@ -92,10 +98,14 @@ class WaitingCustomDialog (
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onYesButtonClick(num: Int, theme: Int) {
+
+    }
 }
 
 interface WaitingInfoCheckInterface {
-
+    fun onCancelButtonClick(num: Int, theme: Int)
 }
 
 // 대기 취소 레트로핏 연결
@@ -125,7 +135,35 @@ private fun waitingDelay(ResDelayInfo: ResDelayInfo){
         }
 
         override fun onFailure(call: Call<ResWaitDelay>, t: Throwable) {
-            Log.d("retrofit", "대기 미루기 - 응답 실패")
+            Log.d("retrofit", "대기 미루기 - 응답 실패 t : $t")
+        }
+    })
+}
+
+private fun stampNumCheck(WaitIndex: WaitIndexInt){
+    val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+    val call = iRetrofit?.stampNumCheck(WaitIndex) ?:return
+
+    call.enqueue(object : Callback<StampInfo>{
+        override fun onResponse(call: Call<StampInfo>, response: Response<StampInfo>) {
+            Log.d("retrofit","스탬프 개수 확인 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+            Log.d("baby", response.body()!!.stamp.toString())
+            stampNum = response.body()!!.stamp
+
+            if(stampNum > 0) {
+                waitingDelay(ResDelayInfo("23", "032 934 6188"))
+            }
+            else{
+                /*val dialog = CustomDialog(this, "스탬프 개수가 부족합니다", 0, 1 )
+                dialog.isCancelable = true
+                dialog.show(this.parentFragmentManager, "ConfirmDialog")*/
+                Log.d("retrofit", "스탬프 개수 부족")
+            }
+
+        }
+
+        override fun onFailure(call: Call<StampInfo>, t: Throwable) {
+            Log.d("retrofit", "스탬프 개수 확인 - 응답 실패 t : $t")
         }
     })
 }

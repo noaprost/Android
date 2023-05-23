@@ -368,4 +368,10 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
     }
 
+    override fun onCancelButtonClick(num: Int, theme: Int) {
+        when(num){
+            1->binding.watingInfoBtn.visibility = View.GONE
+        }
+    }
+
 }
