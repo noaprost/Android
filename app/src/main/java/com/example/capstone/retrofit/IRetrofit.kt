@@ -20,7 +20,7 @@ interface IRetrofit {
     fun addWaiting(@Body addWaiting: AddWaiting):Call<WaitingInfo>
 
     @POST("/user/waitindex")
-    fun getWaitingIndex(@Body getWaitingInfo: getWaitingInfo):Call<WaitIndexList>
+    fun getWaitingIndex(@Body UserPhone: UserPhone):Call<WaitIndexList>
 
     @POST("/restaurant/reviews")
     fun showRestaurantReview(@Body ResID: ResID):Call<RestaurantReviewList>

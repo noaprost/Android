@@ -41,7 +41,6 @@ import java.time.format.DateTimeFormatter
 import okhttp3.OkHttpClient
 import java.io.IOException
 
-
 class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private lateinit var binding: ActivityWriteReviewBinding
     private lateinit var reviewImage: Uri
@@ -49,6 +48,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     private lateinit var dialog1:CustomDialog
     private lateinit var userInfo: SharedPreferences
     private lateinit var userId:String
+    private lateinit var WaitedIdx:String
     private lateinit var resId:String
     var reviewImagePath: File? = null
     var reviewText=""
@@ -206,8 +206,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
 
                     if(reviewImagePath==null){
                         val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                            .addFormDataPart("UserID", userId)
-                            .addFormDataPart("ResID", resId)
+                            .addFormDataPart("WaitedIdx", WaitedIdx)
                             .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
                             .addFormDataPart("RevTxt", reviewText)
                             .addFormDataPart("RevKeyWord", keyword.toString())
@@ -218,8 +217,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                         uploadReview(requestBody)
                     }else{
                         val requestBody:RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                            .addFormDataPart("UserID", userId)
-                            .addFormDataPart("ResID", resId)
+                            .addFormDataPart("WaitedIdx", WaitedIdx)
                             .addFormDataPart("Rating",binding.ratingBar2.rating.toString())
                             .addFormDataPart("RevTxt", reviewText)
                             .addFormDataPart("RevKeyWord", keyword.toString())
@@ -239,8 +237,10 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
 
     private fun uploadReview(requestBody:RequestBody) {
         val client = OkHttpClient()
-
-
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val date = current.format(formatter).toString()
+        Log.d("retrofit", "UserID: $userId\nResID: $resId\nRating: ${binding.ratingBar2.rating.toString()} \nRevTxt: $reviewText\nRevKeyWord: ${keyword.toString()}\nRevSatis: ${isSatisfied.toString()}\nRevRecom: ${isSatisfied.toString()}\nRevTime: ${date}\nImgPath: $reviewImagePath")
         val request = Request.Builder()
             .url(BASE_URL)
             .post(requestBody)
@@ -255,42 +255,64 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                 }
             }
 
-            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+            override fun onResponse(call: Call, response: Response) {
                 // 성공 처리
                 val responseData = response.body?.string()
-                // 결과를 처리하고 UI 업데이트 등을 수행
-                runOnUiThread {
-                    try {
-                        val jsonObject = JSONObject(responseData!!)
-                        Log.d("retrofit", jsonObject.toString())
-                        val userID = jsonObject.getString("UserID")
-                        val resID = jsonObject.getString("ResID")
-                        val rating = jsonObject.getDouble("Rating")
-                        val revTxt = jsonObject.getString("RevTxt")
-                        val revKeyWordArray = JSONArray(jsonObject.getString("RevKeyWord"))
-                        val revKeyWord = mutableListOf<String>()
-                        for (i in 0 until revKeyWordArray.length()) {
-                            revKeyWord.add(revKeyWordArray.getString(i))
-                        }
-                        val revSatis = jsonObject.getBoolean("RevSatis")
-                        val revRecom = jsonObject.getBoolean("RevRecom")
-                        val revTime = jsonObject.getString("RevTime")
-                        val imgPath = jsonObject.getString("ImgPath")
-                        val message = jsonObject.getString("message")
-
-                        Log.d("retrofit", "UserID: $userID\nResID: $resID\nRating: $rating\nRevTxt: $revTxt\nRevKeyWord: $revKeyWord\nRevSatis: $revSatis\nRevRecom: $revRecom\nRevTime: $revTime\nImgPath: $imgPath\nMessage: $message")
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                        Log.d("retrofit", "JSON 파싱 오류: ${e.message}")
-                        println(e.message)
-                    }
-                }
                 val dialog = CustomDialog(this@WriteReviewActivity, "리뷰 작성을 완료하였습니다", 0, 1)
                 dialog.isCancelable = true
                 dialog.show(this@WriteReviewActivity.supportFragmentManager, "ConfirmDialog")
                 Handler(Looper.getMainLooper()).postDelayed({
                     finish()
                 }, 1000)
+
+                Log.d("retrofit", responseData!!)
+                // 결과를 처리하고 UI 업데이트 등을 수행
+                runOnUiThread {
+                    if(!responseData.contains("불가")){
+                        try {
+                            val jsonObject = JSONObject(responseData)
+                            Log.d("retrofit", jsonObject.toString())
+                            if(jsonObject.getString("message").contains("불가")){
+                                val dialog = CustomDialog(this@WriteReviewActivity, "리뷰는 한 번만 작성 가능합니다.", 0, 1)
+                                dialog.isCancelable = true
+                                dialog.show(this@WriteReviewActivity.supportFragmentManager, "ConfirmDialog")
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    finish()
+                                }, 1000)
+                            }else{
+                                val userID = jsonObject.getString("UserID")
+                                val resID = jsonObject.getString("ResID")
+                                val rating = jsonObject.getDouble("Rating")
+                                val revTxt = jsonObject.getString("RevTxt")
+                                val revKeyWordArray = JSONArray(jsonObject.getString("RevKeyWord"))
+                                val revKeyWord = mutableListOf<String>()
+                                for (i in 0 until revKeyWordArray.length()) {
+                                    revKeyWord.add(revKeyWordArray.getString(i))
+                                }
+                                val revSatis = jsonObject.getBoolean("RevSatis")
+                                val revRecom = jsonObject.getBoolean("RevRecom")
+                                val revTime = jsonObject.getString("RevTime")
+                                val imgPath = jsonObject.getString("ImgPath")
+                                val message = jsonObject.getString("message")
+
+                                Log.d("retrofit", "UserID: $userID\nResID: $resID\nRating: $rating\nRevTxt: $revTxt\nRevKeyWord: $revKeyWord\nRevSatis: $revSatis\nRevRecom: $revRecom\nRevTime: $revTime\nImgPath: $imgPath\nMessage: $message")
+                                val dialog = CustomDialog(this@WriteReviewActivity, "리뷰 작성을 완료하였습니다", 0, 1)
+                                dialog.isCancelable = true
+                                dialog.show(this@WriteReviewActivity.supportFragmentManager, "ConfirmDialog")
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    finish()
+                                }, 1000)
+                            }
+
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                            Log.d("retrofit", "JSON 파싱 오류: ${e.message}")
+                            println(e.message)
+                        }
+                    }
+
+                }
+
 
             }
         })

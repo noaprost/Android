@@ -181,7 +181,7 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
                     }, 1000)
                 }
                 if(response.body()!!.message.contains("완료")){
-                    getWaitingIndex(getWaitingInfo(userPhoneNum, response.body()!!.WaitTime))
+                    getWaitingIndex(UserPhone(userPhoneNum))
                     val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기 신청이 완료되었습니다. ", 0, 1)
                     dialog.isCancelable = true
                     dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
@@ -202,16 +202,18 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
             }
         })
     }
-    private fun getWaitingIndex(getWaitingInfo: getWaitingInfo){
+    private fun getWaitingIndex(UserPhone: UserPhone){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.getWaitingIndex(getWaitingInfo = getWaitingInfo) ?:return
+        val call = iRetrofit?.getWaitingIndex(UserPhone) ?:return
 
         call.enqueue(object : Callback<WaitIndexList> {
 
             override fun onResponse(call: Call<WaitIndexList>, response: Response<WaitIndexList>) {
                 Log.d("retrofit", "대기 인덱스 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-                Log.d("retrofit", "${getWaitingInfo.WaitTime}   ${getWaitingInfo.UserPhone}")
-                userInfo.edit().putString("WaitIndex", response.body()!!.result[0].WaitIndex.toString()).apply()
+                val waitingInfo = this@RestaurantWaitingActivity.getSharedPreferences("waitingInfo", MODE_PRIVATE)
+                waitingInfo.edit().putString("waitIndex", response.body()!!.result[0].WaitIndex.toString()).apply()
+                waitingInfo.edit().putString("resPhNum", resPhNum).apply()
+
             }
             override fun onFailure(call: Call<WaitIndexList>, t: Throwable) {
                 Log.d("retrofit", "대기 인덱스 - 응답 실패 / t: $t ${t.message}")

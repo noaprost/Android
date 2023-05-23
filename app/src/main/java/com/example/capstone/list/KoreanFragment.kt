@@ -142,7 +142,7 @@ class KoreanFragment : Fragment() {
             }
             override fun onFailure(call: Call<RestaurantList>, t: Throwable) {
                 Log.d("retrofit", "음식점  리스트 - 응답 실패 / t: $t")
-                Toast.makeText(activity, "리스트를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+                //Toast.makeText(activity, "리스트를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
             }
         })
     }
