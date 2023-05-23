@@ -5,44 +5,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/joinBackBtn"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            app:srcCompat="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/textView46"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="회원가입"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <com.example.capstone.restaurant.NewScrollView
+        android:id="@+id/newScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
-
-            <ImageButton
-                android:id="@+id/joinBackBtn"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                app:srcCompat="@drawable/ic_back" />
-
-            <TextView
-                android:id="@+id/textView46"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="회원가입"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="16dp" />
-        </LinearLayout>
-
-        <LinearLayout
+            android:id="@+id/linear1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_marginHorizontal="12dp"
             android:orientation="vertical">
 
             <TextView
@@ -63,23 +67,33 @@
                     android:id="@+id/userPhNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginRight="8dp"
                     android:ems="15"
-                    android:textSize="16sp"
-                    android:hint="휴대폰 번호를 입력해주세요"
-                    android:textColorHint="@color/LightGray"
+                    android:hint="010-0000-0000"
+                    android:inputType="phone"
                     android:textColor="@color/black"
-                    android:inputType="phone" />
+                    android:textColorHint="@color/LightGray"
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/doubleCheckBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="14sp"
-                    android:text="중복확인" />
+                    android:text="중복확인"
+                    android:textSize="14sp" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/idEmptyTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="아이디는 필수 입력 사항입니다."
+                android:textSize="12sp"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/red"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/textView47"
@@ -95,8 +109,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="20"
-                android:inputType="textPassword"
-                android:layout_marginBottom="8dp"/>
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/pwEmptyTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="비밀번호는 필수 입력 사항입니다."
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_marginLeft="4dp"/>
 
             <TextView
                 android:id="@+id/textView48"
@@ -112,8 +136,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="20"
-                android:inputType="textPassword"
-                android:layout_marginBottom="8dp"/>
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/pwNotMatchTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:text="비밀번호가 일치하지 않습니다" />
 
             <TextView
                 android:id="@+id/textView49"
@@ -127,8 +161,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/birthYear"
@@ -136,8 +169,9 @@
                     android:layout_height="wrap_content"
                     android:ems="4"
                     android:hint="1990"
-                    android:textColorHint="@color/LightGray"
-                    android:inputType="textPersonName" />
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/LightGray" />
 
                 <TextView
                     android:id="@+id/textView51"
@@ -147,34 +181,47 @@
                     android:text="ㅡ" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName9"
+                    android:id="@+id/birthMonth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="2"
                     android:hint="01"
-                    android:textColorHint="@color/LightGray"
-                    android:inputType="textPersonName" />
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/LightGray" />
 
                 <TextView
-                    android:id="@+id/birthMonth"
+                    android:id="@+id/txt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
                     android:text="ㅡ" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName10"
+                    android:id="@+id/birthDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="2"
                     android:hint="01"
-                    android:textColorHint="@color/LightGray"
-                    android:inputType="textPersonName" />
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/LightGray" />
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/birthDay"
+                android:id="@+id/birthEmptyTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="생년월일은 필수 입력 사항입니다"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/txt0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="성별"
@@ -186,20 +233,23 @@
                 android:id="@+id/genderCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/male"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:selectAllOnFocus="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:checked="true"
                     android:text="남자" />
 
                 <RadioButton
                     android:id="@+id/female"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="여자" />
+
             </RadioGroup>
 
             <TextView
@@ -217,30 +267,253 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
-                android:textColor="@color/black"
-                android:text="" />
+                android:text=""
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/nameEmptyTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="이름은 필수 입력 사항입니다."
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/red"
+                android:visibility="gone"
+                android:textSize="12sp"
+                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:id="@+id/textView50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="선호하는 키워드를 3개 골라주세요"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:layout_marginVertical="12dp"
+                android:text="선호하는 키워드를 그룹별로 하나씩 골라주세요"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/textView52"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="음식 / 가격"
+                android:textColor="@color/black"
+                app:selectionRequired="false"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/userChipGroup1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword1"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#특별한메뉴"
+                    app:chipStrokeColor="#FCAF17" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword2"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#건강한맛" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword3"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#다양한메뉴" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword4"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#익숙한맛" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword5"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#가성비" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword6"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#가치있는" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword7"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#신선한" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/textView53"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="분위기"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/userChipGroup2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:selectionRequired="false"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword8"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#연인끼리"
+                    app:chipStrokeColor="#FCAF17" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword9"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#가족끼리" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword10"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#혼자서" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword11"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#프라이빗" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword12"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#독특한" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword13"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#인스타감성" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword14"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#뷰맛집" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword15"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#컨셉추얼" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword16"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#기념일" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/textView54"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="편의시설 / 기타"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/userChipGroup3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:selectionRequired="false"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword17"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#노키즈존"
+                    app:chipStrokeColor="#FCAF17" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword18"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#반려견과" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword19"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#넓은주차장" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword20"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#친절해요" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword21"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#깔끔한" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/userKeyword22"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#접근성좋은" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <Button
+                android:id="@+id/submitBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="완료"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </com.example.capstone.restaurant.NewScrollView>
 
-    <Button
-        android:id="@+id/submitBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="완료"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2" />
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -193,7 +193,13 @@ data class WaitIndexList(
     val result: List<WaitIndex>
 )
 data class WaitIndex(
-    val WaitIndex:Int
+    val WaitIndex:String
+)
+
+//대기 내역 확인 요청 폼
+data class WaitCheckForm(
+    val WaitIndex:String,
+    val resPhNum : String
 )
 
 data class ResWaitInfo(
@@ -202,7 +208,7 @@ data class ResWaitInfo(
 )
 
 data class ResWaitCancel(
-    val WaitIndex: Int,
+    val WaitIndex: String,
     val message: String
 )
 
@@ -214,3 +220,10 @@ data class ResDelayInfo(
 data class ResWaitDelay(
     val message: String
 )
+
+data class CheckedInfo(
+    val result : Boolean,
+    val msg: String
+)
+
+
