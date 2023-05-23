@@ -34,6 +34,8 @@ class LoginActivity : AppCompatActivity() {
                 userInfo.edit().putString("userNickname", "김남준").apply()
                 userInfo.edit().putString("userLocation", "").apply()
                 userInfo.edit().putString("WaitIndex", "").apply()
+                userInfo.edit().putString("resPhNum", "").apply()
+
                 //인텐트 종료하면서 정보 전달
                 intent.putExtra("isSignedIn",true )
                 setResult(RESULT_OK, intent)

@@ -177,12 +177,14 @@ data class WaitingHistoryList(
     val result1: List<WaitHistory>
 )
 data class WaitHistory(
+    val WaitedIdx:String,
     val UserPhone:String,
     val resPhNum:String,
     val acceptedTime:String,
     val resName : String,
     val resImg : String,
-    val resIdx:String
+    val resIdx:String,
+    val WaitisAccepted:Int
 )
 
 data class getWaitingInfo(

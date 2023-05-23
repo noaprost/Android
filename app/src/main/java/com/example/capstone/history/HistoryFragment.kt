@@ -55,7 +55,7 @@ class HistoryFragment : Fragment() {
 
         fun bind(prewait : WaitHistory) : Unit{
             this.prewait = prewait
-
+            Img.clipToOutline=true
             var arr:List<String> =listOf("", "", "")
             for (addr in prewait.acceptedTime) {
                 val splitedAddr = prewait.acceptedTime.split("T")
@@ -71,13 +71,19 @@ class HistoryFragment : Fragment() {
                     .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
                     .into(Img) // 이미지를 넣을 뷰
             }
-
-            writeReviewBtn.setOnClickListener {
-                val intent = Intent(activity, WriteReviewActivity::class.java)
-                intent.putExtra("resId", prewait.resIdx)
-                intent.putExtra("resName", prewait.resName)
-                startActivity(intent)
+            if(prewait.WaitisAccepted==3) {
+                writeReviewBtn.text="리뷰 작성 완료!"
+            }else{
+                writeReviewBtn.text="리뷰 작성 하러 가기"
+                writeReviewBtn.setOnClickListener {
+                    val intent = Intent(activity, WriteReviewActivity::class.java)
+                    intent.putExtra("resId", prewait.resIdx)
+                    intent.putExtra("resName", prewait.resName)
+                    intent.putExtra("WaitedIdx", prewait.resName)
+                    startActivity(intent)
+                }
             }
+
 
             itemView.setOnClickListener {
                 getResInfo(ResID(prewait.resIdx))
@@ -113,10 +119,13 @@ class HistoryFragment : Fragment() {
 
             override fun onResponse(call: Call<WaitingHistoryList>, response: Response<WaitingHistoryList>) {
                 Log.d("retrofit", "대기 내역 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-                if(!response.body()!!.result1.isNullOrEmpty()){
+                if(!response.body()?.result1.isNullOrEmpty()){
                     binding.previousWaitingRecyclerView.visibility=View.VISIBLE
                     binding.textView88.visibility=View.INVISIBLE
-                    binding.previousWaitingRecyclerView.layoutManager = LinearLayoutManager(context)
+                    val manager=LinearLayoutManager(context)
+                    manager.reverseLayout=true
+                    manager.stackFromEnd=true
+                    binding.previousWaitingRecyclerView.layoutManager = manager
                     binding.previousWaitingRecyclerView.adapter = PreviousWaitingAdapter(response.body()!!.result1)
                 }else{
                     binding.previousWaitingRecyclerView.visibility=View.INVISIBLE

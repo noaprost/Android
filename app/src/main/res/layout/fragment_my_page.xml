@@ -207,6 +207,7 @@
                 android:layout_height="35dp"
                 android:src="@drawable/ic_next" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/my_announce"
             android:layout_width="match_parent"
@@ -214,7 +215,8 @@
             android:orientation="horizontal"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingBottom="10dp"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imageView20"

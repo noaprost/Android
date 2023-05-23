@@ -9,7 +9,6 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
@@ -36,7 +35,6 @@ import com.example.capstone.*
 import com.example.capstone.retrofit.API
 import com.example.capstone.retrofit.IRetrofit
 import com.example.capstone.retrofit.RetrofitClient
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,6 +52,8 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
     private lateinit var userInfo: SharedPreferences
     private lateinit var userId : String
+    private lateinit var userPhoneNum : String
+
     private lateinit var waitingInfoDialog: WaitingCustomDialog
     private lateinit var waitingInfo : SharedPreferences
 
@@ -67,12 +67,13 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         val root: View = binding.root
         userInfo = this.requireActivity().getSharedPreferences("userInfo", MODE_PRIVATE)
         userId = userInfo.getString("userId", "0").toString()
-        Log.d("hyhyhy", userInfo.getString("userLocation", "").toString())
+        userPhoneNum = userInfo.getString("userPhoneNum", "").toString()
         val isMember = userInfo.getBoolean("isMember",false)
         if(isMember){
             binding.textView90.visibility=View.GONE
             binding.restaurantHomeRecyclerView1.visibility=View.VISIBLE
             recommendRestaurant(userId(userId))
+            getWaitingIndex(UserPhone(userPhoneNum))
             binding.title1.setOnClickListener {
                 val bundle = Bundle()
                 val mainAct = activity as MainActivity
@@ -81,24 +82,19 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         }else{
             binding.textView90.visibility=View.VISIBLE
             binding.restaurantHomeRecyclerView1.visibility=View.GONE
+            binding.watingInfoBtn.visibility=View.INVISIBLE
         }
         hotRestaurant()
 
-
-        // 대기 내역이 있는 경우에만 대기 정보 버튼이 보이도록 설정
-        var isExistWatingInfo = true // 불러온 데이터의 존재 여부로 판단되도혹 수정 필요
-        binding.watingInfoBtn.visibility = if(isExistWatingInfo){
-            View.VISIBLE
-        }else{
-            View.INVISIBLE
-        }
-
         // 대기 정보 버튼을 누를 경우 팝업 연결
         binding.watingInfoBtn.setOnClickListener {
+
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
-            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "58").toString()
-            val resPhNum = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("resPhNum", "032 934 6188").toString()
-            waitingInfoCheck(WaitCheckForm(waitIndex, resPhNum))
+            val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "")
+            val resPhNum = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("resPhNum", "").toString()
+            waitingInfoCheck(WaitCheckForm(waitIndex!!, resPhNum))
+            Log.d("hyhyhy", waitIndex)
+            Log.d("hyhyhy", resPhNum)
         }
 
         binding.title2.setOnClickListener {
@@ -135,6 +131,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
             rating.text=restaurantItem.resRating.toString()
             commentNumber.text=restaurantItem.revCnt.toString()
             restaurantName.text=restaurantItem.resName
+
 
             if(restaurantItem.resImg!=null){
                 val url="${API.BASE_URL}/${restaurantItem.resImg}"
@@ -300,6 +297,29 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
             }
         })
     }
+    private fun getWaitingIndex(UserPhone: UserPhone){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.getWaitingIndex(UserPhone) ?:return
+
+        call.enqueue(object : Callback<WaitIndexList> {
+
+            override fun onResponse(call: Call<WaitIndexList>, response: Response<WaitIndexList>) {
+                Log.d("retrofit", "대기 인덱스 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                if(response.body()?.result.isNullOrEmpty()){
+                    binding.watingInfoBtn.visibility=View.INVISIBLE
+                }else{
+                    val waitingInfo=this@HomeFragment.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE)
+                    waitingInfo.edit().putString("waitIndex", response.body()!!.result[0].WaitIndex.toString()).apply()
+                    binding.watingInfoBtn.visibility=View.VISIBLE
+                }
+
+            }
+            override fun onFailure(call: Call<WaitIndexList>, t: Throwable) {
+                Log.d("retrofit", "대기 인덱스 - 응답 실패 / t: $t ${t.message}")
+
+            }
+        })
+    }
     private fun getResInfo(ResID: ResID){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.getResInfo(ResID) ?:return
@@ -340,6 +360,12 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
                 Log.d("retrofit", "대기 현황 - 응답 실패 / t: $t")
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getWaitingIndex(UserPhone(userPhoneNum))
+
     }
 
 }

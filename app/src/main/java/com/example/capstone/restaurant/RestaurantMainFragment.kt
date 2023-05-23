@@ -89,7 +89,7 @@ class RestaurantMainFragment : Fragment() {
             if(distance<=2000){
                 binding.button.visibility=View.VISIBLE
             }else {
-                binding.button.visibility=View.INVISIBLE
+                binding.button.visibility=View.VISIBLE
                 Toast.makeText(activity, "현재 위치에선 대기가 불가능해요", Toast.LENGTH_LONG).show()
             }
 
