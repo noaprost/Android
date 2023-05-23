@@ -64,7 +64,13 @@ interface IRetrofit {
     @POST("/user/waiting/postpone")
     fun waitingDelay(@Body ResDelayInfo: ResDelayInfo) : Call<ResWaitDelay>
 
-    @GET("/user/checkId")
-    fun checkId(@Query("userPhone") userPhone : UserPhone) : Call<CheckedInfo>
+    @POST("/user/checkId")
+    fun checkId(@Body userPhone: UserPhone) : Call<CheckedInfo>
+
+    @POST("/user/join")
+    fun join(@Body requestBody: RequestBody) : Call<CheckedInfo>
+
+    @POST("/user/stamp")
+    fun stampNumCheck(@Body WaitIndex: WaitIndexInt) : Call<StampInfo>
 
 }

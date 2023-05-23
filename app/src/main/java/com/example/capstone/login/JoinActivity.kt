@@ -23,17 +23,18 @@ import com.example.capstone.retrofit.API
 import com.example.capstone.retrofit.API.BASE_URL
 import com.example.capstone.retrofit.IRetrofit
 import com.example.capstone.retrofit.RetrofitClient
+import okhttp3.FormBody
 import okhttp3.MultipartBody
 import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
+import okio.IOException
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
 import java.sql.Array
 
 class JoinActivity : AppCompatActivity(){
@@ -303,17 +304,15 @@ class JoinActivity : AppCompatActivity(){
 
             if(validchecked){
 
-                val requestBody : RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("userPhone", userPhone)
-                    .addFormDataPart("userPW", userPW)
-                    .addFormDataPart("userGender", userGender)
-                    .addFormDataPart("userBirth", userBirth)
-                    .addFormDataPart("userName", userName)
-                    .addFormDataPart("keyword", userKeyword.toString())
-                    .build()
+                val requestBody : RequestBody = FormBody.Builder()
+                    .add("userPhone", userPhone)
+                    .add("userPW", userPW)
+                    .add("userGender", userGender)
+                    .add("userBirth", userBirth)
+                    .add("userName", userName)
+                    .add("keyword", userKeyword.toString())
+                    .build() as RequestBody
                 join(requestBody)
-
-                Log.d("retrofit", "$requestBody")
             }
         }
     }
@@ -342,46 +341,19 @@ class JoinActivity : AppCompatActivity(){
     }
 
     private fun join(requestBody: RequestBody){
-        val client = OkHttpClient()
+        var client = OkHttpClient()
 
-        val request = Request.Builder()
-            .url(BASE_URL)
-            .post(requestBody)
-            .build()
+        val request : Request = Request.Builder().url(BASE_URL).post(requestBody).build()
 
-        Log.d("retrofit", requestBody.javaClass.toString())
-
-        client.newCall(request).enqueue(object: okhttp3.Callback{
+        client.newCall(request).enqueue(object : okhttp3.Callback {
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                val responseData = response.body?.string()
-
-                runOnUiThread {
-                    try {
-                        //val jsonObject = JSONObject(responseData!!)
-                        Log.d("retrofit", "")
-                        /*val userPhone = jsonObject.getString("userPhone")
-                        val userPW = jsonObject.getString("userPW")
-                        val userGender = jsonObject.getString("userGender")
-                        val userBirth = jsonObject.getString("userBirth")
-                        val userName = jsonObject.getString("userName")
-                        val keyword = jsonObject.getString("keyword")*/
-                        //Log.d("retrofit", "userPhone: $userPhone\n userPW : $userPW\n userGender $userGender\n userBirth : $userBirth\n userName : $userName\n userKeyword : ${keyword.toString()}")
-
-                    }catch (e : JSONException) {
-                        e.printStackTrace()
-                        Log.d("retrofit", "JSON 파싱 오류: ${e.message}")
-                        println(e.message)
-                    }
-                }
+                Log.d("baby", response?.body?.string())
             }
 
-            override fun onFailure(call: okhttp3.Call, e: IOException) {
-                runOnUiThread {
-                    Log.d("retrofit fail","업로드 실패: ${e.message}")
-                    Toast.makeText(this@JoinActivity, "[오류 발생]\n잠시 후 다시 시도해주세요.", Toast.LENGTH_LONG).show()
-                }
+            override fun onFailure(call: okhttp3.Call, e: okio.IOException) {
+
             }
         })
     }
-
 }
+

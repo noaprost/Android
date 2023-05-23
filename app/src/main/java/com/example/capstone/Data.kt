@@ -228,4 +228,14 @@ data class CheckedInfo(
     val msg: String
 )
 
+data class WaitIndexInt(
+    val WaitIndex:Int
+)
+
+data class StampInfo(
+    val stamp : Int,
+    val message: String
+
+)
+
 
