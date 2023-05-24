@@ -68,6 +68,9 @@ class WaitingCustomDialog (
             val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "58").toString()
             this.WaitingInfoCheckInterface?.onCancelButtonClick(num!!, theme!!)
             waitingCancel(WaitIndex(waitIndex))
+            val dialog = CustomDialog(this, "대기 취소가 완료되었습니다", 0, 1 )
+                dialog.isCancelable = true
+                dialog.show(this.parentFragmentManager, "ConfirmDialog")
             dismiss()
         }
 
@@ -153,9 +156,6 @@ private fun stampNumCheck(WaitIndex: WaitIndexInt){
                 waitingDelay(ResDelayInfo("23", "032 934 6188"))
             }
             else{
-                /*val dialog = CustomDialog(this, "스탬프 개수가 부족합니다", 0, 1 )
-                dialog.isCancelable = true
-                dialog.show(this.parentFragmentManager, "ConfirmDialog")*/
                 Log.d("retrofit", "스탬프 개수 부족")
             }
 
