@@ -51,11 +51,11 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
     private var presentLocation = ""
 
     private lateinit var userInfo: SharedPreferences
+    private lateinit var waitingInfo: SharedPreferences
     private lateinit var userId : String
     private lateinit var userPhoneNum : String
 
     private lateinit var waitingInfoDialog: WaitingCustomDialog
-    private lateinit var waitingInfo : SharedPreferences
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -66,6 +66,8 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         userInfo = this.requireActivity().getSharedPreferences("userInfo", MODE_PRIVATE)
+        waitingInfo=this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
+
         userId = userInfo.getString("userId", "0").toString()
         userPhoneNum = userInfo.getString("userPhoneNum", "").toString()
         val isMember = userInfo.getBoolean("isMember",false)
@@ -73,6 +75,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
             binding.textView90.visibility=View.GONE
             binding.restaurantHomeRecyclerView1.visibility=View.VISIBLE
             recommendRestaurant(userId(userId))
+            Log.d("hyhyhy", userPhoneNum)
             getWaitingIndex(UserPhone(userPhoneNum))
             binding.title1.setOnClickListener {
                 val bundle = Bundle()
@@ -307,11 +310,14 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
                 Log.d("retrofit", "대기 인덱스 - 응답 성공 / t : ${response.raw()} ${response.body()}")
                 if(response.body()?.result.isNullOrEmpty()){
                     binding.watingInfoBtn.visibility=View.INVISIBLE
+                    val mainAct = activity as MainActivity
+                    mainAct.ChangePage(R.id.navigation_home)
                 }else{
-                    val waitingInfo=this@HomeFragment.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE)
+
                     waitingInfo.edit().putString("waitIndex", response.body()!!.result[0].WaitIndex.toString()).apply()
                     binding.watingInfoBtn.visibility=View.VISIBLE
                 }
+
 
             }
             override fun onFailure(call: Call<WaitIndexList>, t: Throwable) {
@@ -365,7 +371,6 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
     override fun onResume() {
         super.onResume()
         getWaitingIndex(UserPhone(userPhoneNum))
-
     }
 
     override fun onCancelButtonClick(num: Int, theme: Int) {

@@ -172,7 +172,7 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
                         finish()
                     }, 1000)
                 }
-                if(response.body()!!.message.contains("시간")){
+                else if(response.body()!!.message.contains("시간")){
                     val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기 가능 시간이 아닙니다.", 0, 1)
                     dialog.isCancelable = true
                     dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
@@ -180,9 +180,17 @@ class RestaurantWaitingActivity : AppCompatActivity(), ConfirmDialogInterface {
                         finish()
                     }, 1000)
                 }
-                if(response.body()!!.message.contains("완료")){
+                else if(response.body()!!.message.contains("완료")){
                     getWaitingIndex(UserPhone(userPhoneNum))
                     val dialog = CustomDialog(this@RestaurantWaitingActivity, "대기 신청이 완료되었습니다. ", 0, 1)
+                    dialog.isCancelable = true
+                    dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 1000)
+                }
+                else{
+                    val dialog = CustomDialog(this@RestaurantWaitingActivity, "잠시 후 다시 실행해주세요.", 0, 1)
                     dialog.isCancelable = true
                     dialog.show(this@RestaurantWaitingActivity.supportFragmentManager, "ConfirmDialog")
                     Handler(Looper.getMainLooper()).postDelayed({

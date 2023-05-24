@@ -67,6 +67,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         userInfo = this.getSharedPreferences("userInfo", MODE_PRIVATE)
         userId = userInfo.getString("userId", "0").toString()
         resId= intent.getStringExtra("resId").toString()
+        WaitedIdx= intent.getStringExtra("WaitedIdx").toString()
         binding.writeReviewName.text=intent.getStringExtra("resName").toString()
 
         binding.writeReviewComment.addTextChangedListener(object : TextWatcher {
@@ -240,9 +241,9 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val date = current.format(formatter).toString()
-        Log.d("retrofit", "UserID: $userId\nResID: $resId\nRating: ${binding.ratingBar2.rating.toString()} \nRevTxt: $reviewText\nRevKeyWord: ${keyword.toString()}\nRevSatis: ${isSatisfied.toString()}\nRevRecom: ${isSatisfied.toString()}\nRevTime: ${date}\nImgPath: $reviewImagePath")
+        Log.d("retrofit", "WaitedIdx: $WaitedIdx\nRating: ${binding.ratingBar2.rating.toString()} \nRevTxt: $reviewText\nRevKeyWord: ${keyword.toString()}\nRevSatis: ${isSatisfied.toString()}\nRevRecom: ${isSatisfied.toString()}\nRevTime: ${date}\nImgPath: $reviewImagePath")
         val request = Request.Builder()
-            .url(BASE_URL)
+            .url("http://ec2-13-125-237-193.ap-northeast-2.compute.amazonaws.com:3000/review")
             .post(requestBody)
             .build()
 
@@ -280,8 +281,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                                     finish()
                                 }, 1000)
                             }else{
-                                val userID = jsonObject.getString("UserID")
-                                val resID = jsonObject.getString("ResID")
+                                val userID = jsonObject.getString("WaitedIdx")
                                 val rating = jsonObject.getDouble("Rating")
                                 val revTxt = jsonObject.getString("RevTxt")
                                 val revKeyWordArray = JSONArray(jsonObject.getString("RevKeyWord"))
@@ -295,7 +295,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
                                 val imgPath = jsonObject.getString("ImgPath")
                                 val message = jsonObject.getString("message")
 
-                                Log.d("retrofit", "UserID: $userID\nResID: $resID\nRating: $rating\nRevTxt: $revTxt\nRevKeyWord: $revKeyWord\nRevSatis: $revSatis\nRevRecom: $revRecom\nRevTime: $revTime\nImgPath: $imgPath\nMessage: $message")
+                                Log.d("retrofit", "WaitedIdx: $WaitedIdx\nRating: ${binding.ratingBar2.rating.toString()} \nRevTxt: $reviewText\nRevKeyWord: ${keyword.toString()}\nRevSatis: ${isSatisfied.toString()}\nRevRecom: ${isSatisfied.toString()}\nRevTime: ${date}\nImgPath: $reviewImagePath")
                                 val dialog = CustomDialog(this@WriteReviewActivity, "리뷰 작성을 완료하였습니다", 0, 1)
                                 dialog.isCancelable = true
                                 dialog.show(this@WriteReviewActivity.supportFragmentManager, "ConfirmDialog")
