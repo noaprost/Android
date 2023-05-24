@@ -73,13 +73,13 @@ data class RestaurantReviewList(
 data class AddWaiting(
     val UserPhone : String,
     val resPhNum : String,
-    val Waitheadcount : Int,
+    val WaitHeadcount : Int,
     val WaitSeat : String,
 ):Serializable
 
 data class WaitingInfo(
     val message:String,
-    val WaitTime : String
+    val waitTime : String
 ):Serializable
 
 data class UserIdPassword(

@@ -94,13 +94,13 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
             if(review.RevSatis!=0){
                 isSatisfied.setImageResource(R.drawable.ic_unsatisfied)
             }
-            if(review.RevImg!=null){
+            if(review.RevImg!=null || review.RevImg!=""){
                 img.visibility=View.VISIBLE
                 val url="${API.BASE_URL}/${review.RevImg}"
                 Glide.with(this@MyReviewFragment)
                     .load(url) // 불러올 이미지 url
-                    .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
-                    .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                    .error(R.drawable.dummy_chinese) // 로딩 에러 발생 시 표시할 이미지
+                    .fallback(R.drawable.dummy_japanese) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
                     .into(img) // 이미지를 넣을 뷰
             }else{img.visibility=View.GONE}
             img.setOnClickListener {

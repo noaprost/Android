@@ -29,7 +29,7 @@ class HistoryFragment : Fragment() {
     private var _binding : FragmentHistoryBinding? = null
     private val binding get() = _binding!!
     lateinit var userInfo: SharedPreferences
-    var reviewData = HashMap<String, String>()
+    lateinit var userPhoneNum:String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +39,7 @@ class HistoryFragment : Fragment() {
         val root: View = binding.root
 
         userInfo = this.requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
-        val userPhoneNum = userInfo.getString("userPhoneNum", "010-1234-5678").toString()
+        userPhoneNum = userInfo.getString("userPhoneNum", "010-1234-5678").toString()
         getWaitingHistory(UserPhone(userPhoneNum))
 
         return root
@@ -79,7 +79,7 @@ class HistoryFragment : Fragment() {
                     val intent = Intent(activity, WriteReviewActivity::class.java)
                     intent.putExtra("resId", prewait.resIdx)
                     intent.putExtra("resName", prewait.resName)
-                    intent.putExtra("WaitedIdx", prewait.resName)
+                    intent.putExtra("WaitedIdx", prewait.WaitedIdx)
                     startActivity(intent)
                 }
             }
@@ -160,5 +160,9 @@ class HistoryFragment : Fragment() {
             }
         })
     }
+    override fun onResume() {
+        super.onResume()
+        getWaitingHistory(UserPhone(userPhoneNum))
 
+    }
 }

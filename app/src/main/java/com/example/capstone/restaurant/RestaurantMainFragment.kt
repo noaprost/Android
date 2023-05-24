@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.capstone.*
 import com.example.capstone.databinding.FragmentRestaurantMainBinding
 import com.example.capstone.retrofit.API
@@ -89,7 +90,7 @@ class RestaurantMainFragment : Fragment() {
             if(distance<=2000){
                 binding.button.visibility=View.VISIBLE
             }else {
-                binding.button.visibility=View.VISIBLE
+                binding.button.visibility=View.INVISIBLE
                 Toast.makeText(activity, "현재 위치에선 대기가 불가능해요", Toast.LENGTH_LONG).show()
             }
 
@@ -139,7 +140,7 @@ class RestaurantMainFragment : Fragment() {
     }
     fun attach(){
         if(resInfo.resImg!=null) {
-            /*
+
             //todo 이미지 url 수정
             val url="${API.BASE_URL}/${resInfo.resImg}"
             Glide.with(this)
@@ -149,15 +150,17 @@ class RestaurantMainFragment : Fragment() {
                 .override(500, 300)
                 .into(binding.imageView) // 이미지를 넣을 뷰
 
-             */
+
+        }else{
+            //캡쳐용 코드
+            if(resInfo.resCategory=="한식") binding.imageView.setImageResource(R.drawable.dummy_korean)
+            else if(resInfo.resCategory=="중식") binding.imageView.setImageResource(R.drawable.dummy_chinese)
+            else if(resInfo.resCategory=="양식") binding.imageView.setImageResource(R.drawable.dummy_restaurant_image)
+            else if(resInfo.resCategory=="일식") binding.imageView.setImageResource(R.drawable.dummy_japanese)
+            else if(resInfo.resCategory=="카페/베이커리") binding.imageView.setImageResource(R.drawable.dummy_bakery)
+            else binding.imageView.setImageResource(R.drawable.dummy_alcohol)
         }
-        //캡쳐용 코드
-        if(resInfo.resCategory=="한식") binding.imageView.setImageResource(R.drawable.dummy_korean)
-        else if(resInfo.resCategory=="중식") binding.imageView.setImageResource(R.drawable.dummy_chinese)
-        else if(resInfo.resCategory=="양식") binding.imageView.setImageResource(R.drawable.dummy_restaurant_image)
-        else if(resInfo.resCategory=="일식") binding.imageView.setImageResource(R.drawable.dummy_japanese)
-        else if(resInfo.resCategory=="카페/베이커리") binding.imageView.setImageResource(R.drawable.dummy_bakery)
-        else binding.imageView.setImageResource(R.drawable.dummy_alcohol)
+
 
         binding.textView.text=resInfo.resName
         binding.star.text=resInfo.resRating.toString()
