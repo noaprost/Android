@@ -82,12 +82,12 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         }else{
             binding.textView90.visibility=View.VISIBLE
             binding.restaurantHomeRecyclerView1.visibility=View.GONE
-            binding.watingInfoBtn.visibility=View.INVISIBLE
+            binding.waitingInfoBtn.visibility=View.INVISIBLE
         }
         hotRestaurant()
 
         // 대기 정보 버튼을 누를 경우 팝업 연결
-        binding.watingInfoBtn.setOnClickListener {
+        binding.waitingInfoBtn.setOnClickListener {
 
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
             val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "")
@@ -306,11 +306,11 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
             override fun onResponse(call: Call<WaitIndexList>, response: Response<WaitIndexList>) {
                 Log.d("retrofit", "대기 인덱스 - 응답 성공 / t : ${response.raw()} ${response.body()}")
                 if(response.body()?.result.isNullOrEmpty()){
-                    binding.watingInfoBtn.visibility=View.INVISIBLE
+                    binding.waitingInfoBtn.visibility=View.INVISIBLE
                 }else{
                     val waitingInfo=this@HomeFragment.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE)
                     waitingInfo.edit().putString("waitIndex", response.body()!!.result[0].WaitIndex.toString()).apply()
-                    binding.watingInfoBtn.visibility=View.VISIBLE
+                    binding.waitingInfoBtn.visibility=View.VISIBLE
                 }
 
             }
@@ -370,7 +370,9 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
     override fun onCancelButtonClick(num: Int, theme: Int) {
         when(num){
-            1->binding.watingInfoBtn.visibility = View.GONE
+            0->{
+                binding.waitingInfoBtn.visibility = View.INVISIBLE
+            }
         }
     }
 

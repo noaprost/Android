@@ -38,12 +38,12 @@ class WaitingCustomDialog (
     private var _binding: DialogWaitingLayoutBinding?= null
     private val binding get() = _binding!!
 
-    private var WaitingInfoCheckInterface: WaitingInfoCheckInterface? = null
-
     private var text: String? = null
     private var num: Int? = null
     private var theme: Int? = null
     private lateinit var waitingInfo: SharedPreferences
+
+    private val WaitingInfoCheckInterface = WaitingInfoCheckInterface
 
     init {
         this.text = text
@@ -66,7 +66,6 @@ class WaitingCustomDialog (
         binding.waitingCancelBtn.setOnClickListener {
             waitingInfo = this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
             val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "58").toString()
-
             this.WaitingInfoCheckInterface?.onCancelButtonClick(num!!, theme!!)
             waitingCancel(WaitIndex(waitIndex))
             dismiss()
