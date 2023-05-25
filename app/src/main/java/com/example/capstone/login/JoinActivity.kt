@@ -242,7 +242,12 @@ class JoinActivity : AppCompatActivity(){
             if(!userPhone.isNullOrEmpty()){
                 joiningInfo = this.getSharedPreferences("joiningInfo", MODE_PRIVATE)
                 val userPhone = this.getSharedPreferences("joiningInfo", AppCompatActivity.MODE_PRIVATE).getString("userPhone", userPhone).toString()
-                checkId(UserPhone(userPhone))
+
+                var requestBody = FormBody.Builder()
+                    .add("userPhone", userPhone)
+                    .build()
+
+                checkId(requestBody)
             }
         }
 
@@ -311,25 +316,23 @@ class JoinActivity : AppCompatActivity(){
                     .add("userBirth", userBirth)
                     .add("userName", userName)
                     .add("keyword", userKeyword.toString())
-                    .build() as RequestBody
+                    .build()
                 join(requestBody)
             }
         }
     }
 
-    private fun checkId(userPhone: UserPhone){
+    private fun checkId(requestBody: RequestBody){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.checkId(userPhone) ?:return
+        val call = iRetrofit?.checkId(requestBody) ?:return
 
         call.enqueue(object : Callback<CheckedInfo> {
             override fun onResponse(call: Call<CheckedInfo>, response: Response<CheckedInfo>) {
                 Log.d("retrofit", "아이디 중복 체크 - 성공 / t : ${response.raw()} ${response.body()}")
                 if(response.body()!!.result){
-                    Toast.makeText(this@JoinActivity, "중복된 아이디가 존재합니다", Toast.LENGTH_SHORT)
                     binding.userPhNum.text = null
                     checked = false
                 }else{
-                    Toast.makeText(this@JoinActivity, "사용 가능한 아이디입니다", Toast.LENGTH_SHORT)
                     checked = true
                 }
             }

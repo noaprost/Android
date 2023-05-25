@@ -80,8 +80,7 @@ class WaitingCustomDialog (
             val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("WaitIndex", "23").toString()
             val resPhNum = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("resPhNum", "032 934 6188").toString()
 
-            stampNumCheck(WaitIndexInt(23))
-
+            this.WaitingInfoCheckInterface?.onDelayButtonClick(num!!, theme!!)
             dismiss()
         }
 
@@ -107,6 +106,7 @@ class WaitingCustomDialog (
 
 interface WaitingInfoCheckInterface {
     fun onCancelButtonClick(num: Int, theme: Int)
+    fun onDelayButtonClick(num: Int, theme: Int)
 }
 
 // 대기 취소 레트로핏 연결
@@ -126,43 +126,3 @@ private fun waitingCancel(WaitIndex : WaitIndex){
     })
 }
 
-// 대기 미루기 레트로핏 연결
-private fun waitingDelay(ResDelayInfo: ResDelayInfo){
-    val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create((IRetrofit::class.java))
-    val call = iRetrofit?.waitingDelay(ResDelayInfo) ?:return
-
-    call.enqueue(object : Callback<ResWaitDelay>{
-        override fun onResponse(call: Call<ResWaitDelay>, response: Response<ResWaitDelay>) {
-            Log.d("retrofit", "대기 미루기 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-        }
-
-        override fun onFailure(call: Call<ResWaitDelay>, t: Throwable) {
-            Log.d("retrofit", "대기 미루기 - 응답 실패 t : $t")
-        }
-    })
-}
-
-private fun stampNumCheck(WaitIndex: WaitIndexInt){
-    val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-    val call = iRetrofit?.stampNumCheck(WaitIndex) ?:return
-
-    call.enqueue(object : Callback<StampInfo>{
-        override fun onResponse(call: Call<StampInfo>, response: Response<StampInfo>) {
-            Log.d("retrofit","스탬프 개수 확인 - 응답 성공 / t : ${response.raw()} ${response.body()}")
-            Log.d("baby", response.body()!!.stamp.toString())
-            stampNum = response.body()!!.stamp
-
-            if(stampNum > 0) {
-                waitingDelay(ResDelayInfo("23", "032 934 6188"))
-            }
-            else{
-                Log.d("retrofit", "스탬프 개수 부족")
-            }
-
-        }
-
-        override fun onFailure(call: Call<StampInfo>, t: Throwable) {
-            Log.d("retrofit", "스탬프 개수 확인 - 응답 실패 t : $t")
-        }
-    })
-}
