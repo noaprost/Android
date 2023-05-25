@@ -100,7 +100,6 @@ class WaitingCustomDialog (
     }
 
     override fun onYesButtonClick(num: Int, theme: Int) {
-
     }
 }
 
@@ -120,6 +119,7 @@ private fun waitingCancel(WaitIndex : WaitIndex){
 
         override fun onFailure(call: Call<ResWaitCancel>, t: Throwable) {
             Log.d("retrofit", "대기 취소 - 응답 실패 / t: $t")
+
         }
     })
 }

@@ -73,4 +73,7 @@ interface IRetrofit {
     @POST("/user/stamp")
     fun stampNumCheck(@Body WaitIndex: WaitIndexInt) : Call<StampInfo>
 
+    @POST("/user/stamp")
+    fun CheckStamp(@Body UserPhone: UserPhone) : Call<StampInfo>
+
 }

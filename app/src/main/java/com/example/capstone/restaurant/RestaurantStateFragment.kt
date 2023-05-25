@@ -92,7 +92,7 @@ class RestaurantStateFragment : Fragment() {
             description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
             setMaxVisibleValueCount(12) // 최대 보이는 그래프 개수
             axisLeft.run { //왼쪽 축. 즉 Y방향 축을 뜻한다.
-                axisMaximum = 101f //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
+                axisMaximum = 61f //100 위치에 선을 그리기 위해 101f로 맥시멈값 설정
                 axisMinimum = 0f // 최소값 0
                 granularity = 20f // 20 단위마다 선을 그리려고 설정.
                 setDrawLabels(true) // 값 적는거 허용
@@ -150,7 +150,7 @@ class RestaurantStateFragment : Fragment() {
             description.isEnabled = false
             setMaxVisibleValueCount(7)
             axisLeft.run {
-                axisMaximum = 101f
+                axisMaximum = 61f
                 axisMinimum = 0f
                 granularity = 20f
                 setDrawLabels(true)

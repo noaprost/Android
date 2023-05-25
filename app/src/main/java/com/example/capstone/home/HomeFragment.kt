@@ -39,6 +39,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
+import kotlin.properties.Delegates
 
 class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
@@ -54,7 +55,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
     private lateinit var waitingInfo: SharedPreferences
     private lateinit var userId : String
     private lateinit var userPhoneNum : String
-
+    private var isMember by Delegates.notNull<Boolean>()
     private lateinit var waitingInfoDialog: WaitingCustomDialog
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -62,21 +63,18 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         userInfo = this.requireActivity().getSharedPreferences("userInfo", MODE_PRIVATE)
         waitingInfo=this.requireActivity().getSharedPreferences("waitingInfo", MODE_PRIVATE)
-
-        userId = userInfo.getString("userId", "0").toString()
-        userPhoneNum = userInfo.getString("userPhoneNum", "").toString()
-        val isMember = userInfo.getBoolean("isMember",false)
+        hotRestaurant()
+        userId = userInfo.getString("userId", "2").toString()
+        userPhoneNum = userInfo.getString("userPhoneNum", "010-1111-1111").toString()
+        isMember = userInfo.getBoolean("isMember",false)
         if(isMember){
             binding.textView90.visibility=View.GONE
             binding.restaurantHomeRecyclerView1.visibility=View.VISIBLE
-            recommendRestaurant(userId(userId))
-            Log.d("hyhyhy", userPhoneNum)
-            getWaitingIndex(UserPhone(userPhoneNum))
+            recommendRestaurant(userId("2"))
             binding.title1.setOnClickListener {
                 val bundle = Bundle()
                 val mainAct = activity as MainActivity
@@ -87,7 +85,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
             binding.restaurantHomeRecyclerView1.visibility=View.GONE
             binding.watingInfoBtn.visibility=View.INVISIBLE
         }
-        hotRestaurant()
+
 
         // 대기 정보 버튼을 누를 경우 팝업 연결
         binding.watingInfoBtn.setOnClickListener {
@@ -96,8 +94,6 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
             val waitIndex = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("waitIndex", "")
             val resPhNum = this.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE).getString("resPhNum", "").toString()
             waitingInfoCheck(WaitCheckForm(waitIndex!!, resPhNum))
-            Log.d("hyhyhy", waitIndex)
-            Log.d("hyhyhy", resPhNum)
         }
 
         binding.title2.setOnClickListener {
@@ -279,6 +275,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
                 Log.d("retrofit", "핫한 음식점 - 응답 실패 / t: $t")
             }
         })
+
     }
     private fun recommendRestaurant(userId: userId){
         val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
@@ -310,8 +307,6 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
                 Log.d("retrofit", "대기 인덱스 - 응답 성공 / t : ${response.raw()} ${response.body()}")
                 if(response.body()?.result.isNullOrEmpty()){
                     binding.watingInfoBtn.visibility=View.INVISIBLE
-                    val mainAct = activity as MainActivity
-                    mainAct.ChangePage(R.id.navigation_home)
                 }else{
 
                     waitingInfo.edit().putString("waitIndex", response.body()!!.result[0].WaitIndex.toString()).apply()
@@ -370,12 +365,15 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface {
 
     override fun onResume() {
         super.onResume()
-        getWaitingIndex(UserPhone(userPhoneNum))
+        if(isMember){
+            Log.d("retrofit", "onresume")
+            getWaitingIndex(UserPhone(userPhoneNum))}
     }
 
     override fun onCancelButtonClick(num: Int, theme: Int) {
         when(num){
             1->binding.watingInfoBtn.visibility = View.GONE
+
         }
     }
 
