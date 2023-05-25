@@ -37,10 +37,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.sql.Array
 
+private var checked = true
+
 class JoinActivity : AppCompatActivity(){
     private lateinit var binding : ActivityJoinBinding
     private var userKeyword : MutableList<String> = mutableListOf("", "", "")
-    private var checked = false
     private var validchecked = true
     private var userPhone : String = ""
     private var userPW : String =  ""
@@ -242,7 +243,7 @@ class JoinActivity : AppCompatActivity(){
             if(!userPhone.isNullOrEmpty()){
                 joiningInfo = this.getSharedPreferences("joiningInfo", MODE_PRIVATE)
                 val userPhone = this.getSharedPreferences("joiningInfo", AppCompatActivity.MODE_PRIVATE).getString("userPhone", userPhone).toString()
-
+                Log.d("baby", "$userPhone")
                 var requestBody = FormBody.Builder()
                     .add("userPhone", userPhone)
                     .build()
@@ -306,8 +307,8 @@ class JoinActivity : AppCompatActivity(){
                 Toast.makeText(this, "편의 시설 키워드를 입력해주세요", Toast.LENGTH_SHORT).show()
                 validchecked = false
             }
-
-            if(validchecked){
+            Log.d("baby", "메인 안의 checked : $checked")
+            if(!checked && validchecked){
 
                 val requestBody : RequestBody = FormBody.Builder()
                     .add("userPhone", userPhone)
@@ -323,38 +324,48 @@ class JoinActivity : AppCompatActivity(){
     }
 
     private fun checkId(requestBody: RequestBody){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
-        val call = iRetrofit?.checkId(requestBody) ?:return
+        Log.d("baby", "아이디 중복 체크 진입 성공")
+        val client = OkHttpClient()
 
-        call.enqueue(object : Callback<CheckedInfo> {
-            override fun onResponse(call: Call<CheckedInfo>, response: Response<CheckedInfo>) {
-                Log.d("retrofit", "아이디 중복 체크 - 성공 / t : ${response.raw()} ${response.body()}")
-                if(response.body()!!.result){
-                    binding.userPhNum.text = null
-                    checked = false
-                }else{
-                    checked = true
-                }
+        val request : Request = Request.Builder()
+            .url(BASE_URL+"/user/checkId")
+            .post(requestBody)
+            .addHeader("Content-Type", "application/x-www-form-urlencoded")
+            .build()
+
+        client.newCall(request).enqueue(object : okhttp3.Callback{
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                var json = response.body.string()
+                Log.d("retrofit", "아이디 중복 체크 - 성공 : $json")
+                json = json.replace(",\"msg\":\"사용가능한 아이디입니다.\"}", "")
+                json = json.replace("{\"result\":", "")
+                Log.d("baby", "아이디 중복 여부 : $json")
+                checked = json.toBoolean()
             }
 
-            override fun onFailure(call: Call<CheckedInfo>, t: Throwable) {
-                Log.d("retrofit", "아이디 중복 체크 - 실패 / t: $t")
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                Log.d("retrofit", "아이디 중복 체크 - 실패 ${e.message}")
             }
         })
     }
 
     private fun join(requestBody: RequestBody){
-        var client = OkHttpClient()
+        Log.d("baby", "회원가입 진입 성공")
+        val client = OkHttpClient()
 
-        val request : Request = Request.Builder().url(BASE_URL).post(requestBody).build()
+        val request : Request = Request.Builder()
+            .url(BASE_URL+"/user/join")
+            .post(requestBody)
+            .addHeader("Content-Type", "application/x-www-form-urlencoded")
+            .build()
 
         client.newCall(request).enqueue(object : okhttp3.Callback {
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                Log.d("baby", response?.body?.string())
+                Log.d("baby", response.body.string())
             }
 
-            override fun onFailure(call: okhttp3.Call, e: okio.IOException) {
-
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                Log.d("baby", "회원가입 실패 : ${e.message}")
             }
         })
     }

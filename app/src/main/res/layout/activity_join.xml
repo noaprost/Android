@@ -168,6 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="4"
+                    android:maxLength="4"
                     android:hint="1990"
                     android:inputType="number"
                     android:textAlignment="center"
@@ -186,6 +187,7 @@
                     android:layout_height="wrap_content"
                     android:ems="2"
                     android:hint="01"
+                    android:maxLength="2"
                     android:inputType="number"
                     android:textAlignment="center"
                     android:textColorHint="@color/LightGray" />
@@ -203,6 +205,7 @@
                     android:layout_height="wrap_content"
                     android:ems="2"
                     android:hint="01"
+                    android:maxLength="2"
                     android:inputType="number"
                     android:textAlignment="center"
                     android:textColorHint="@color/LightGray" />
