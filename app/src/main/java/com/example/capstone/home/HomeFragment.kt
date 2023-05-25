@@ -10,7 +10,6 @@ import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
-import android.util.JsonToken
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +31,6 @@ import com.example.capstone.databinding.FragmentHomeBinding
 import com.google.android.gms.location.*
 import java.util.*
 import com.example.capstone.*
-import com.example.capstone.retrofit.API
 import com.example.capstone.retrofit.API.BASE_URL
 import com.example.capstone.retrofit.IRetrofit
 import com.example.capstone.retrofit.RetrofitClient
@@ -41,13 +39,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okio.IOException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
-
-private var stampNum = 0
 
 class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterface {
 
@@ -143,7 +138,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterfa
 
 
             if(restaurantItem.resImg!=null){
-                val url="${API.BASE_URL}/${restaurantItem.resImg}"
+                val url="${BASE_URL}/${restaurantItem.resImg}"
                 Glide.with(this@HomeFragment)
                     .load(url) // 불러올 이미지 url
                     .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
@@ -267,10 +262,10 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterfa
     }
 
     private fun hotRestaurant(){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.hotRestaurant() ?:return
 
-        call.enqueue(object : retrofit2.Callback<RecommendRestaurants> {
+        call.enqueue(object : Callback<RecommendRestaurants> {
 
             override fun onResponse(call: Call<RecommendRestaurants>, response: Response<RecommendRestaurants>){
                 Log.d("retrofit", "핫한 음식점 - 응답 성공 / t : ${response.raw()} ${response.body()?.message}")
@@ -287,10 +282,10 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterfa
         })
     }
     private fun recommendRestaurant(userId: userId){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.recommendRestaurant(userId) ?:return
 
-        call.enqueue(object : retrofit2.Callback<RecommendRestaurants> {
+        call.enqueue(object : Callback<RecommendRestaurants> {
 
             override fun onResponse(call: Call<RecommendRestaurants>, response: Response<RecommendRestaurants>){
                 Log.d("retrofit", "음식점 매칭- 응답 성공 / t : ${response.raw()} ${response.body()?.message}")
@@ -307,7 +302,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterfa
         })
     }
     private fun getWaitingIndex(UserPhone: UserPhone){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.getWaitingIndex(UserPhone) ?:return
 
         call.enqueue(object : Callback<WaitIndexList> {
@@ -315,10 +310,10 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterfa
             override fun onResponse(call: Call<WaitIndexList>, response: Response<WaitIndexList>) {
                 Log.d("retrofit", "대기 인덱스 - 응답 성공 / t : ${response.raw()} ${response.body()}")
                 if(response.body()?.result.isNullOrEmpty()){
-                    binding.waitingInfoBtn.visibility=View.VISIBLE
+                    binding.waitingInfoBtn.visibility=View.INVISIBLE
                 }else{
                     val waitingInfo=this@HomeFragment.requireActivity().getSharedPreferences("waitingInfo", AppCompatActivity.MODE_PRIVATE)
-                    waitingInfo.edit().putString("waitIndex", response.body()!!.result[0].WaitIndex.toString()).apply()
+                    waitingInfo.edit().putString("waitIndex", response.body()!!.result[0].WaitIndex).apply()
                     binding.waitingInfoBtn.visibility=View.VISIBLE
                 }
 
@@ -330,7 +325,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterfa
         })
     }
     private fun getResInfo(ResID: ResID){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.getResInfo(ResID) ?:return
 
         call.enqueue(object : Callback<List<Restaurants>> {
@@ -352,7 +347,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterfa
 
     // 대기 현황 팝업 레트로핏 연결
     private fun waitingInfoCheck(WaitCheckForm : WaitCheckForm){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(BASE_URL)?.create(IRetrofit::class.java)
         val call = iRetrofit?.waitingInfoCheck(WaitCheckForm) ?:return
 
         call.enqueue(object : Callback<ResWaitInfo> {
@@ -397,7 +392,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterfa
     // 스탭프 개수 확인
     private fun stampNumCheck(requestBody: RequestBody) {
 
-        var client = OkHttpClient()
+        val client = OkHttpClient()
 
         val request: Request = Request.Builder()
             .url(BASE_URL+"/user/stamp")
@@ -443,7 +438,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterfa
                 }
             }
 
-            override fun onFailure(call: okhttp3.Call, e: okio.IOException) {
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
                 Log.d("retrofit", "스탬프 개수 확인 실패 ${e.message}")
             }
         })
@@ -451,7 +446,7 @@ class HomeFragment : Fragment(), WaitingInfoCheckInterface, ConfirmDialogInterfa
 
     // 대기 미루기 레트로핏 연결
     fun waitingDelay(ResDelayInfo: ResDelayInfo){
-        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create((IRetrofit::class.java))
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(BASE_URL)?.create((IRetrofit::class.java))
         val call = iRetrofit?.waitingDelay(ResDelayInfo) ?:return
 
         call.enqueue(object : Callback<ResWaitDelay>{
