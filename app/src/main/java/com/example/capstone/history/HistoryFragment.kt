@@ -29,19 +29,16 @@ class HistoryFragment : Fragment() {
     private var _binding : FragmentHistoryBinding? = null
     private val binding get() = _binding!!
     lateinit var userInfo: SharedPreferences
-    var reviewData = HashMap<String, String>()
+    lateinit var userPhoneNum:String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         userInfo = this.requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
-        val userPhoneNum = userInfo.getString("userPhoneNum", "010-1234-5678").toString()
-        getWaitingHistory(UserPhone(userPhoneNum))
-
+        userPhoneNum = userInfo.getString("userPhoneNum", "010-1234-5678").toString()
         return root
     }
 
@@ -79,7 +76,7 @@ class HistoryFragment : Fragment() {
                     val intent = Intent(activity, WriteReviewActivity::class.java)
                     intent.putExtra("resId", prewait.resIdx)
                     intent.putExtra("resName", prewait.resName)
-                    intent.putExtra("WaitedIdx", prewait.resName)
+                    intent.putExtra("WaitedIdx", prewait.WaitedIdx)
                     startActivity(intent)
                 }
             }
@@ -123,8 +120,6 @@ class HistoryFragment : Fragment() {
                     binding.previousWaitingRecyclerView.visibility=View.VISIBLE
                     binding.textView88.visibility=View.INVISIBLE
                     val manager=LinearLayoutManager(context)
-                    manager.reverseLayout=true
-                    manager.stackFromEnd=true
                     binding.previousWaitingRecyclerView.layoutManager = manager
                     binding.previousWaitingRecyclerView.adapter = PreviousWaitingAdapter(response.body()!!.result1)
                 }else{
@@ -134,7 +129,7 @@ class HistoryFragment : Fragment() {
             }
             override fun onFailure(call: Call<WaitingHistoryList>, t: Throwable) {
                 Log.d("retrofit", "대기 내역 - 응답 실패 / t: $t")
-                Toast.makeText(activity, "대기 내역을 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
+                //Toast.makeText(activity, "대기 내역을 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
 
             }
         })
@@ -160,5 +155,9 @@ class HistoryFragment : Fragment() {
             }
         })
     }
-
+    override fun onResume() {
+        super.onResume()
+        getWaitingHistory(UserPhone(userPhoneNum))
+        Log.d("retrofit", "히스토리!! onresume")
+    }
 }

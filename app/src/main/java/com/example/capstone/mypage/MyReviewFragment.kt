@@ -41,11 +41,10 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
         binding.backButton.setOnClickListener {
             destroy()
         }
-        val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "0")
+        val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "2")
         val isMember = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)
-
         if(isMember){//로그인이 돼있으면
-            myReview(userId(userId!!))
+            myReview(userId("2"))
         }else{
             binding.textView64.visibility=View.VISIBLE
             binding.myReviewRecyclerView.visibility=View.GONE
@@ -94,13 +93,13 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
             if(review.RevSatis!=0){
                 isSatisfied.setImageResource(R.drawable.ic_unsatisfied)
             }
-            if(review.RevImg!=null){
+            if(review.RevImg!=null || review.RevImg!=""){
                 img.visibility=View.VISIBLE
                 val url="${API.BASE_URL}/${review.RevImg}"
                 Glide.with(this@MyReviewFragment)
                     .load(url) // 불러올 이미지 url
-                    .error(R.drawable.onlyone_logo) // 로딩 에러 발생 시 표시할 이미지
-                    .fallback(R.drawable.onlyone_logo) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                    .error(R.drawable.dummy_chinese) // 로딩 에러 발생 시 표시할 이미지
+                    .fallback(R.drawable.dummy_japanese) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
                     .into(img) // 이미지를 넣을 뷰
             }else{img.visibility=View.GONE}
             img.setOnClickListener {
@@ -115,7 +114,6 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
                 val dialog = CustomDialog(this@MyReviewFragment, "리뷰를 삭제하시겠습니까?\n재작성은 불가능합니다.", 0, 0)
                 dialog.isCancelable = false
                 this@MyReviewFragment.fragmentManager?.let { it1 -> dialog.show(it1, "ConfirmDialog") }
-                //todo 리사이클러뷰 새로고침
             }
         }
 
