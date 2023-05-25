@@ -40,11 +40,11 @@ class MatchingRestaurantFragment : Fragment() {
         _binding = FragmentMatchingRestaurantBinding.inflate(layoutInflater, container, false)
         val root: View = binding.root
         userInfo = this.requireActivity().getSharedPreferences("userInfo", MODE_PRIVATE)
-        val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "")
+        val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "2")
         val userNickname = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userNickname", "")
 
         binding.textView66.text="${userNickname}님을 위한 추천 음식점"
-        recommendRestaurant(userId(userId!!))
+        recommendRestaurant(userId("2"))
         binding.matchingBackBtn.setOnClickListener {
             destroy()
         }

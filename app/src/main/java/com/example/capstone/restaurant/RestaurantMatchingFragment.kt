@@ -50,6 +50,7 @@ class RestaurantMatchingFragment : Fragment() {
 
         val bundle = arguments
         resInfo=bundle!!.getSerializable("restaurant") as Restaurants
+
         preferenceByAge(ResID(resInfo.resIdx.toString()))
         preferenceByGender(ResID(resInfo.resIdx.toString()))
 
@@ -183,9 +184,12 @@ class RestaurantMatchingFragment : Fragment() {
                 Log.d("retrofit", "성별 매칭 - 응답 성공 / t : ${response.raw()} ${response.body()}")
                 entryF=response.body()!!.cntF.toFloat()/(response.body()!!.cntF.toFloat()+response.body()!!.cntM.toFloat())*100.toFloat()
                 entryM=response.body()!!.cntM.toFloat()/(response.body()!!.cntF.toFloat()+response.body()!!.cntM.toFloat())*100.toFloat()
-                sex_entries.add(PieEntry(entryM, "남"))
-                sex_entries.add(PieEntry(entryF, "여"))
-                setGenderChart()
+                if(sex_entries.isEmpty()){
+                    sex_entries.add(PieEntry(entryM, "남"))
+                    sex_entries.add(PieEntry(entryF, "여"))
+                    setGenderChart()
+                }
+
             }
             override fun onFailure(call: Call<PreferenceByGender>, t: Throwable) {
                 Log.d("retrofit", "성별 매칭 -  응답 실패 / t: $t")
@@ -195,4 +199,10 @@ class RestaurantMatchingFragment : Fragment() {
             }
         })
     }
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+
 }

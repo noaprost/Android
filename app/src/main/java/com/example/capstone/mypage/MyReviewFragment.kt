@@ -41,11 +41,10 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
         binding.backButton.setOnClickListener {
             destroy()
         }
-        val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "0")
+        val userId = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getString("userId", "2")
         val isMember = this.requireActivity().getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE).getBoolean("isMember", false)
-
         if(isMember){//로그인이 돼있으면
-            myReview(userId(userId!!))
+            myReview(userId("2"))
         }else{
             binding.textView64.visibility=View.VISIBLE
             binding.myReviewRecyclerView.visibility=View.GONE
@@ -115,7 +114,6 @@ class MyReviewFragment : Fragment(), ConfirmDialogInterface {
                 val dialog = CustomDialog(this@MyReviewFragment, "리뷰를 삭제하시겠습니까?\n재작성은 불가능합니다.", 0, 0)
                 dialog.isCancelable = false
                 this@MyReviewFragment.fragmentManager?.let { it1 -> dialog.show(it1, "ConfirmDialog") }
-                //todo 리사이클러뷰 새로고침
             }
         }
 

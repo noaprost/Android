@@ -1,5 +1,6 @@
 package com.example.capstone
 
+import com.google.gson.annotations.SerializedName
 import java.io.File
 import java.io.Serializable
 
@@ -139,17 +140,29 @@ data class complexityByDate(
 
 data class complexityByHour(
     val resPhNum: String,
+    @SerializedName(value = "0_")
     val _0 : Int,
+    @SerializedName(value = "2_")
     val _2 : Int,
+    @SerializedName(value = "4_")
     val _4 : Int,
+    @SerializedName(value = "6_")
     val _6 : Int,
+    @SerializedName(value = "8_")
     val _8 : Int,
+    @SerializedName(value = "10_")
     val _10 : Int,
+    @SerializedName(value = "12_")
     val _12 : Int,
+    @SerializedName(value = "14_")
     val _14 : Int,
+    @SerializedName(value = "16_")
     val _16 : Int,
+    @SerializedName(value = "18_")
     val _18 : Int,
+    @SerializedName(value = "20_")
     val _20 : Int,
+    @SerializedName(value = "22_")
     val _22 : Int
 )
 

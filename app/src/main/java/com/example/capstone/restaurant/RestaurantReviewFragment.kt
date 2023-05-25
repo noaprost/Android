@@ -44,8 +44,6 @@ class RestaurantReviewFragment : Fragment() {
             intent.putExtra("resInfo", resInfo)
             startActivity(intent)
         }
-        showRestaurantReview(ResID(resInfo.resIdx.toString()))
-
 
         return root
     }
@@ -132,8 +130,12 @@ class RestaurantReviewFragment : Fragment() {
             }
             override fun onFailure(call: Call<RestaurantReviewList>, t: Throwable) {
                 Log.d("retrofit", "음식점 리뷰 리스트 - 응답 실패 / t: $t")
-                Toast.makeText(activity, "리뷰를 불러올 수 없습니다.", Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showRestaurantReview(ResID(resInfo.resIdx.toString()))
     }
 }

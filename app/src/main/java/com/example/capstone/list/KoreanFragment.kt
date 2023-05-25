@@ -114,7 +114,7 @@ class KoreanFragment : Fragment() {
             return MyViewHolder(view)
         }
 
-        override fun getItemCount(): Int = list.size
+        override fun getItemCount(): Int = 5//list.size
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             val post = list[position]

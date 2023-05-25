@@ -42,9 +42,6 @@ object RetrofitClient {
         })
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS)
         client.addInterceptor(loggingInterceptor) //위에서 설정한 로깅 인터셉터 추가
-        client.connectTimeout(500, TimeUnit.SECONDS)
-            .readTimeout(500, TimeUnit.SECONDS)
-            .writeTimeout(500,TimeUnit.SECONDS)
 
         //기본파라메터 추가
         val baseParameterInterceptor : Interceptor = (object :Interceptor{
@@ -65,6 +62,9 @@ object RetrofitClient {
         })
         //위에서 설정한 기본파라메터 인터셉터를 okhttp 클라이언트에 추가
         client.addInterceptor(baseParameterInterceptor)
+         //   .connectTimeout(500, TimeUnit.SECONDS)
+         //   .readTimeout(500, TimeUnit.SECONDS)
+         //   .writeTimeout(500,TimeUnit.SECONDS)
 
         if(retrofitClient==null) { //비어있으면 생성
             //레트로핏 빌더를 통해 인스턴스 생성
