@@ -26,11 +26,12 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@id/headerView"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/dummy_restaurant_image"
@@ -42,6 +43,7 @@
                 android:layout_height="match_parent"
                 android:background="#FFFFFF"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/pager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageView">
@@ -143,7 +145,7 @@
                     android:layout_marginEnd="5dp"
                     app:tabGravity="fill"
                     app:tabIndicatorAnimationMode="linear"
-                    app:tabIndicatorColor="#C4C4C4"
+                    app:tabIndicatorColor="#FCAF17"
                     app:tabIndicatorHeight="4dp"
                     app:tabMode="fixed"
                     app:tabUnboundedRipple="false">
@@ -174,15 +176,15 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
+                android:overScrollMode="never"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerView"
-                app:layout_constraintVertical_bias="0.464">
+                app:layout_constraintTop_toBottomOf="@id/headerView">
 
             </androidx.viewpager2.widget.ViewPager2>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -212,10 +214,10 @@
         android:src="@drawable/ic_heart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="#FCAF17" />
+        app:tint="@color/semiWhite" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/backButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="10dp"

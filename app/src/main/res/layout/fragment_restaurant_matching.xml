@@ -57,21 +57,13 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/BestKeyword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="데이트코스"
-            android:textSize="22sp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayou2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="40dp">
 
         <ImageView
             android:id="@+id/imageView9"
@@ -96,35 +88,31 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
+        android:id="@+id/BestKeyword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="데이트코스"
+        android:textColor="@color/INUBlue"
+        android:textSize="22sp" />
+
+    <TextView
         android:id="@+id/Bestkeyword2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
         android:text="조용한"
-        android:textSize="20sp" />
+        android:textColor="@color/INUBlue"
+        android:textSize="19sp" />
 
     <TextView
         android:id="@+id/Bestkeyword3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="80dp"
         android:text="인스타감성"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/Bestkeyword4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="연인끼리"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="가족식사"
+        android:textColor="@color/INUBlue"
         android:textSize="14sp" />
 
 </LinearLayout>

@@ -1,5 +1,14 @@
 <resources>
-    <string name="app_name">Capstone</string>
+    <string name="app_name">내 자리 내놔</string>
+    <string-array name="spinner_array">
+        <item>2명</item>
+        <item>3명</item>
+        <item>4명</item>
+        <item>5명</item>
+        <item>6명</item>
+        <item>7명</item>
+        <item>8명</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

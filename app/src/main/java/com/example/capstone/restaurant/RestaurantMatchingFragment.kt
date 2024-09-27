@@ -2,14 +2,20 @@ package com.example.capstone.restaurant
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat.animate
-import com.example.capstone.R
+import com.example.capstone.*
 import com.example.capstone.databinding.FragmentRestaurantMatchingBinding
+import com.example.capstone.retrofit.API
+import com.example.capstone.retrofit.IRetrofit
+import com.example.capstone.retrofit.RetrofitClient
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
@@ -17,27 +23,52 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
-import com.github.mikephil.charting.utils.ColorTemplate.COLORFUL_COLORS
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RestaurantMatchingFragment : Fragment() {
     private var _binding: FragmentRestaurantMatchingBinding? = null
     private val binding get() = _binding!!
+    lateinit var resInfo:Restaurants
+    var entryM:Float = 0.0F
+    var entryF:Float = 0.0F
+    var entryE:Float = 0.0F
+    var a10:Float = 0.0F
+    var a20:Float = 0.0F
+    var a30:Float = 0.0F
+    var a40:Float = 0.0F
+    var a50:Float = 0.0F
+    val sex_entries = ArrayList<PieEntry>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentRestaurantMatchingBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val bundle = arguments
+        resInfo=bundle!!.getSerializable("restaurant") as Restaurants
+
+
+
+        if(resInfo.keyWord !=null){
+            var arr:List<String> =listOf("", "", "")
+            for (addr in resInfo.keyWord) {
+                val splitedAddr = resInfo.keyWord.split("[\"", "\", \"", "\"]")
+                arr = splitedAddr
+            }
+            binding.BestKeyword.text="#"+arr[1]
+            binding.Bestkeyword2.text="#"+arr[2]
+            binding.Bestkeyword3.text="#"+arr[3]
+        }
+        return root
+    }
+    fun setGenderChart(){
         binding.chart.setUsePercentValues(true)
-        //binding.chart.setDrawHoleEnabled(false) //구멍 없애기
         binding.chart.holeRadius=30f
         binding.chart.transparentCircleRadius=35f
-        // 성별 데이터 입력
-        val sex_entries = ArrayList<PieEntry>()
-        sex_entries.add(PieEntry(25f, "남"))
-        sex_entries.add(PieEntry(60f, "여"))
-        sex_entries.add(PieEntry(15f, "기타"))
 
         // 차트 색
         val colorsItems = ArrayList<Int>()
@@ -47,7 +78,6 @@ class RestaurantMatchingFragment : Fragment() {
 
         val pieDataSet = PieDataSet(sex_entries, "")
         pieDataSet.apply {
-
             colors = colorsItems
             valueTextColor = Color.WHITE
             valueTextSize = 10f
@@ -55,25 +85,24 @@ class RestaurantMatchingFragment : Fragment() {
         val pieData = PieData(pieDataSet)
         binding.chart
             .apply {
-            data = pieData
-            description.isEnabled = false
-            isRotationEnabled = false
-            //centerText = "남녀 선호도"
-
-            setEntryLabelColor(Color.WHITE)
-            animateY(1400, Easing.EaseInOutQuad)
-            animate()
-        }
-
-        //--------------------------------------------------------------------------
+                data = pieData
+                description.isEnabled = false
+                isRotationEnabled = false
+                setEntryLabelColor(Color.WHITE)
+                animateY(1400, Easing.EaseInOutQuad)
+                animate()
+            }
+    }
+    fun setAgeChart(){
         var barChart: BarChart = binding.barChart // barChart 생성
 
         val entries = ArrayList<BarEntry>()
-        entries.add(BarEntry(1f,20.0f))
-        entries.add(BarEntry(2f,70.0f))
-        entries.add(BarEntry(3f,30.0f))
-        entries.add(BarEntry(4f,90.0f))
-        entries.add(BarEntry(5f,70.0f))
+        entries.clear()
+        entries.add(BarEntry(1f,a10))
+        entries.add(BarEntry(2f,a20))
+        entries.add(BarEntry(3f,a30))
+        entries.add(BarEntry(4f,a40))
+        entries.add(BarEntry(5f,a50))
 
         barChart.run {
             description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
@@ -119,8 +148,6 @@ class RestaurantMatchingFragment : Fragment() {
             setFitBars(true)
             invalidate()
         }
-        return root
-
     }
     class MyXAxisFormatter : ValueFormatter() {
         private val days = arrayOf("10대","20대","30대","40대","50+")
@@ -128,4 +155,58 @@ class RestaurantMatchingFragment : Fragment() {
             return days.getOrNull(value.toInt()-1) ?: value.toString()
         }
     }
+    private fun preferenceByAge(ResID: ResID){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.preferenceByAge(ResID) ?:return
+        call.enqueue(object : Callback<PreferenceByAge> {
+
+            override fun onResponse(call: Call<PreferenceByAge>, response: Response<PreferenceByAge>) {
+                Log.d("retrofit", "나이 매칭 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                val all= response.body()!!.cnt10 + response.body()!!.cnt20+ response.body()!!.cnt30+ response.body()!!.cnt40+ response.body()!!.cnt50
+                a10=response.body()!!.cnt10.toFloat()/all * 100
+                a20=response.body()!!.cnt20.toFloat()/all * 100
+                a30=response.body()!!.cnt30.toFloat()/all * 100
+                a40=response.body()!!.cnt40.toFloat()/all * 100
+                a50=response.body()!!.cnt50.toFloat()/all * 100
+                setAgeChart()
+            }
+            override fun onFailure(call: Call<PreferenceByAge>, t: Throwable) {
+                Log.d("retrofit", "나이 매칭 -  응답 실패 / t: $t")
+            }
+        })
+    }
+    private fun preferenceByGender(ResID: ResID){
+        val iRetrofit : IRetrofit? = RetrofitClient.getClient(API.BASE_URL)?.create(IRetrofit::class.java)
+        val call = iRetrofit?.preferenceByGender(ResID) ?:return
+        call.enqueue(object : Callback<PreferenceByGender> {
+
+            override fun onResponse(call: Call<PreferenceByGender>, response: Response<PreferenceByGender>) {
+                Log.d("retrofit", "성별 매칭 - 응답 성공 / t : ${response.raw()} ${response.body()}")
+                entryF=response.body()!!.cntF.toFloat()/(response.body()!!.cntF.toFloat()+response.body()!!.cntM.toFloat())*100.toFloat()
+                entryM=response.body()!!.cntM.toFloat()/(response.body()!!.cntF.toFloat()+response.body()!!.cntM.toFloat())*100.toFloat()
+                if(sex_entries.isEmpty()){
+                    sex_entries.add(PieEntry(entryM, "남"))
+                    sex_entries.add(PieEntry(entryF, "여"))
+                    setGenderChart()
+                }
+
+            }
+            override fun onFailure(call: Call<PreferenceByGender>, t: Throwable) {
+                Log.d("retrofit", "성별 매칭 -  응답 실패 / t: $t")
+                entryE=100.toFloat()
+                if(sex_entries.isEmpty()){
+                    sex_entries.add(PieEntry(entryE, "기타"))
+                    setGenderChart()
+                }
+
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        preferenceByAge(ResID(resInfo.resIdx.toString()))
+        preferenceByGender(ResID(resInfo.resIdx.toString()))
+    }
+
 }

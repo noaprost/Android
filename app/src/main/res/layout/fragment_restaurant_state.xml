@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15sp"
-    tools:context=".restaurant.RestaurantStateFragment">
+    android:padding="15sp">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -25,23 +24,253 @@
                 android:layout_height="25dp"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
-                android:src="@drawable/armchair" />
+                android:src="@drawable/ic_armchair_line" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="좌석별 대기 현황"
+                android:text="키워드별 좌석 수"
                 android:textColor="#000000"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView2"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="#C6C6C6"
-            android:text="임시" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_round_rectangular"
+            android:backgroundTint="#4DFCAF17"
+            android:orientation="vertical"
+            android:padding="10sp">
+
+            <LinearLayout
+                android:id="@+id/seatKeywordBox1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginBottom="3sp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/seatKeyword1"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="200dp"
+                    android:text="#좌석키워드1"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/seat1Max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3sp"
+                    android:maxLength="3"
+                    android:text="0"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/seatKeywordBox2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginBottom="3sp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/seatKeyword2"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="#좌석키워드2"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/seat2Max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3sp"
+                    android:maxLength="3"
+                    android:text="0"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/seatKeywordBox3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginBottom="3sp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/seatKeyword3"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="#좌석키워드3"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/seat3Max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3sp"
+                    android:maxLength="3"
+                    android:text="0"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/seatKeywordBox4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginRight="3sp"
+                android:layout_marginBottom="3sp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/seatKeyword4"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="#좌석키워드4"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/seat4Max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3sp"
+                    android:maxLength="3"
+                    android:text="0"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/seatKeywordBox5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginRight="3sp"
+                android:layout_marginBottom="3sp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/seatKeyword5"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="#좌석키워드5"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/seat5Max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3sp"
+                    android:maxLength="3"
+                    android:text="0"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/seatKeywordBox6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginRight="3sp"
+                android:layout_marginBottom="3sp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/seatKeyword6"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="#좌석키워드6"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/seat6Max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3sp"
+                    android:maxLength="3"
+                    android:text="0"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/seatKeywordBox7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginRight="3sp"
+                android:layout_marginBottom="3sp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/seatKeyword7"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="#좌석키워드7"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/seat7Max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3sp"
+                    android:maxLength="3"
+                    android:text="0"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/seatKeywordBox8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginRight="3sp"
+                android:layout_marginBottom="3sp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/seatKeyword8"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="#좌석키워드8"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/seat8Max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3sp"
+                    android:maxLength="3"
+                    android:text="0"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -70,6 +299,40 @@
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView30"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_margin="5sp"
+                app:srcCompat="@drawable/ic_date" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="요일별 인기"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart2"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginBottom="80dp"

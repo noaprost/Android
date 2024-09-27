@@ -1,62 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="15dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <ImageView
+        android:id="@+id/restaurantImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/background_round_rectangular"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/dummy_restaurant_image" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/restaurantImage"
-            android:layout_width="110dp"
-            android:layout_height="100dp"
-            android:scaleType="center"
-            android:layout_marginBottom="4dp"
-            app:srcCompat="@drawable/dummy_restaurant_image"
-            tools:ignore="SpeakableTextPresentCheck" />
-        <!-- TODO: add radius -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="4dp">
-
-            <ImageView
-                android:id="@+id/star"
-                android:layout_width="13dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
-                android:gravity="center"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/star" />
-
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:gravity="center"
-                android:text="5.0" />
-
-            <TextView
-                android:id="@+id/commentNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="(19)" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/star"
+            android:layout_width="13dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/star" />
 
         <TextView
-            android:id="@+id/restaurantName"
+            android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="온리원 파스타" />
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:text="5.0"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="("
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/commentNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="19"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=")"
+            android:textColor="#000000" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/restaurantName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="온리원 파스타 송도점"
+        android:textColor="@color/black"
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+</LinearLayout>
